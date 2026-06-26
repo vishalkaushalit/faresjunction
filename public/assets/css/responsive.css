@@ -1,0 +1,58 @@
+@media (max-width: 1200px) {
+    .blog-hero-content {
+        padding: 0 30px;
+    }
+
+}
+
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+    .faq-timeline {
+        max-width: 100%;
+    }
+
+    .faq-main-container {
+        align-items: initial;
+        flex-direction: column;
+    }
+
+    .sticky-bottom-cta {
+        display: none;
+    }
+
+}
+
+@media (max-width: 992px) {
+
+    /* Tablet Styles */
+    .map-graphic {
+        top: 10%;
+        left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+
+    /* Mobile Styles */
+    .passenger-select-btn {
+        width: 100%;
+        padding: 15px 20px;
+    }
+
+    .passenger-dropdown-container {
+        width: 100%;
+    }
+
+    .channel-details a {
+        font-size: 16px;
+        font-weight: 700;
+        word-break: break-word;
+    }
+
+    .filter-tabs {
+        flex-direction: column;
+        align-items: start;
+    }
+}

@@ -1,0 +1,129 @@
+/* ========================================
+   BRANDS / TRUST SECTION
+   ======================================== */
+
+.brands-section {
+  padding: 2.5rem 0;
+  background-color: var(--white);
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.brands-label {
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1.75rem;
+}
+
+.brands-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.brand-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  min-width: 200px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-fast);
+}
+
+.brand-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.brand-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-icon.customer-rating-icon {
+  background: linear-gradient(135deg, #e8f4fd, #cce5ff);
+}
+.brand-icon.google-icon {
+  background: linear-gradient(135deg, #fef3e2, #fde68a);
+}
+.brand-icon.bbb-icon {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+}
+.brand-icon.norton-icon {
+  background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+}
+.brand-icon.iata-icon {
+  background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.brand-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.brand-rating {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--dark);
+  line-height: 1.1;
+}
+
+.brand-stars {
+  display: flex;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.brand-stars svg {
+  fill: #fbbf24;
+}
+
+.brand-score {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  margin-top: 1px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .brands-row {
+    gap: 1rem;
+  }
+
+  .brand-card {
+    min-width: 160px;
+    padding: 0.85rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-card {
+    min-width: calc(50% - 0.5rem);
+    flex: 1;
+  }
+}

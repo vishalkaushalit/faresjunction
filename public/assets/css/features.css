@@ -1,0 +1,139 @@
+/* ========================================
+   FEATURES SECTION ("Reasons to Book")
+   ======================================== */
+
+.features-section {
+  padding: 5rem 0 0 0;
+  background-color: var(--white);
+  position: relative;
+  margin-top: -2.5rem;
+  /* overlaps slightly with hero for standard premium look */
+}
+
+.features-container-card {
+  background: var(--white);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-200);
+  padding: 2.2rem 1.5rem;
+}
+
+.section-header h2,
+.section-header p {
+  color: var(--primary-color);
+}
+
+.features-title {
+  font-family: var(--font-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.features-title span {
+  color: var(--secondary-color);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.feature-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: var(--transition-fast);
+  text-decoration: none;
+  color: inherit;
+}
+
+.feature-card:hover {
+  background-color: var(--gray-100);
+  transform: translateY(-3px);
+}
+
+.feature-icon-wrapper {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 123, 37, 0.1);
+  /* light orange */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--secondary-color);
+  transition: var(--transition-fast);
+}
+
+.feature-card:hover .feature-icon-wrapper {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  transform: rotate(-8deg) scale(1.05);
+}
+
+.feature-info {
+  flex-grow: 1;
+}
+
+.feature-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+}
+
+.feature-card-desc {
+  font-size: 0.88rem;
+  color: var(--gray-600);
+  line-height: 1.4;
+}
+
+/* Specific styling for Google rating stars */
+.google-stars {
+  display: flex;
+  gap: 2px;
+  margin-top: 0.25rem;
+  color: #ffb800;
+}
+
+.google-stars svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .features-section {
+    margin-top: 0;
+    padding: 3rem 0;
+  }
+}
+
+@media (max-width: 992px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .features-title {
+    font-size: 1.6rem;
+  }
+
+  .feature-card {
+    padding: 0.5rem;
+  }
+}

@@ -1,0 +1,220 @@
+/* ========================================
+   DEALS SECTION
+   ======================================== */
+
+.deals-section {
+  padding: var(--section-padding) 0;
+  background-color: var(--white);
+}
+
+/* Filter tabs */
+.deals-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.deal-tab-btn {
+  padding: 0.55rem 1.4rem;
+  border-radius: 30px;
+  border: 2px solid var(--gray-300);
+  background: none;
+  font-family: var(--font-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.deal-tab-btn:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.deal-tab-btn.active {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--white);
+}
+
+/* Deals Grid */
+.deals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+}
+
+.deal-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background: var(--white);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--gray-200);
+  padding: 1.4rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.deal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--secondary-color);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+}
+
+.deal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: transparent;
+}
+
+.deal-card:hover::before {
+  transform: scaleY(1);
+}
+
+.deal-airline {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.airline-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background-color: var(--section-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+}
+
+.airline-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+
+.deal-route {
+  margin-bottom: 0.75rem;
+}
+
+.deal-route-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.route-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.route-city {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.route-code {
+  font-size: 0.8rem;
+  color: var(--gray-600);
+  margin-left: auto;
+}
+
+.route-line {
+  width: 2px;
+  height: 18px;
+  background-color: var(--gray-300);
+  margin-left: 3px;
+  border-radius: 2px;
+}
+
+.deal-footer {
+  border-top: 1px solid var(--gray-200);
+  padding-top: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deal-price-label {
+  font-size: 0.75rem;
+  color: var(--gray-600);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.deal-price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--secondary-color);
+  line-height: 1;
+}
+
+.btn-book {
+  padding: 0.5rem 1.1rem;
+  background-color: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: var(--btn-radius);
+  font-family: var(--font-primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: var(--transition-fast);
+}
+
+.btn-book:hover,
+.deal-card:hover .btn-book {
+  background-color: var(--secondary-color);
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .deals-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .deals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .deals-section {
+    padding: var(--section-padding-mobile) 0;
+  }
+
+  .deals-grid {
+    grid-template-columns: 1fr;
+  }
+}

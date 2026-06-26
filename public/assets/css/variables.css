@@ -1,0 +1,73 @@
+:root {
+    /* Brand Colors */
+    --primary-color: #0f294d;
+    --primary-dark: #0a1e38;
+    --primary-accent: #0d6efd;
+    --secondary-color: #ff7b25;
+    --secondary-dark: #e56513;
+    --secondary-color-rgb: 255, 123, 37;
+
+    /* Neutrals */
+    --white: #ffffff;
+    --dark: #1e293b;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #cbd5e1;
+    --gray-500: #94a3b8;
+    --gray-600: #64748b;
+    --gray-700: #475569;
+    --gray-800: #334155;
+    --gray-900: #1e293b;
+    --section-bg: #f4f6f9;
+
+    /* Typography */
+    --font-primary: "Outfit", sans-serif;
+    --font-serif: "Outfit", sans-serif;
+
+    /* Spacing */
+    --section-padding: 5rem;
+    --section-padding-mobile: 2.5rem;
+    --container-max: 1200px;
+    --card-radius: 12px;
+    --btn-radius: 6px;
+    --gap: 1.5rem;
+
+    /* Transitions */
+    --transition-fast: all 0.2s ease-in-out;
+    --transition-normal: all 0.35s ease-in-out;
+    --transition-slow: all 0.5s ease-in-out;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.15);
+
+    /* Helper Colors */
+    --rating-color: #ffb800;
+    --tooltip-bg: var(--gray-800);
+    --black-overlay: rgba(0, 0, 0, 0.75);
+    --black-overlay-light: rgba(0, 0, 0, 0.15);
+}
+
+.section_padding {
+    padding: var(--section-padding) 0;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition-fast, all 0.2s ease-in-out);
+    cursor: pointer;
+    border: none;
+}
+
+.btn-call {
+    background-color: var(--secondary-color, #ff7b25);
+    color: #11264b;
+}

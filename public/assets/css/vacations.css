@@ -1,0 +1,266 @@
+/* ========================================
+   VACATION PACKAGES SECTION
+   ======================================== */
+
+.vacations-section {
+  padding: var(--section-padding) 0;
+  background-color: var(--white);
+  overflow: hidden; /* prevents slider scrollbar or bleed */
+}
+
+.vacations-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.vacations-header-row .section-header {
+  text-align: left;
+  margin-bottom: 0;
+}
+
+/* Slider Controls on Top Right */
+.vacations-controls {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.vacations-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--gray-300);
+  background-color: var(--white);
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.vacations-btn:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+.vacations-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Carousel Layout */
+.vacations-slider-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.vacations-slider {
+  display: flex;
+  gap: var(--gap);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+.vacation-card {
+  flex: 0 0 calc((100% - (var(--gap) * 2)) / 3); /* default 3 items */
+  background: var(--white);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hover style: border-bottom highlighted in orange */
+.vacation-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--secondary-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.vacation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.vacation-card:hover::after {
+  transform: scaleX(1);
+}
+
+.vacation-img-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vacation-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.vacation-card:hover .vacation-img {
+  transform: scale(1.08);
+}
+
+.vacation-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.vacation-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+}
+
+.vacation-nights {
+  font-size: 0.92rem;
+  color: var(--gray-800);
+  margin-bottom: 0.75rem;
+  min-height: 42px;
+  display: block;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.vacation-nights span.highlight-nights {
+  color: var(--secondary-color);
+  font-weight: 700;
+  margin: 0 3px;
+}
+
+.vacation-stars {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  color: #ffb800;
+  margin-bottom: 1rem;
+}
+
+.vacation-stars svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.vacation-price-box {
+  margin-top: auto;
+  border-top: 1px dashed var(--gray-200);
+  padding-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.vacation-price-label {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  display: block;
+  margin-bottom: 0.15rem;
+}
+
+.vacation-price {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary-color);
+}
+
+.btn-vacation-offer {
+  display: inline-block;
+  width: 100%;
+  padding: 0.65rem 0;
+  border: 1px solid var(--secondary-color);
+  color: var(--secondary-color);
+  background: transparent;
+  border-radius: var(--btn-radius);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  transition: var(--transition-fast);
+}
+
+.vacation-card:hover .btn-vacation-offer {
+  background-color: var(--secondary-color);
+  color: var(--white);
+}
+
+.btn-vacation-offer:hover {
+  background-color: var(--secondary-dark) !important;
+  border-color: var(--secondary-dark) !important;
+  color: var(--white) !important;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .vacations-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .vacations-controls {
+    align-self: flex-end;
+  }
+
+  .vacation-card {
+    flex: 0 0 calc((100% - var(--gap)) / 2); /* 2 items on tablet */
+  }
+}
+
+@media (max-width: 576px) {
+  .vacations-section {
+    padding: var(--section-padding-mobile) 0;
+  }
+
+  .vacation-card {
+    flex: 0 0 100%; /* 1 item on mobile */
+  }
+  
+  .vacation-img-wrapper {
+    height: 180px;
+  }
+  
+  .vacations-controls {
+    gap: 0.5rem;
+  }
+  
+  .vacations-btn {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+.packages-hero {
+  position: relative;
+  background: linear-gradient(rgba(15, 41, 77, 0.5), rgba(15, 41, 77, 0.5)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&auto=format&fit=crop') no-repeat center center/cover;
+  padding: 5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 480px;
+}

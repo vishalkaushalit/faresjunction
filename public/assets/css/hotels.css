@@ -1,0 +1,474 @@
+/* ========================================
+   HOTELS PAGE SPECIFIC STYLES
+   ======================================== */
+
+.hotels-hero {
+  position: relative;
+  background: linear-gradient(rgba(15, 41, 77, 0.45), rgba(15, 41, 77, 0.45)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&auto=format&fit=crop') no-repeat center center/cover;
+  padding: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+}
+
+.banner-title-text h1 {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+/* Grids for Hotels Form */
+.hotel-row1-grid {
+  grid-template-columns: 2fr 1.1fr 1.1fr 1.3fr;
+}
+
+.hotel-row2-grid {
+  grid-template-columns: 1.2fr 1.2fr 1.2fr 1fr;
+}
+
+/* USP Section */
+.hotel-usp-section {
+  padding: 4rem 0;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.hotel-usp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.hotel-usp-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.85rem;
+}
+
+.hotel-usp-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(var(--secondary-color-rgb), 0.15);
+  color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(var(--secondary-color-rgb), 0.1);
+  transition: all 0.2s ease;
+}
+
+.hotel-usp-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.hotel-usp-item:hover .hotel-usp-icon {
+  transform: scale(1.05);
+  background-color: var(--secondary-color);
+  color: var(--white);
+}
+
+.hotel-usp-item h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+/* Trending Destinations */
+.hotel-trending-section {
+  padding: 5rem 0;
+  background-color: var(--gray-100);
+}
+
+.trending-destinations-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.trending-dest-card {
+  position: relative;
+  height: 330px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trending-dest-card.card-large {
+  grid-column: span 2;
+}
+
+.trending-dest-card.card-medium {
+  grid-column: span 1;
+}
+
+.dest-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.trending-dest-card:hover .dest-bg-img {
+  transform: scale(1.06);
+}
+
+.dest-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--black-overlay-light), var(--black-overlay));
+  z-index: 1;
+}
+
+.dest-card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dest-card-title {
+  color: var(--white);
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  margin: 0;
+}
+
+.dest-city-thumbnails {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.trending-dest-card:hover .dest-city-thumbnails {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.city-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--white);
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.city-thumb:hover {
+  background-color: var(--secondary-color);
+  color: var(--white);
+  transform: scale(1.1);
+}
+
+.city-thumb .city-name {
+  position: absolute;
+  bottom: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--tooltip-bg);
+  color: var(--white);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.city-thumb:hover .city-name {
+  visibility: visible;
+  opacity: 1;
+  bottom: 56px;
+}
+
+/* Call Banner */
+.hotel-call-banner {
+  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+  color: var(--white);
+  padding: 2.25rem 0;
+  text-align: center;
+}
+
+.hotel-call-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hotel-call-content svg {
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.hotel-call-content p {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--white);
+}
+
+.hotel-call-content a {
+  color: var(--white);
+  text-decoration: underline;
+  font-weight: 800;
+  transition: opacity 0.2s ease;
+}
+
+.hotel-call-content a:hover {
+  opacity: 0.9;
+}
+
+/* Popular Hotels */
+.popular-hotels-section {
+  padding: 5rem 0 0 0;
+  background-color: var(--white);
+}
+
+.popular-hotels-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.popular-hotel-card {
+  background: var(--white);
+  border-radius: 10px;
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.popular-hotel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(var(--secondary-color-rgb), 0.25);
+}
+
+.hotel-img-container {
+  height: 170px;
+  overflow: hidden;
+}
+
+.hotel-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.popular-hotel-card:hover .hotel-img-container img {
+  transform: scale(1.05);
+}
+
+.hotel-details-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.popular-hotel-card .hotel-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.popular-hotel-card .hotel-city {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  margin-bottom: 0.65rem;
+  font-weight: 500;
+}
+
+.popular-hotel-card .hotel-stars {
+  display: flex;
+  gap: 2px;
+  color: var(--rating-color);
+  margin-bottom: 0.75rem;
+}
+
+.popular-hotel-card .hotel-stars svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.hotel-price-row {
+  border-top: 1px dashed var(--gray-200);
+  padding-top: 0.85rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.hotel-price-row .price-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--secondary-color);
+}
+
+.hotel-price-row .price-val strong {
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.hotel-price-row .price-val sup {
+  font-size: 0.85rem;
+  font-weight: 700;
+  top: -0.2em;
+}
+
+.hotel-price-row .price-type {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+}
+
+.btn-hotel-book {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem 0;
+  background-color: var(--secondary-color);
+  color: var(--white);
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: background-color 0.2s ease;
+  text-align: center;
+}
+
+.btn-hotel-book:hover {
+  background-color: var(--secondary-dark);
+}
+
+/* FAQ Accordion Section */
+.hotels-faq-section {
+  padding: 5rem 0;
+  background-color: var(--white);
+}
+
+/* Responsive Rules */
+@media (max-width: 1200px) {
+  .trending-destinations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .trending-dest-card.card-large {
+    grid-column: span 2;
+  }
+
+  .popular-hotels-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .hotel-row1-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hotel-row2-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hotel-usp-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .trending-destinations-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .trending-dest-card.card-large {
+    grid-column: span 1;
+  }
+
+  .popular-hotels-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hotels-hero {
+    padding: 3rem 0;
+  }
+
+  .banner-title-text h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hotel-row1-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hotel-row2-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hotel-call-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hotel-usp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trending-destinations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .popular-hotels-grid {
+    grid-template-columns: 1fr;
+  }
+}

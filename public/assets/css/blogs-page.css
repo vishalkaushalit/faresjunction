@@ -1,0 +1,213 @@
+/* ========================================
+   BLOG PAGE EXTENSIONS
+   ======================================== */
+
+.blog-hero {
+  position: relative;
+  background: linear-gradient(rgba(15, 41, 77, 0.5), rgba(15, 41, 77, 0.5)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1600&auto=format&fit=crop') no-repeat center center/cover;
+  padding: 5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 480px;
+}
+
+.blog-hero-content {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.blog-hero-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Category Filter Bar */
+.category-filter-bar {
+  background-color: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 80px; /* offset for header */
+  z-index: 100;
+  padding: 0.75rem 0;
+}
+
+.filter-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  padding-bottom: 2px;
+}
+
+.filter-tabs::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+.filter-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-tab-btn:hover {
+  color: var(--secondary-color);
+  background-color: var(--gray-100);
+}
+
+.filter-tab-btn.active {
+  background-color: var(--secondary-color);
+  color: var(--white) !important;
+}
+
+.blog-search-box {
+  position: relative;
+  width: 250px;
+}
+
+.blog-search-input {
+  width: 100%;
+  padding: 0.5rem 2.25rem 0.5rem 0.85rem;
+  border: 1px solid var(--gray-300);
+  border-radius: 20px;
+  font-size: 0.88rem;
+  outline: none;
+  background-color: var(--gray-100);
+  transition: all 0.2s ease;
+}
+
+.blog-search-input:focus {
+  background-color: var(--white);
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(229, 101, 19, 0.1);
+}
+
+.blog-search-icon {
+  position: absolute;
+  top: 50%;
+  right: 0.85rem;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--gray-500);
+  pointer-events: none;
+}
+
+/* Hoverable Share Tray inside Blog Cards */
+.blog-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.blog-thumb-wrapper {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.blog-share-overlay {
+  position: absolute;
+  bottom: -45px;
+  left: 0;
+  width: 100%;
+  background: rgba(15, 41, 77, 0.95);
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 0.65rem 0;
+  transition: bottom 0.3s ease;
+  z-index: 10;
+}
+
+.blog-card:hover .blog-share-overlay {
+  bottom: 0;
+}
+
+.share-icon-btn {
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.2s ease, transform 0.1s ease;
+  display: flex;
+  align-items: center;
+}
+
+.share-icon-btn:hover {
+  color: var(--secondary-color);
+  transform: scale(1.15);
+}
+
+.share-icon-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* No results state */
+.no-blogs-found {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--white);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  grid-column: 1 / -1;
+}
+
+.no-blogs-found h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.no-blogs-found p {
+  color: var(--gray-500);
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* Responsive elements */
+@media (max-width: 768px) {
+  .category-filter-bar {
+    position: static;
+    padding: 1rem 0;
+  }
+  .filter-bar-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .blog-search-box {
+    width: 100%;
+  }
+}
+
+/* Blog card cover link styling */
+.blog-card-cover-link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  cursor: pointer;
+}
+
