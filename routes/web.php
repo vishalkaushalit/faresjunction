@@ -4,9 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GlobalScriptController;
 use App\Http\Controllers\SeoMetaController;
+use App\Http\Controllers\UserController;
 
 Route::controller(WebsiteController::class)->group(function () {
     Route::get('/', 'index')->name('website.index');
@@ -46,26 +48,32 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Contact Controller
-    Route::get('contact/index', [ContactController::class, 'index'])->name('contact.index');
-    Route::post('contact/create', [ContactController::class, 'create'])->name('contact.create');
-    Route::delete('/contact/delete/{id}', [ContactController::class, 'delete'])->name('contact.delete');
+    Route::resource('blog-posts', BlogPostController::class)->except(['show']);
 
-    Route::get('subscribe/index', [ContactController::class, 'subscribeIndex'])->name('subscribe.index');
-    Route::post('subscribe/create', [ContactController::class, 'subscribeCreate'])->name('subscribe.create');
-    Route::delete('/subscribe/delete/{id}', [ContactController::class, 'subscribeDelete'])->name('subscribe.delete');
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('users', UserController::class)->except(['show']);
 
-    Route::get('seo-meta', [SeoMetaController::class, 'index'])->name('seo-meta.index');
-    Route::get('seo-meta/create', [SeoMetaController::class, 'create'])->name('seo-meta.create');
-    Route::post('seo-meta', [SeoMetaController::class, 'store'])->name('seo-meta.store');
-    Route::get('seo-meta/{type}/{key}/edit', [SeoMetaController::class, 'edit'])->name('seo-meta.edit');
-    Route::put('seo-meta/{type}/{key}', [SeoMetaController::class, 'update'])->name('seo-meta.update');
-    Route::delete('seo-meta/{type}/{key}', [SeoMetaController::class, 'destroy'])->name('seo-meta.destroy');
+        // Contact Controller
+        Route::get('contact/index', [ContactController::class, 'index'])->name('contact.index');
+        Route::post('contact/create', [ContactController::class, 'create'])->name('contact.create');
+        Route::delete('/contact/delete/{id}', [ContactController::class, 'delete'])->name('contact.delete');
 
-    Route::get('global-scripts', [GlobalScriptController::class, 'edit'])->name('global-scripts.edit');
-    Route::put('global-scripts', [GlobalScriptController::class, 'update'])->name('global-scripts.update');
+        Route::get('subscribe/index', [ContactController::class, 'subscribeIndex'])->name('subscribe.index');
+        Route::post('subscribe/create', [ContactController::class, 'subscribeCreate'])->name('subscribe.create');
+        Route::delete('/subscribe/delete/{id}', [ContactController::class, 'subscribeDelete'])->name('subscribe.delete');
 
-    Route::resource('blog-categories', BlogCategoryController::class)->except(['show']);
+        Route::get('seo-meta', [SeoMetaController::class, 'index'])->name('seo-meta.index');
+        Route::get('seo-meta/create', [SeoMetaController::class, 'create'])->name('seo-meta.create');
+        Route::post('seo-meta', [SeoMetaController::class, 'store'])->name('seo-meta.store');
+        Route::get('seo-meta/{type}/{key}/edit', [SeoMetaController::class, 'edit'])->name('seo-meta.edit');
+        Route::put('seo-meta/{type}/{key}', [SeoMetaController::class, 'update'])->name('seo-meta.update');
+        Route::delete('seo-meta/{type}/{key}', [SeoMetaController::class, 'destroy'])->name('seo-meta.destroy');
+
+        Route::get('global-scripts', [GlobalScriptController::class, 'edit'])->name('global-scripts.edit');
+        Route::put('global-scripts', [GlobalScriptController::class, 'update'])->name('global-scripts.update');
+
+        Route::resource('blog-categories', BlogCategoryController::class)->except(['show']);
+    });
 });
 
 require __DIR__.'/auth.php';

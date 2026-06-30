@@ -1,5 +1,5 @@
 <?php
-require_once resource_path('views/layouts/includes/packages-data.php');
+require resource_path('views/layouts/includes/packages-data.php');
 
 // Resolve package from query parameter, fallback to default
 $packageKey = isset($_GET['package']) ? $_GET['package'] : 'all-in-one-thailand';

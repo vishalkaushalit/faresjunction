@@ -1,5 +1,5 @@
 <?php
-require_once resource_path('views/layouts/includes/packages-data.php');
+require resource_path('views/layouts/includes/packages-data.php');
 
 $pageTitle = "Popular Vacation Packages & Tour Deals | Fond Travels";
 $pageDescription = "Browse and book handpicked vacation packages and global tour deals with flights, hotels, and sightseeing included.";

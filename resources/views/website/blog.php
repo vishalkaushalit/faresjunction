@@ -1,6 +1,6 @@
 <?php
-require_once resource_path('views/layouts/includes/blogs-data.php');
-require_once resource_path('views/layouts/includes/packages-data.php');
+require resource_path('views/layouts/includes/blogs-data.php');
+require resource_path('views/layouts/includes/packages-data.php');
 
 $pageTitle = "Travel Blog, Guides & Flight Hacks | Fond Travels";
 $pageDescription = "Unlock travel hacks, airline policies, baggage fees, and insider destination guides with our comprehensive travel blog.";

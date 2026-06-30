@@ -1,14 +1,32 @@
 <?php
-require_once resource_path('views/layouts/includes/blogs-data.php');
-require_once resource_path('views/layouts/includes/packages-data.php');
+require resource_path('views/layouts/includes/blogs-data.php');
+require resource_path('views/layouts/includes/packages-data.php');
 
-// Resolve post from route slug or legacy query parameter, fallback to default
-$postKey = $postKey ?? ($_GET['post'] ?? 'best-time-to-visit-europe');
-if (!isset($blogsData[$postKey])) {
-    $postKey = 'best-time-to-visit-europe';
+if (!empty($databasePost)) {
+    $postKey = $databasePost->slug;
+    $blog = [
+        'title' => $databasePost->title,
+        'excerpt' => $databasePost->excerpt ?: str($databasePost->content)->stripTags()->limit(160)->toString(),
+        'tag' => $databasePost->category?->name ?? 'Travel',
+        'author' => $databasePost->author?->name ?? 'Fond Travels',
+        'date' => optional($databasePost->published_at ?? $databasePost->created_at)->format('F j, Y'),
+        'readTime' => ceil(str_word_count(strip_tags($databasePost->content)) / 200) . ' min read',
+        'image' => $databasePost->featured_image ? asset('storage/' . $databasePost->featured_image) : asset('dashboardAssets/img/news-1.jpg'),
+        'content' => $databasePost->content,
+        'tags' => $databasePost->tags ?? [],
+        'tableOfContents' => $databasePost->table_of_contents ?? [],
+    ];
+} else {
+    // Resolve post from route slug or legacy query parameter, fallback to default
+    $postKey = $postKey ?? ($_GET['post'] ?? 'best-time-to-visit-europe');
+    if (!isset($blogsData[$postKey])) {
+        $postKey = 'best-time-to-visit-europe';
+    }
+
+    $blog = $blogsData[$postKey];
+    $blog['tags'] = $blog['tags'] ?? [];
+    $blog['tableOfContents'] = $blog['tableOfContents'] ?? [];
 }
-
-$blog = $blogsData[$postKey];
 
 $pageTitle = $blog['title'] . " | Travel Blog & Insights";
 $pageDescription = $blog['excerpt'];
@@ -58,6 +76,37 @@ ob_start();
                 <div class="blog-post-banner">
                   <img src="<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
                 </div>
+
+                <?php if (!empty($blog['tags'])) { ?>
+                <div class="blog-post-tags" aria-label="Blog tags">
+                  <?php foreach ($blog['tags'] as $tag) { ?>
+                    <span><?php echo htmlspecialchars($tag); ?></span>
+                  <?php } ?>
+                </div>
+                <?php } ?>
+
+                <?php if (!empty($blog['tableOfContents'])) { ?>
+                <nav class="blog-table-of-contents" aria-label="Table of Contents">
+                  <div class="toc-heading">
+                    <span class="toc-heading-icon">&#9776;</span>
+                    <h2>Table of Contents</h2>
+                  </div>
+                  <ul>
+                    <?php foreach ($blog['tableOfContents'] as $tocItem) {
+                        $tocTitle = $tocItem['title'] ?? '';
+                        $tocLink = $tocItem['link'] ?? '#';
+
+                        if ($tocTitle === '') {
+                            continue;
+                        }
+                        ?>
+                        <li>
+                          <a href="<?php echo htmlspecialchars($tocLink); ?>"><?php echo htmlspecialchars($tocTitle); ?></a>
+                        </li>
+                    <?php } ?>
+                  </ul>
+                </nav>
+                <?php } ?>
 
                 <div class="blog-post-body">
                   <?php echo $blog['content']; ?>

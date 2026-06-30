@@ -155,6 +155,10 @@
         if (window.CKEDITOR && document.getElementById('sub_description')) {
             CKEDITOR.replace('sub_description');
         }
+
+        if (window.CKEDITOR && document.getElementById('content')) {
+            CKEDITOR.replace('content');
+        }
     </script>
 </body>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogPost;
 use Illuminate\View\View;
 
 class WebsiteController extends Controller
@@ -48,8 +49,18 @@ class WebsiteController extends Controller
 
     public function blogDetails(?string $slug = null): View
     {
+        $postKey = $slug ?: request('post');
+        $databasePost = $postKey
+            ? BlogPost::query()
+                ->with(['author', 'category'])
+                ->where('slug', $postKey)
+                ->where('status', true)
+                ->first()
+            : null;
+
         return view('website.blog-details', [
-            'postKey' => $slug ?: request('post'),
+            'postKey' => $postKey,
+            'databasePost' => $databasePost,
         ]);
     }
 

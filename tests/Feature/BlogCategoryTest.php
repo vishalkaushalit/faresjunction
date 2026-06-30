@@ -13,7 +13,7 @@ class BlogCategoryTest extends TestCase
 
     public function test_blog_categories_page_can_be_rendered(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['role' => User::ROLE_ADMIN]);
 
         $response = $this
             ->actingAs($user)
@@ -27,7 +27,7 @@ class BlogCategoryTest extends TestCase
 
     public function test_blog_category_can_be_created(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['role' => User::ROLE_ADMIN]);
 
         $response = $this
             ->actingAs($user)
@@ -51,7 +51,7 @@ class BlogCategoryTest extends TestCase
 
     public function test_blog_category_can_be_updated(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['role' => User::ROLE_ADMIN]);
         $category = BlogCategory::create([
             'name' => 'Travel Tips',
             'slug' => 'travel-tips',
@@ -82,7 +82,7 @@ class BlogCategoryTest extends TestCase
 
     public function test_blog_category_can_be_deleted(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['role' => User::ROLE_ADMIN]);
         $category = BlogCategory::create([
             'name' => 'Travel Tips',
             'slug' => 'travel-tips',

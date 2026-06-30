@@ -1,5 +1,5 @@
 <?php
-require_once resource_path('views/layouts/includes/packages-data.php');
+require resource_path('views/layouts/includes/packages-data.php');
 
 $pageTitle = "Book Cheap Flight Tickets & Last Minute Travel Deals | Fond Travels";
 $pageDescription = "Compare airfares on major airlines. Book cheap flights, round-trip ticket deals, and get up to 40% off by calling our 24/7 travel experts.";

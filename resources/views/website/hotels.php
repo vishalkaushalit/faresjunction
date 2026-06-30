@@ -1,5 +1,5 @@
 <?php
-require_once resource_path('views/layouts/includes/packages-data.php');
+require resource_path('views/layouts/includes/packages-data.php');
 
 $pageTitle = "Book Hotels & Accommodations Worldwide | Fond Travels";
 $pageDescription = "Compare hotel prices and find cheap room stays at popular global tourist destinations with Fond Travels.";

@@ -1,6 +1,6 @@
 <?php
-require_once resource_path('views/layouts/includes/packages-data.php');
-require_once resource_path('views/layouts/includes/blogs-data.php');
+require resource_path('views/layouts/includes/packages-data.php');
+require resource_path('views/layouts/includes/blogs-data.php');
 
 $pageTitle = "Fond Travels Clone - Dynamic Flight & Holiday Booking";
 $pageDescription = "Explore and book flights, hotels, and holiday destinations around the world with Fond Travels.";
