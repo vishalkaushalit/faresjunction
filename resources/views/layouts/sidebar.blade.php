@@ -30,6 +30,14 @@
         <!-- End Global Scripts Nav -->
 
         <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('blog-categories.index') }}">
+                <i class="bi bi-tags"></i>
+                <span>Blog Categories</span>
+            </a>
+        </li>
+        <!-- End Blog Categories Nav -->
+
+        <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('contact.index') }}">
                 <i class="bi bi-envelope"></i>
                 <span>Enquiry Form</span>

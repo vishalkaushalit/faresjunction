@@ -10,6 +10,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
+                    <h1 class="text-center mb-3 fs-3 fw-semibold">Login</h1>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

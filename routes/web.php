@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GlobalScriptController;
 use App\Http\Controllers\SeoMetaController;
@@ -63,6 +64,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('global-scripts', [GlobalScriptController::class, 'edit'])->name('global-scripts.edit');
     Route::put('global-scripts', [GlobalScriptController::class, 'update'])->name('global-scripts.update');
+
+    Route::resource('blog-categories', BlogCategoryController::class)->except(['show']);
 });
 
 require __DIR__.'/auth.php';
