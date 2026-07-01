@@ -1,5 +1,8 @@
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
+    @php
+        $blogMenuOpen = request()->routeIs('blog-posts.*', 'blog-categories.*', 'blog-tags.*');
+    @endphp
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -14,12 +17,32 @@
         <li class="nav-heading">Pages</li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ route('blog-posts.index') }}">
-                <i class="bi bi-pencil-square"></i>
-                <span>Blog Posts</span>
+            <a class="nav-link {{ $blogMenuOpen ? '' : 'collapsed' }}" data-bs-target="#blog-nav" data-bs-toggle="collapse" href="#" aria-expanded="{{ $blogMenuOpen ? 'true' : 'false' }}">
+                <i class="bi bi-journal-text"></i>
+                <span>Blogs</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
             </a>
+            <ul id="blog-nav" class="nav-content collapse {{ $blogMenuOpen ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                <li>
+                    <a href="{{ route('blog-posts.index') }}" class="{{ request()->routeIs('blog-posts.index') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>All Blogs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('blog-tags.index') }}" class="{{ request()->routeIs('blog-tags.index') ? 'active' : '' }}">
+                        <i class="bi bi-circle"></i><span>Tags</span>
+                    </a>
+                </li>
+                @if (Auth::user()->isAdmin())
+                    <li>
+                        <a href="{{ route('blog-categories.index') }}" class="{{ request()->routeIs('blog-categories.index') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Categories</span>
+                        </a>
+                    </li>
+                @endif
+            </ul>
         </li>
-        <!-- End Blog Posts Nav -->
+        <!-- End Blogs Nav -->
 
         @if (Auth::user()->isAdmin())
             <li class="nav-item">
@@ -45,14 +68,6 @@
                 </a>
             </li>
             <!-- End Global Scripts Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('blog-categories.index') }}">
-                    <i class="bi bi-tags"></i>
-                    <span>Blog Categories</span>
-                </a>
-            </li>
-            <!-- End Blog Categories Nav -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('contact.index') }}">

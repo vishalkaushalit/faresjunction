@@ -12,8 +12,11 @@ if (!empty($databasePost)) {
         'date' => optional($databasePost->published_at ?? $databasePost->created_at)->format('F j, Y'),
         'readTime' => ceil(str_word_count(strip_tags($databasePost->content)) / 200) . ' min read',
         'image' => $databasePost->featured_image ? asset('storage/' . $databasePost->featured_image) : asset('dashboardAssets/img/news-1.jpg'),
+        'imageAlt' => $databasePost->featured_image_alt ?: $databasePost->title,
         'content' => $databasePost->content,
-        'tags' => $databasePost->tags ?? [],
+        'tags' => $databasePost->tags
+            ->map(fn ($tag) => ['name' => $tag->name, 'slug' => $tag->slug])
+            ->all(),
         'tableOfContents' => $databasePost->table_of_contents ?? [],
     ];
 } else {
@@ -24,6 +27,7 @@ if (!empty($databasePost)) {
     }
 
     $blog = $blogsData[$postKey];
+    $blog['imageAlt'] = $blog['imageAlt'] ?? $blog['title'];
     $blog['tags'] = $blog['tags'] ?? [];
     $blog['tableOfContents'] = $blog['tableOfContents'] ?? [];
 }
@@ -74,13 +78,21 @@ ob_start();
                 </div>
 
                 <div class="blog-post-banner">
-                  <img src="<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>">
+                  <img src="<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['imageAlt']); ?>">
                 </div>
 
                 <?php if (!empty($blog['tags'])) { ?>
                 <div class="blog-post-tags" aria-label="Blog tags">
                   <?php foreach ($blog['tags'] as $tag) { ?>
-                    <span><?php echo htmlspecialchars($tag); ?></span>
+                    <?php
+                        $tagName = is_array($tag) ? ($tag['name'] ?? '') : $tag;
+                        $tagSlug = is_array($tag) ? ($tag['slug'] ?? \Illuminate\Support\Str::slug($tagName)) : \Illuminate\Support\Str::slug($tagName);
+
+                        if ($tagName === '') {
+                            continue;
+                        }
+                    ?>
+                    <a href="<?php echo route('website.blog', ['tag' => $tagSlug], false); ?>"><?php echo htmlspecialchars($tagName); ?></a>
                   <?php } ?>
                 </div>
                 <?php } ?>

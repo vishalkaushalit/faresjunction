@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BlogPost extends Model
@@ -13,8 +14,8 @@ class BlogPost extends Model
         'title',
         'slug',
         'featured_image',
+        'featured_image_alt',
         'excerpt',
-        'tags',
         'table_of_contents',
         'content',
         'status',
@@ -24,7 +25,6 @@ class BlogPost extends Model
     protected $casts = [
         'status' => 'boolean',
         'published_at' => 'datetime',
-        'tags' => 'array',
         'table_of_contents' => 'array',
     ];
 
@@ -36,5 +36,10 @@ class BlogPost extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(BlogCategory::class, 'blog_category_id');
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class)->orderBy('name');
     }
 }

@@ -44,12 +44,17 @@
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
                                     <a href="{{ route('blog-categories.edit', $category) }}"
-                                        class="btn btn-sm btn-primary">Edit</a>
+                                        class="btn btn-sm btn-primary" title="Edit" aria-label="Edit blog category">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                     <form method="POST" action="{{ route('blog-categories.destroy', $category) }}"
                                         onsubmit="return confirm('Are you sure you want to delete this blog category?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete"
+                                            aria-label="Delete blog category">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </td>

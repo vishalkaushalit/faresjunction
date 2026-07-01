@@ -20,6 +20,7 @@ class UserManagementTest extends TestCase
                 'name' => 'Author Name',
                 'age' => 32,
                 'experience' => '7 years',
+                'bio' => 'Travel writer focused on family vacations and affordable flights.',
                 'social_media_profile' => 'https://linkedin.com/in/author-name',
                 'contact_number' => '1234567890',
                 'email' => 'author@example.com',
@@ -36,6 +37,7 @@ class UserManagementTest extends TestCase
             'name' => 'Author Name',
             'age' => 32,
             'experience' => '7 years',
+            'bio' => 'Travel writer focused on family vacations and affordable flights.',
             'email' => 'author@example.com',
             'role' => User::ROLE_AUTHOR,
         ]);

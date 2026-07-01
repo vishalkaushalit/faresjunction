@@ -58,12 +58,18 @@
                             <td>{{ $user->contact_number ?? 'Not set' }}</td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-primary"
+                                        title="Edit" aria-label="Edit user">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
                                     <form method="POST" action="{{ route('users.destroy', $user) }}"
                                         onsubmit="return confirm('Are you sure you want to delete this user?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete"
+                                            aria-label="Delete user">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </td>

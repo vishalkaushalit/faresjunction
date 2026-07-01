@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class WebsiteController extends Controller
@@ -42,9 +43,24 @@ class WebsiteController extends Controller
         return view('website.about');
     }
 
-    public function blog(): View
+    public function blog(Request $request): View
     {
-        return view('website.blog');
+        $selectedTag = $request->query('tag');
+        $databasePosts = BlogPost::query()
+            ->with(['author', 'category', 'tags'])
+            ->where('status', true)
+            ->when($selectedTag, fn ($query) => $query->whereHas(
+                'tags',
+                fn ($tagQuery) => $tagQuery->where('slug', $selectedTag)
+            ))
+            ->latest('published_at')
+            ->latest()
+            ->get();
+
+        return view('website.blog', [
+            'databasePosts' => $databasePosts,
+            'selectedTag' => $selectedTag,
+        ]);
     }
 
     public function blogDetails(?string $slug = null): View
@@ -52,7 +68,7 @@ class WebsiteController extends Controller
         $postKey = $slug ?: request('post');
         $databasePost = $postKey
             ? BlogPost::query()
-                ->with(['author', 'category'])
+                ->with(['author', 'category', 'tags'])
                 ->where('slug', $postKey)
                 ->where('status', true)
                 ->first()

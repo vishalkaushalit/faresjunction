@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
+use App\Http\Controllers\BlogTagController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GlobalScriptController;
 use App\Http\Controllers\SeoMetaController;
@@ -48,7 +49,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::post('/blog-posts/content-image-upload', [BlogPostController::class, 'uploadContentImage'])
+        ->name('blog-posts.content-image-upload');
+    Route::post('/blog-posts/content-file-upload', [BlogPostController::class, 'uploadContentFile'])
+        ->name('blog-posts.content-file-upload');
+    Route::post('/blog-posts/{blogPost}/duplicate', [BlogPostController::class, 'duplicate'])
+        ->name('blog-posts.duplicate');
     Route::resource('blog-posts', BlogPostController::class)->except(['show']);
+    Route::get('/blog-tags', [BlogTagController::class, 'index'])->name('blog-tags.index');
+    Route::post('/blog-tags', [BlogTagController::class, 'store'])->name('blog-tags.store');
+    Route::delete('/blog-tags/{tag}', [BlogTagController::class, 'destroy'])->name('blog-tags.destroy');
 
     Route::middleware('role:admin')->group(function () {
         Route::resource('users', UserController::class)->except(['show']);

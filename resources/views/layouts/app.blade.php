@@ -140,7 +140,7 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('dashboardAssets/js/main.js') }}"></script>
-    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.21.0/full-all/ckeditor.js"></script>
     <script>
         if (window.bootstrap) {
             document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach((dropdownToggle) => {
@@ -148,16 +148,51 @@
             });
         }
 
+        const richTextEditorConfig = {
+            extraAllowedContent: '*[id]; *{text-align}; img[!src,alt,width,height,style]; a[!href,id,name,target,rel]',
+            toolbar: [
+                { name: 'document', items: ['Source'] },
+                { name: 'clipboard', items: ['Undo', 'Redo'] },
+                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat'] },
+                {
+                    name: 'paragraph',
+                    items: [
+                        'NumberedList',
+                        'BulletedList',
+                        'Outdent',
+                        'Indent',
+                        'Blockquote',
+                        'JustifyLeft',
+                        'JustifyCenter',
+                        'JustifyRight',
+                        'JustifyBlock',
+                    ],
+                },
+                { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule'] },
+                { name: 'styles', items: ['Format'] },
+            ],
+        };
+
         if (window.CKEDITOR && document.getElementById('description')) {
-            CKEDITOR.replace('description');
+            CKEDITOR.replace('description', richTextEditorConfig);
         }
 
         if (window.CKEDITOR && document.getElementById('sub_description')) {
-            CKEDITOR.replace('sub_description');
+            CKEDITOR.replace('sub_description', richTextEditorConfig);
         }
 
         if (window.CKEDITOR && document.getElementById('content')) {
-            CKEDITOR.replace('content');
+            CKEDITOR.replace('content', {
+                ...richTextEditorConfig,
+                uploadUrl: @json(route('blog-posts.content-file-upload')),
+                imageUploadUrl: @json(route('blog-posts.content-image-upload')),
+                filebrowserUploadUrl: @json(route('blog-posts.content-file-upload', ['_token' => csrf_token()])),
+                filebrowserImageUploadUrl: @json(route('blog-posts.content-image-upload', ['_token' => csrf_token()])),
+                fileTools_requestHeaders: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+                },
+            });
         }
     </script>
 </body>

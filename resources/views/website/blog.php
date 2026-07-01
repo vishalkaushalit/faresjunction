@@ -2,6 +2,43 @@
 require resource_path('views/layouts/includes/blogs-data.php');
 require resource_path('views/layouts/includes/packages-data.php');
 
+$selectedTag = $selectedTag ?? null;
+$databaseBlogsData = [];
+
+foreach (($databasePosts ?? collect()) as $databasePost) {
+    $tagItems = $databasePost->tags
+        ->map(fn ($tag) => ['name' => $tag->name, 'slug' => $tag->slug])
+        ->all();
+
+    $databaseBlogsData[$databasePost->slug] = [
+        'title' => $databasePost->title,
+        'tag' => $databasePost->category?->name ?? ($tagItems[0]['name'] ?? 'Travel'),
+        'image' => $databasePost->featured_image ? asset('storage/' . $databasePost->featured_image) : asset('dashboardAssets/img/news-1.jpg'),
+        'imageAlt' => $databasePost->featured_image_alt ?: $databasePost->title,
+        'author' => $databasePost->author?->name ?? 'Fond Travels',
+        'date' => optional($databasePost->published_at ?? $databasePost->created_at)->format('F j, Y'),
+        'readTime' => ceil(str_word_count(strip_tags($databasePost->content)) / 200) . ' min read',
+        'excerpt' => $databasePost->excerpt ?: str($databasePost->content)->stripTags()->limit(160)->toString(),
+        'tags' => $tagItems,
+    ];
+}
+
+$blogCardsData = $selectedTag ? $databaseBlogsData : $databaseBlogsData + $blogsData;
+$selectedTagLabel = null;
+
+if ($selectedTag) {
+    foreach ($databaseBlogsData as $blog) {
+        foreach ($blog['tags'] ?? [] as $tag) {
+            if (($tag['slug'] ?? '') === $selectedTag) {
+                $selectedTagLabel = $tag['name'];
+                break 2;
+            }
+        }
+    }
+
+    $selectedTagLabel ??= \Illuminate\Support\Str::headline(str_replace('-', ' ', $selectedTag));
+}
+
 $pageTitle = "Travel Blog, Guides & Flight Hacks | Fond Travels";
 $pageDescription = "Unlock travel hacks, airline policies, baggage fees, and insider destination guides with our comprehensive travel blog.";
 $extraCSS = ['css/vacations.css', 'css/flights.css', 'css/blogs.css', 'css/blogs-page.css', 'css/testimonials.css'];
@@ -137,16 +174,35 @@ ob_start();
         <!-- Dynamic Blog Listing Section -->
         <section style="padding: 4rem 0; background-color: var(--gray-100); min-height: 60vh;">
           <div class="container">
+            <?php if ($selectedTagLabel): ?>
+              <div class="mb-4" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                <h2 style="font-size: 1.5rem; margin: 0; color: var(--primary-color);">Posts tagged: <?php echo htmlspecialchars($selectedTagLabel); ?></h2>
+                <a href="<?php echo route('website.blog', [], false); ?>" class="blog-read-more">View All Blogs</a>
+              </div>
+            <?php endif; ?>
             
             <div class="blogs-grid" id="blogsListingGrid">
-              <?php foreach ($blogsData as $bKey => $blog): ?>
+              <?php if (empty($blogCardsData)): ?>
+                <div class="no-blogs-found" style="display: block;">
+                  <h3>No articles found for this tag</h3>
+                  <p>There are no published blog posts using this tag yet.</p>
+                </div>
+              <?php endif; ?>
+
+              <?php foreach ($blogCardsData as $bKey => $blog): ?>
+                <?php
+                    $blogTagNames = array_map(
+                        fn ($tag) => is_array($tag) ? ($tag['name'] ?? '') : $tag,
+                        $blog['tags'] ?? []
+                    );
+                ?>
                 
-                <div class="blog-card" data-category="<?php echo htmlspecialchars($blog['tag']); ?>" data-title="<?php echo htmlspecialchars(strtolower($blog['title'])); ?>">
+                <div class="blog-card" data-category="<?php echo htmlspecialchars($blog['tag']); ?>" data-title="<?php echo htmlspecialchars(strtolower($blog['title'] . ' ' . implode(' ', $blogTagNames))); ?>">
                   <!-- Card cover link for full card click -->
                   <a href="<?php echo route('website.blog-details', ['slug' => $bKey], false); ?>" class="blog-card-cover-link" aria-label="Read <?php echo htmlspecialchars($blog['title']); ?>"></a>
                   <!-- Thumbnail & Social Share Overlays -->
                   <div class="blog-thumb-wrapper">
-                    <img src="<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>" class="blog-img" loading="lazy">
+                    <img src="<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['imageAlt'] ?? $blog['title']); ?>" class="blog-img" loading="lazy">
                     <span class="blog-tag"><?php echo htmlspecialchars($blog['tag']); ?></span>
                     
                     <!-- Social Share Overlay -->
@@ -181,6 +237,22 @@ ob_start();
                     
                     <h3 class="blog-title"><a href="<?php echo route('website.blog-details', ['slug' => $bKey], false); ?>"><?php echo htmlspecialchars($blog['title']); ?></a></h3>
                     <p class="blog-excerpt"><?php echo htmlspecialchars($blog['excerpt']); ?></p>
+
+                    <?php if (!empty($blog['tags'])): ?>
+                      <div class="blog-post-tags blog-card-tags" aria-label="Blog tags">
+                        <?php foreach ($blog['tags'] as $tag): ?>
+                          <?php
+                              $tagName = is_array($tag) ? ($tag['name'] ?? '') : $tag;
+                              $tagSlug = is_array($tag) ? ($tag['slug'] ?? \Illuminate\Support\Str::slug($tagName)) : \Illuminate\Support\Str::slug($tagName);
+
+                              if ($tagName === '') {
+                                  continue;
+                              }
+                          ?>
+                          <a href="<?php echo route('website.blog', ['tag' => $tagSlug], false); ?>"><?php echo htmlspecialchars($tagName); ?></a>
+                        <?php endforeach; ?>
+                      </div>
+                    <?php endif; ?>
                     
                     <a href="<?php echo route('website.blog-details', ['slug' => $bKey], false); ?>" class="blog-read-more">
                       Read More <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

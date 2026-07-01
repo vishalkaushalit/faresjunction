@@ -28,6 +28,11 @@
             value="{{ old('experience', $user?->experience) }}" placeholder="5 years">
     </div>
 
+    <div class="col-12 mb-3">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea id="bio" name="bio" class="form-control" rows="4">{{ old('bio', $user?->bio) }}</textarea>
+    </div>
+
     <div class="col-md-6 mb-3">
         <label for="social_media_profile" class="form-label">Social Media Profile</label>
         <input type="url" id="social_media_profile" name="social_media_profile" class="form-control"

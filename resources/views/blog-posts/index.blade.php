@@ -35,10 +35,10 @@
                             <td class="text-start">
                                 <strong>{{ $post->title }}</strong>
                                 <div class="small text-muted">{{ $post->slug }}</div>
-                                @if (!empty($post->tags))
+                                @if ($post->tags->isNotEmpty())
                                     <div class="mt-1">
                                         @foreach ($post->tags as $tag)
-                                            <span class="badge bg-info text-dark">{{ $tag }}</span>
+                                            <span class="badge bg-info text-dark">{{ $tag->name }}</span>
                                         @endforeach
                                     </div>
                                 @endif
@@ -55,12 +55,30 @@
                             <td>{{ $post->published_at?->format('d M Y') ?? 'Not published' }}</td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
-                                    <a href="{{ route('blog-posts.edit', $post) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="{{ route('website.blog-details', $post->slug) }}"
+                                        class="btn btn-sm btn-info text-white" target="_blank" rel="noopener"
+                                        title="View" aria-label="View blog post">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{{ route('blog-posts.edit', $post) }}" class="btn btn-sm btn-primary"
+                                        title="Edit" aria-label="Edit blog post">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <form method="POST" action="{{ route('blog-posts.duplicate', $post) }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-secondary" title="Duplicate"
+                                            aria-label="Duplicate blog post">
+                                            <i class="bi bi-copy"></i>
+                                        </button>
+                                    </form>
                                     <form method="POST" action="{{ route('blog-posts.destroy', $post) }}"
                                         onsubmit="return confirm('Are you sure you want to delete this blog post?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete"
+                                            aria-label="Delete blog post">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </td>

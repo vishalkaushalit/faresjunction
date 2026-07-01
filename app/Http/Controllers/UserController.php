@@ -87,6 +87,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'age' => ['nullable', 'integer', 'min:1', 'max:120'],
             'experience' => ['nullable', 'string', 'max:255'],
+            'bio' => ['nullable', 'string', 'max:5000'],
             'social_media_profile' => ['nullable', 'url', 'max:255'],
             'contact_number' => ['nullable', 'string', 'max:30'],
             'email' => [

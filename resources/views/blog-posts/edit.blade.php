@@ -1,4 +1,11 @@
 <x-app-layout>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session('success') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <section class="card">
         <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Edit Blog Post</h5>
