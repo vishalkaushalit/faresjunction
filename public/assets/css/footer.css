@@ -54,7 +54,6 @@
   content: "›";
   color: var(--secondary-color);
   font-size: 1.1rem;
-  opacity: 0;
   transition: opacity 0.2s ease;
 }
 
