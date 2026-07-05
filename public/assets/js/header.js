@@ -87,4 +87,35 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Open placeholder date fields on the first click.
+  const dateInputs = document.querySelectorAll('input[onfocus*="date"], .date-wrapper input');
+
+  const openDatePicker = (input) => {
+    if (!input || input.disabled || input.readOnly) return;
+
+    if (input.type !== 'date') {
+      input.type = 'date';
+    }
+
+    input.focus({ preventScroll: true });
+
+    if (typeof input.showPicker === 'function') {
+      try {
+        input.showPicker();
+      } catch (error) {
+        // Some browsers reject showPicker when the native picker is already open.
+      }
+    }
+  };
+
+  dateInputs.forEach((input) => {
+    input.addEventListener('pointerdown', () => openDatePicker(input));
+
+    input.addEventListener('blur', () => {
+      if (!input.value) {
+        input.type = 'text';
+      }
+    });
+  });
 });
