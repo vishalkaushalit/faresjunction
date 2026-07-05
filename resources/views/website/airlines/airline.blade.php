@@ -505,19 +505,10 @@ ob_start();
     </div>
 </section>
 
-<section class="airline-title-section">
-    <div class="container">
-        <span class="airline-page-label">Fond Travels Airline Support</span>
-        <h2>{{ $airline['name'] }} {{ $activePageTitle }}</h2>
-        <p>{{ $airline['intro'] }}</p>
-    </div>
-</section>
-
 <section class="airline-content-section">
     <div class="container">
         <div class="airline-layout">
             <aside class="airline-sidebar" aria-label="{{ $airline['name'] }} page navigation">
-                <div class="airline-sidebar-heading">Airline Pages</div>
                 <ul class="airline-nav-list">
                     <?php foreach ($sidebarPages as $key => $label): ?>
                         <li>
@@ -527,7 +518,9 @@ ob_start();
                                 @if ($pageKey === $key) aria-current="page" @endif
                             >
                                 {{ $label }}
-                                <span class="arrow">&rsaquo;</span>
+                                @if ($key === 'classes-seat')
+                                    <span class="arrow">▼</span>
+                                @endif
                             </a>
                         </li>
                     <?php endforeach; ?>
@@ -536,14 +529,12 @@ ob_start();
 
             <main class="airline-main-content">
                 <article class="airline-content-card">
-                    <div class="airline-code-badge">{{ $airline['code'] }}</div>
-                    <h2>{{ $contentMap[$pageKey]['title'] }}</h2>
+                    <p class="airline-code">Airline Code: {{ $airline['code'] }}</p>
+                    <h2 class="section-title">{{ $contentMap[$pageKey]['title'] }}</h2>
                     <p>{{ $contentMap[$pageKey]['body'] }}</p>
-                    <div class="airline-help-strip">
-                        <strong>Need a quick fare check?</strong>
-                        <span>Call our 24/7 travel experts at <a href="tel:+13238006001">+1 (323) 800-6001</a>.</span>
-                    </div>
                 </article>
+
+                <hr class="airline-content-divider">
 
                 <section class="airline-popular-flights">
                     <h3 class="airline-section-title"><span>Popular Flights from</span> {{ $airline['name'] }}</h3>
@@ -558,25 +549,45 @@ ob_start();
 
                 <section class="airline-faq-section">
                     <h3 class="airline-section-title">Frequently Asked Questions</h3>
-                    <div class="faq-accordion">
-                        <details class="faq-item">
-                            <summary>How can I book {{ $airline['name'] }} flights with Fond Travels?</summary>
-                            <div class="faq-content">
-                                <p>Use the flight search form above or call Fond Travels for live help comparing fares and booking options.</p>
+                    <div class="accordion faq-accordion" id="airlineFaqAccordion">
+                        <div class="accordion-item faq-item">
+                            <h4 class="accordion-header" id="airlineFaqHeadingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#airlineFaqOne" aria-expanded="false" aria-controls="airlineFaqOne">
+                                    How can I check-in for my {{ $airline['name'] }} flight?
+                                </button>
+                            </h4>
+                            <div id="airlineFaqOne" class="accordion-collapse collapse" aria-labelledby="airlineFaqHeadingOne" data-bs-parent="#airlineFaqAccordion">
+                                <div class="accordion-body faq-content">
+                                    <p>You can check in online through the airline website, mobile app, or at the airport using self-service kiosks and check-in counters.</p>
+                                </div>
                             </div>
-                        </details>
-                        <details class="faq-item">
-                            <summary>Can I change or cancel my {{ $airline['name'] }} booking?</summary>
-                            <div class="faq-content">
-                                <p>Yes, but eligibility, fees, and credits depend on the fare rules attached to your ticket.</p>
+                        </div>
+
+                        <div class="accordion-item faq-item">
+                            <h4 class="accordion-header" id="airlineFaqHeadingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#airlineFaqTwo" aria-expanded="false" aria-controls="airlineFaqTwo">
+                                    What is the baggage allowance for {{ $airline['name'] }}?
+                                </button>
+                            </h4>
+                            <div id="airlineFaqTwo" class="accordion-collapse collapse" aria-labelledby="airlineFaqHeadingTwo" data-bs-parent="#airlineFaqAccordion">
+                                <div class="accordion-body faq-content">
+                                    <p>Baggage allowance varies by ticket class, route, and fare rules. Most passengers can bring one carry-on bag and one personal item.</p>
+                                </div>
                             </div>
-                        </details>
-                        <details class="faq-item">
-                            <summary>Does the sidebar open tabs?</summary>
-                            <div class="faq-content">
-                                <p>No. Each sidebar item is a normal link that loads the requested airline page section while keeping the same sidebar layout.</p>
+                        </div>
+
+                        <div class="accordion-item faq-item">
+                            <h4 class="accordion-header" id="airlineFaqHeadingThree">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#airlineFaqThree" aria-expanded="true" aria-controls="airlineFaqThree">
+                                    Can I cancel or change my {{ $airline['name'] }} booking?
+                                </button>
+                            </h4>
+                            <div id="airlineFaqThree" class="accordion-collapse collapse show" aria-labelledby="airlineFaqHeadingThree" data-bs-parent="#airlineFaqAccordion">
+                                <div class="accordion-body faq-content">
+                                    <p>Yes, you can modify or cancel your booking through the Manage Booking section. Fees and policies depend on your fare type and how far in advance you make the change.</p>
+                                </div>
                             </div>
-                        </details>
+                        </div>
                     </div>
                 </section>
             </main>

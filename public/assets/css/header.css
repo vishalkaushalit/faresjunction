@@ -19,13 +19,6 @@
   display: none;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  width: 100%;
-}
-
 /* --- Top Bar Styling --- */
 .top-bar {
   background-color: var(--primary-color, #0f294d);
