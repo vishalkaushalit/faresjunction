@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 body {
@@ -10,6 +9,10 @@ body {
   background-color: var(--white);
   color: var(--dark);
   line-height: 1.6;
+}
+
+div#app {
+  overflow: hidden;
 }
 
 h2,
