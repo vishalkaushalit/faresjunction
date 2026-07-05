@@ -38,6 +38,11 @@ class WebsiteController extends Controller
         return view('website.package-details');
     }
 
+    public function airline(): View
+    {
+        return view('website.airlines.airline');
+    }
+
     public function about(): View
     {
         return view('website.about');

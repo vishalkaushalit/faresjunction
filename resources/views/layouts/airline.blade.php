@@ -236,6 +236,7 @@
             <div class="drawer-overlay"></div>
         </header>
 
+        
         {{ $slot }}
 
         <!-- Footer Section -->
