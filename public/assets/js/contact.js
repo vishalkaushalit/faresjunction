@@ -12,12 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const nameInput = document.getElementById('contact-name');
       const emailInput = document.getElementById('contact-email');
       const messageInput = document.getElementById('contact-message');
+      const submitButton = form.querySelector('button[type="submit"]');
 
       const name = nameInput.value.trim();
       const email = emailInput.value.trim();
@@ -43,16 +44,48 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Hide form and show success state
-      if (formContainer) {
-        formContainer.style.display = 'none';
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.dataset.originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending...';
       }
-      if (successWidget) {
-        const nameSpan = document.getElementById('success-contact-name');
-        if (nameSpan) {
-          nameSpan.textContent = name;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          credentials: 'same-origin',
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          const validationMessage = data.errors ? Object.values(data.errors).flat()[0] : null;
+          throw new Error(validationMessage || data.message || 'Something went wrong. Please try again.');
         }
-        successWidget.style.display = 'block';
+
+        // Hide form and show success state after the server saves and sends emails.
+        if (formContainer) {
+          formContainer.style.display = 'none';
+        }
+        if (successWidget) {
+          const nameSpan = document.getElementById('success-contact-name');
+          if (nameSpan) {
+            nameSpan.textContent = data.name || name;
+          }
+          successWidget.style.display = 'block';
+        }
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = submitButton.dataset.originalText || 'Send Message';
+        }
       }
     });
   }

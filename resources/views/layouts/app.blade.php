@@ -133,6 +133,13 @@
             {{ $slot }}
         </main>
     </div>
+
+    <button id="backToTopBtn" class="back-to-top show" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+        <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"></path>
+      </svg>
+    </button>
+
     <!-- Vendor JS Files -->
     <script src="{{ asset('dashboardAssets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('dashboardAssets/vendor/simple-datatables/simple-datatables.js') }}"></script>
@@ -140,6 +147,7 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('dashboardAssets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/back-to-top.js') }}?v={{ file_exists(public_path('assets/js/back-to-top.js')) ? filemtime(public_path('assets/js/back-to-top.js')) : time() }}" defer></script>
     <script src="https://cdn.ckeditor.com/4.21.0/full-all/ckeditor.js"></script>
     <script>
         if (window.bootstrap) {

@@ -2,6 +2,7 @@
 <aside id="sidebar" class="sidebar">
     @php
         $blogMenuOpen = request()->routeIs('blog-posts.*', 'blog-categories.*', 'blog-tags.*');
+        $leadMenuOpen = request()->routeIs('contact.*', 'subscribe.*');
     @endphp
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -70,20 +71,25 @@
             <!-- End Global Scripts Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('contact.index') }}">
-                    <i class="bi bi-envelope"></i>
-                    <span>Enquiry Form</span>
+                <a class="nav-link {{ $leadMenuOpen ? '' : 'collapsed' }}" data-bs-target="#lead-nav" data-bs-toggle="collapse" href="#" aria-expanded="{{ $leadMenuOpen ? 'true' : 'false' }}">
+                    <i class="bi bi-envelope-paper"></i>
+                    <span>Leads</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
                 </a>
+                <ul id="lead-nav" class="nav-content collapse {{ $leadMenuOpen ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ route('contact.index') }}" class="{{ request()->routeIs('contact.index') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Contact Form</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('subscribe.index') }}" class="{{ request()->routeIs('subscribe.index') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Subscribe Form</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <!-- End Enquiry Form Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('subscribe.index') }}">
-                    <i class="bi bi-envelope"></i>
-                    <span>Subscribe Form</span>
-                </a>
-            </li>
-            <!-- End Subscribe Form Nav -->
+            <!-- End Leads Nav -->
         @endif
 
     </ul>

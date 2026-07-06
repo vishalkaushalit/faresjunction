@@ -299,13 +299,15 @@
                             <h4 class="footer-col-title">Newsletter</h4>
                             <p class="newsletter-desc">Subscribe and get exclusive flight deals, travel guides, and
                                 tips delivered to your inbox.</p>
-                            <div class="newsletter-form">
+                            <form class="newsletter-form footer-subscribe-form" method="POST" action="{{ route('subscribe.create') }}">
+                                @csrf
                                 <div class="newsletter-input-group">
-                                    <input type="email" class="newsletter-input" placeholder="Your email address"
-                                        aria-label="Email for newsletter">
-                                    <button class="newsletter-btn" type="button">Subscribe</button>
+                                    <input type="email" name="email" class="newsletter-input" placeholder="Your email address"
+                                        aria-label="Email for newsletter" required>
+                                    <button class="newsletter-btn" type="submit">Subscribe</button>
                                 </div>
-                            </div>
+                                <p class="newsletter-status" aria-live="polite" style="display: none;"></p>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -432,6 +434,12 @@
             <span class="floating-text">Call Us</span>
         </button>
 
+        <button id="backToTopBtn" class="back-to-top show" aria-label="Back to top">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"></path>
+          </svg>
+        </button>
+
         <script src="{{ asset('dashboardAssets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('dashboardAssets/js/main.js') }}"></script>
 
@@ -510,6 +518,12 @@
         <!-- JS Scripts -->
         <script
             src="{{ asset('assets/js/header.js') }}?v={{ file_exists(public_path('assets/js/header.js')) ? filemtime(public_path('assets/js/header.js')) : time() }}"
+            defer></script>
+        <script
+            src="{{ asset('assets/js/newsletter.js') }}?v={{ file_exists(public_path('assets/js/newsletter.js')) ? filemtime(public_path('assets/js/newsletter.js')) : time() }}"
+            defer></script>
+        <script
+            src="{{ asset('assets/js/back-to-top.js') }}?v={{ file_exists(public_path('assets/js/back-to-top.js')) ? filemtime(public_path('assets/js/back-to-top.js')) : time() }}"
             defer></script>
         @foreach ($extraJS ?? [] as $jsFile)
             @php

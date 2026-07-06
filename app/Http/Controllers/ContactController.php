@@ -24,37 +24,60 @@ class ContactController extends Controller
         $validated = $request->validate([
             'contact_name' => 'required|string|max:255',
             'contact_email' => 'required|email|max:255',
-            'contact_phone' => 'required|string|max:20|regex:/^[0-9+\-\s]+$/',
+            'contact_phone' => 'required|string|max:20|regex:/^[0-9+\-\s()]+$/',
             'contact_subject' => 'required|string|max:255',
             'contact_message' => 'required|string|max:1000',
         ]);
+
+        $safeName = e($validated['contact_name']);
+        $safeEmail = e($validated['contact_email']);
+        $safePhone = e($validated['contact_phone']);
+        $safeSubject = e($validated['contact_subject']);
+        $safeMessage = nl2br(e($validated['contact_message']));
 
         DB::table('contact')->insert([
             'name' => $validated['contact_name'],
             'email' => $validated['contact_email'],
             'phone' => $validated['contact_phone'] ?? null,
-            'subject' => $validated['contact_subject'],
             'message' => $validated['contact_message'],
             'created_at' => $currentDateTime,
         ]);
 
-         // Send email to Admin
-        $adminEmail = "support@codesexperts.com"; // change to your admin email
-        Mail::send([], [], function ($message) use ($validated, $adminEmail) {
+        $adminEmail = 'crm@callinggenie.com';
+        Mail::send([], [], function ($message) use ($validated, $adminEmail, $safeName, $safeEmail, $safePhone, $safeSubject, $safeMessage) {
             $message->to($adminEmail)
-                ->subject("New Contact Enquiry: " . $validated['contact_subject'])
+                ->replyTo($validated['contact_email'], $validated['contact_name'])
+                ->subject('New Contact Enquiry: ' . $validated['contact_subject'])
                 ->html(
                 "Hello Admin,<br><br>" .
                 "A new enquiry has been submitted.<br><br>" .
-                "<strong>Name:</strong> {$validated['contact_name']}<br>" .
-                "<strong>Email:</strong> {$validated['contact_email']}<br>" .
-                "<strong>Phone:</strong> {$validated['contact_phone']}<br>" .
-                "<strong>Subject:</strong> {$validated['contact_subject']}<br><br>" .
-                "Regards,<br>Codes Experts"
+                "<strong>Name:</strong> {$safeName}<br>" .
+                "<strong>Email:</strong> {$safeEmail}<br>" .
+                "<strong>Phone:</strong> {$safePhone}<br>" .
+                "<strong>Subject:</strong> {$safeSubject}<br>" .
+                "<strong>Message:</strong><br>{$safeMessage}<br><br>" .
+                "Regards,<br>Fond Travels"
             );
         });
 
-        return back()->with('success', 'Your Request submitted successfully!');
+        Mail::send([], [], function ($message) use ($validated, $safeName) {
+            $message->to($validated['contact_email'], $validated['contact_name'])
+                ->subject('We received your Fond Travels inquiry')
+                ->html(
+                    "Hello {$safeName},<br><br>" .
+                    "Thank you for contacting Fond Travels. Our reservation desk has received your details and will reach out within 2 business days.<br><br>" .
+                    "Regards,<br>Fond Travels"
+                );
+        });
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Your inquiry has been submitted successfully!',
+                'name' => $validated['contact_name'],
+            ]);
+        }
+
+        return back()->with('success', 'Your inquiry has been submitted successfully!');
     }
 
     public function delete($id)
@@ -80,25 +103,44 @@ class ContactController extends Controller
             'email' => 'required|email|max:255',
         ]);
 
+        $safeEmail = e($validated['email']);
+
         DB::table('subscribe')->insert([
             'email' => $validated['email'],
             'created_at' => $currentDateTime,
         ]);
 
-         // Send email to Admin
-        $adminEmail = "support@codesexperts.com"; // change to your admin email
-        Mail::send([], [], function ($message) use ($validated, $adminEmail) {
+        $adminEmail = 'crm@callinggenie.com';
+        Mail::send([], [], function ($message) use ($validated, $adminEmail, $safeEmail) {
             $message->to($adminEmail)
-                ->subject("New Subscribe Enquiry: ")
+                ->replyTo($validated['email'])
+                ->subject('New Newsletter Subscription')
                 ->html(
                 "Hello Admin,<br><br>" .
-                "A new subscribe enquiry has been submitted.<br><br>" .
-                "<strong>Email:</strong> {$validated['email']}<br>" .
-                "Regards,<br>Codes Experts"
+                "A new newsletter subscription has been submitted.<br><br>" .
+                "<strong>Email:</strong> {$safeEmail}<br><br>" .
+                "Regards,<br>Fond Travels"
             );
         });
 
-        return back()->with('success', 'Your Request submitted successfully!');
+        Mail::send([], [], function ($message) use ($validated, $safeEmail) {
+            $message->to($validated['email'])
+                ->subject('You are subscribed to Fond Travels')
+                ->html(
+                    "Hello,<br><br>" .
+                    "Thank you for subscribing to Fond Travels. We will send exclusive flight deals, travel guides, and tips to {$safeEmail}.<br><br>" .
+                    "Regards,<br>Fond Travels"
+                );
+        });
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Thank you for subscribing!',
+                'email' => $validated['email'],
+            ]);
+        }
+
+        return back()->with('success', 'Thank you for subscribing!');
     }
 
     public function subscribeDelete($id)

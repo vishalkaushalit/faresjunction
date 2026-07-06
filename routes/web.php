@@ -42,6 +42,9 @@ Route::controller(WebsiteController::class)->group(function () {
     Route::get('/terms.php', 'terms');
 });
 
+Route::post('contact/create', [ContactController::class, 'create'])->name('contact.create');
+Route::post('subscribe/create', [ContactController::class, 'subscribeCreate'])->name('subscribe.create');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -67,11 +70,9 @@ Route::middleware('auth')->group(function () {
 
         // Contact Controller
         Route::get('contact/index', [ContactController::class, 'index'])->name('contact.index');
-        Route::post('contact/create', [ContactController::class, 'create'])->name('contact.create');
         Route::delete('/contact/delete/{id}', [ContactController::class, 'delete'])->name('contact.delete');
 
         Route::get('subscribe/index', [ContactController::class, 'subscribeIndex'])->name('subscribe.index');
-        Route::post('subscribe/create', [ContactController::class, 'subscribeCreate'])->name('subscribe.create');
         Route::delete('/subscribe/delete/{id}', [ContactController::class, 'subscribeDelete'])->name('subscribe.delete');
 
         Route::get('seo-meta', [SeoMetaController::class, 'index'])->name('seo-meta.index');

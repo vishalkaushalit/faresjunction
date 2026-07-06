@@ -300,13 +300,15 @@
                             <h4 class="footer-col-title">Newsletter</h4>
                             <p class="newsletter-desc">Subscribe and get exclusive flight deals, travel guides, and
                                 tips delivered to your inbox.</p>
-                            <div class="newsletter-form">
+                            <form class="newsletter-form footer-subscribe-form" method="POST" action="{{ route('subscribe.create') }}">
+                                @csrf
                                 <div class="newsletter-input-group">
-                                    <input type="email" class="newsletter-input" placeholder="Your email address"
-                                        aria-label="Email for newsletter">
-                                    <button class="newsletter-btn" type="button">Subscribe</button>
+                                    <input type="email" name="email" class="newsletter-input" placeholder="Your email address"
+                                        aria-label="Email for newsletter" required>
+                                    <button class="newsletter-btn" type="submit">Subscribe</button>
                                 </div>
-                            </div>
+                                <p class="newsletter-status" aria-live="polite" style="display: none;"></p>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -511,6 +513,9 @@
         <!-- JS Scripts -->
         <script
             src="{{ asset('assets/js/header.js') }}?v={{ file_exists(public_path('assets/js/header.js')) ? filemtime(public_path('assets/js/header.js')) : time() }}"
+            defer></script>
+        <script
+            src="{{ asset('assets/js/newsletter.js') }}?v={{ file_exists(public_path('assets/js/newsletter.js')) ? filemtime(public_path('assets/js/newsletter.js')) : time() }}"
             defer></script>
         @foreach ($extraJS ?? [] as $jsFile)
             @php
