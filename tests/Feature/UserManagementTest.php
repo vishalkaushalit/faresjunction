@@ -25,6 +25,7 @@ class UserManagementTest extends TestCase
                 'contact_number' => '1234567890',
                 'email' => 'author@example.com',
                 'role' => User::ROLE_AUTHOR,
+                'status' => '0',
                 'password' => 'password',
                 'password_confirmation' => 'password',
             ]);
@@ -40,7 +41,28 @@ class UserManagementTest extends TestCase
             'bio' => 'Travel writer focused on family vacations and affordable flights.',
             'email' => 'author@example.com',
             'role' => User::ROLE_AUTHOR,
+            'status' => false,
         ]);
+    }
+
+    public function test_user_index_shows_status_badges(): void
+    {
+        $admin = User::factory()->create(['role' => User::ROLE_ADMIN, 'status' => true]);
+        User::factory()->create([
+            'role' => User::ROLE_AUTHOR,
+            'name' => 'Inactive Author',
+            'status' => false,
+            'last_login_at' => now(),
+        ]);
+
+        $this
+            ->actingAs($admin)
+            ->get(route('users.index'))
+            ->assertOk()
+            ->assertSee('Active')
+            ->assertSee('Inactive Author')
+            ->assertSee('Inactive')
+            ->assertSee('Last Login');
     }
 
     public function test_author_cannot_access_user_management(): void

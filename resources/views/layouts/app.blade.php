@@ -47,6 +47,10 @@
 </head>
 
 <body class="font-sans antialiased">
+    @php
+        $authenticatedUser = Auth::user();
+    @endphp
+
     <div>
         <!-- ======= Header ======= -->
         <header id="header" class="header fixed-top d-flex align-items-center">
@@ -77,15 +81,31 @@
                         <a class="nav-link nav-profile dropdown-toggle d-flex align-items-center pe-0" href="#"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             {{-- Profile image can be added here --}}
-                            <span class="d-block ps-2">{{ Auth::user()->name }}</span>
+                            <span class="d-block ps-2">{{ $authenticatedUser->name }}</span>
+                            @if ($authenticatedUser->status)
+                                <span class="badge bg-success ms-2">Active</span>
+                            @else
+                                <span class="badge bg-secondary ms-2">Inactive</span>
+                            @endif
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 
                             <!-- Profile Header -->
                             <li class="dropdown-header text-start px-3">
-                                <h6 class="mb-0">{{ Auth::user()->name }}</h6>
-                                <small class="text-muted">{{ Auth::user()->email }}</small>
+                                <h6 class="mb-0">{{ $authenticatedUser->name }}</h6>
+                                <small class="text-muted d-block">{{ $authenticatedUser->email }}</small>
+                                @if ($authenticatedUser->status)
+                                    <span class="badge bg-success mt-2">Active</span>
+                                @else
+                                    <span class="badge bg-secondary mt-2">Inactive</span>
+                                @endif
+                                <small class="text-muted d-block mt-2">
+                                    Created: {{ \App\Models\User::formatLocalDateTime($authenticatedUser->created_at) }}
+                                </small>
+                                <small class="text-muted d-block">
+                                    Last Login: {{ \App\Models\User::formatLocalDateTime($authenticatedUser->last_login_at, 'Never') }}
+                                </small>
                             </li>
 
                             <li>

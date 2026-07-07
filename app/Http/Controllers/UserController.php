@@ -83,7 +83,7 @@ class UserController extends Controller
 
     private function validatedUserData(Request $request, ?User $user = null): array
     {
-        return $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'age' => ['nullable', 'integer', 'min:1', 'max:120'],
             'experience' => ['nullable', 'string', 'max:255'],
@@ -100,8 +100,15 @@ class UserController extends Controller
             ],
             'profile_image' => ['nullable', 'image', 'max:2048'],
             'role' => ['required', Rule::in(array_keys(User::ROLES))],
+            'status' => ['nullable', 'boolean'],
             'password' => [$user ? 'nullable' : 'required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        $validated['status'] = $request->has('status')
+            ? $request->boolean('status')
+            : (bool) ($user?->status ?? true);
+
+        return $validated;
     }
 
     private function storeProfileImage(Request $request): ?string

@@ -1,3 +1,7 @@
+@php
+    $isActive = (int) old('status', $user?->exists ? $user->status : 1) === 1;
+@endphp
+
 <div class="row">
     <div class="col-md-6 mb-3">
         <label for="name" class="form-label">Name</label>
@@ -49,6 +53,16 @@
         <label for="email" class="form-label">Email</label>
         <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user?->email) }}"
             required>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label class="form-label d-block">Status</label>
+        <div class="form-check">
+            <input type="hidden" name="status" value="0">
+            <input type="checkbox" id="status" name="status" value="1" class="form-check-input"
+                @checked($isActive)>
+            <label for="status" class="form-check-label">Active</label>
+        </div>
     </div>
 
     <div class="col-md-6 mb-3">

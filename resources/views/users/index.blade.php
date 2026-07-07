@@ -31,6 +31,9 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Last Login</th>
                         <th>Contact</th>
                         <th>Action</th>
                     </tr>
@@ -55,6 +58,15 @@
                             </td>
                             <td>{{ $user->email }}</td>
                             <td><span class="badge bg-dark">{{ \App\Models\User::ROLES[$user->role] ?? $user->role }}</span></td>
+                            <td>
+                                @if ($user->status)
+                                    <span class="badge bg-success">Active</span>
+                                @else
+                                    <span class="badge bg-secondary">Inactive</span>
+                                @endif
+                            </td>
+                            <td>{{ \App\Models\User::formatLocalDateTime($user->created_at) }}</td>
+                            <td>{{ \App\Models\User::formatLocalDateTime($user->last_login_at, 'Never') }}</td>
                             <td>{{ $user->contact_number ?? 'Not set' }}</td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
@@ -76,7 +88,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7">No users available.</td>
+                            <td colspan="10">No users available.</td>
                         </tr>
                     @endforelse
                 </tbody>
