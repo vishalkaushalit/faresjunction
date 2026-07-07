@@ -1,7 +1,7 @@
 <x-guest-layout>
     <?php
-    $pageTitle = 'Fond Travels - Forgot Password';
-    $pageDescription = 'Request a Fond Travels password reset link to regain access to your account.';
+    $pageTitle = 'Fares Junction - Forgot Password';
+    $pageDescription = 'Request a Fares Junction password reset link to regain access to your account.';
     ?>
 
     <!-- Session Status -->

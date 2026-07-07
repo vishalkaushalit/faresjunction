@@ -1,7 +1,7 @@
 <x-guest-layout>
     <?php
-    $pageTitle = 'Fond Travels - Register';
-    $pageDescription = 'Create your Fond Travels account to explore and book flights, hotels, and holiday destinations around the world.';
+    $pageTitle = 'Fares Junction - Register';
+    $pageDescription = 'Create your Fares Junction account to explore and book flights, hotels, and holiday destinations around the world.';
     ?>
 
     <section class="login_sec section_padding">

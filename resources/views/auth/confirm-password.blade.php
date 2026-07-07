@@ -1,7 +1,7 @@
 <x-guest-layout>
     <?php
-    $pageTitle = 'Fond Travels - Confirm Password';
-    $pageDescription = 'Confirm your Fond Travels account password before continuing.';
+    $pageTitle = 'Fares Junction - Confirm Password';
+    $pageDescription = 'Confirm your Fares Junction account password before continuing.';
     ?>
 
     <section class="login_sec section_padding">

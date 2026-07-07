@@ -1,6 +1,6 @@
 <?php
-$pageTitle = "Privacy Policy - User Data & Information Security | Fond Travels";
-$pageDescription = "Read the Fond Travels privacy policy to understand how we collect, store, protect, and use your personal information during flight and hotel bookings.";
+$pageTitle = "Privacy Policy - User Data & Information Security | Fares Junction";
+$pageDescription = "Read the Fares Junction privacy policy to understand how we collect, store, protect, and use your personal information during flight and hotel bookings.";
 ob_start();
 ?>
 
@@ -11,7 +11,7 @@ ob_start();
       Last Updated: June 18, 2026
     </p>
     <p style="color: var(--gray-800); font-size: 1rem; line-height: 1.6; margin-bottom: 1rem;">
-      At Fond Travels, we value your trust and are committed to protecting your personal information. This Privacy Policy describes how we collect, use, and share your personal data when you visit our website, call our travel agents, or make a booking with us.
+      At Fares Junction, we value your trust and are committed to protecting your personal information. This Privacy Policy describes how we collect, use, and share your personal data when you visit our website, call our travel agents, or make a booking with us.
     </p>
     <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.75rem;">1. Information We Collect</h3>
     <p style="color: var(--gray-800); font-size: 1rem; line-height: 1.6; margin-bottom: 1rem;">

@@ -52,8 +52,8 @@
         <header id="header" class="header fixed-top d-flex align-items-center">
 
             <div class="d-flex align-items-center justify-content-between">
-                <a href="{{ url('/') }}" class="logo" aria-label="Fond Travels Home">
-                    <span class="logo-bold">Fond</span><span class="logo-light">Travels</span>
+                <a href="{{ url('/') }}" class="logo" aria-label="Fares Junction Home">
+                    <span class="logo-bold">Fares</span><span class="logo-light">Junction</span>
                     <svg class="logo-plane" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                         <path
                             d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L14 19v-5.5l7 2.5z" />
@@ -135,9 +135,9 @@
     </div>
 
     <button id="backToTopBtn" class="back-to-top show" aria-label="Back to top">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-        <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"></path>
-      </svg>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"></path>
+        </svg>
     </button>
 
     <!-- Vendor JS Files -->
@@ -147,7 +147,9 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('dashboardAssets/js/main.js') }}"></script>
-    <script src="{{ asset('assets/js/back-to-top.js') }}?v={{ file_exists(public_path('assets/js/back-to-top.js')) ? filemtime(public_path('assets/js/back-to-top.js')) : time() }}" defer></script>
+    <script
+        src="{{ asset('assets/js/back-to-top.js') }}?v={{ file_exists(public_path('assets/js/back-to-top.js')) ? filemtime(public_path('assets/js/back-to-top.js')) : time() }}"
+        defer></script>
     <script src="https://cdn.ckeditor.com/4.21.0/full-all/ckeditor.js"></script>
     <script>
         if (window.bootstrap) {
@@ -158,10 +160,18 @@
 
         const richTextEditorConfig = {
             extraAllowedContent: '*[id]; *{text-align}; img[!src,alt,width,height,style]; a[!href,id,name,target,rel]',
-            toolbar: [
-                { name: 'document', items: ['Source'] },
-                { name: 'clipboard', items: ['Undo', 'Redo'] },
-                { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat'] },
+            toolbar: [{
+                    name: 'document',
+                    items: ['Source']
+                },
+                {
+                    name: 'clipboard',
+                    items: ['Undo', 'Redo']
+                },
+                {
+                    name: 'basicstyles',
+                    items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat']
+                },
                 {
                     name: 'paragraph',
                     items: [
@@ -176,9 +186,18 @@
                         'JustifyBlock',
                     ],
                 },
-                { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
-                { name: 'insert', items: ['Image', 'Table', 'HorizontalRule'] },
-                { name: 'styles', items: ['Format'] },
+                {
+                    name: 'links',
+                    items: ['Link', 'Unlink', 'Anchor']
+                },
+                {
+                    name: 'insert',
+                    items: ['Image', 'Table', 'HorizontalRule']
+                },
+                {
+                    name: 'styles',
+                    items: ['Format']
+                },
             ],
         };
 

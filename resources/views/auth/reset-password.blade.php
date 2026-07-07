@@ -1,7 +1,7 @@
 <x-guest-layout>
     <?php
-    $pageTitle = 'Fond Travels - Reset Password';
-    $pageDescription = 'Choose a new password for your Fond Travels account.';
+    $pageTitle = 'Fares Junction - Reset Password';
+    $pageDescription = 'Choose a new password for your Fares Junction account.';
     ?>
 
     <section class="login_sec section_padding">

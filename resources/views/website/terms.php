@@ -1,6 +1,6 @@
 <?php
-$pageTitle = "Terms & Conditions - Booking Policies & Rules | Fond Travels";
-$pageDescription = "Review Fond Travels' terms and conditions, booking agreements, flight cancellation policies, and refund rules.";
+$pageTitle = "Terms & Conditions - Booking Policies & Rules | Fares Junction";
+$pageDescription = "Review Fares Junction' terms and conditions, booking agreements, flight cancellation policies, and refund rules.";
 ob_start();
 ?>
 
@@ -11,7 +11,7 @@ ob_start();
       Last Updated: June 18, 2026
     </p>
     <p style="color: var(--gray-800); font-size: 1rem; line-height: 1.6; margin-bottom: 1rem;">
-      Welcome to Fond Travels. Please read these Terms and Conditions carefully before using our booking services, website, or speaking to our travel agents. By making a booking with us, you agree to comply with all terms stated herein.
+      Welcome to Fares Junction. Please read these Terms and Conditions carefully before using our booking services, website, or speaking to our travel agents. By making a booking with us, you agree to comply with all terms stated herein.
     </p>
     <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.75rem;">1. Booking Agreements</h3>
     <p style="color: var(--gray-800); font-size: 1rem; line-height: 1.6; margin-bottom: 1rem;">

@@ -1,6 +1,6 @@
-# Fond Travels Clone Specification Document
+# Fares Junction Specification Document
 
-This document defines the layout hierarchy, styling design system, and component guidelines for the fondtravels.com clone.
+This document defines the layout hierarchy, styling design system, and component guidelines for the faresjunction.com clone.
 
 ---
 
@@ -25,7 +25,7 @@ The home page follows a traditional, conversion-oriented travel agency structure
   - Left: "Customer Support 24/7" badge and social media icons.
   - Right: Phone icon with click-to-call link (`tel:+13238006001`) displaying the toll-free support number.
 - **Main Navigation Bar**:
-  - Brand Logo: "Fond Travels" logo (Deep Blue text with Orange airplane/swoosh).
+  - Brand Logo: "Fares Junction" logo (Deep Blue text with Orange airplane/swoosh).
   - Navigation Menu: Links to `Flights`, `Hotels`, `Cars`, `Packages`, `About Us`, and `Contact`.
   - Mobile Menu Trigger: Hamburger menu icon toggling a side-drawer or full-screen navigation on smaller screens.
 
@@ -89,7 +89,7 @@ The booking console is the most complex component and requires strict structural
 - **Bottom Footer**:
   - Contact Details: Toll-free number, support email, physical address.
   - Payment Gateways: SVG icons for Visa, Mastercard, American Express, Discover.
-  - Copyright line: "© 2026 Fond Travels. All rights reserved."
+  - Copyright line: "© 2026 Fares Junction. All rights reserved."
 
 ---
 

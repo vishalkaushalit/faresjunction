@@ -1,6 +1,6 @@
 # Airline Page Layout
 
-This folder contains the Fond Travels airline detail layout.
+This folder contains the Fares Junction airline detail layout.
 
 ## Main File
 

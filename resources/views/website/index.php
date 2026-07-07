@@ -2,8 +2,8 @@
 require resource_path('views/layouts/includes/packages-data.php');
 require resource_path('views/layouts/includes/blogs-data.php');
 
-$pageTitle = "Fond Travels Clone - Dynamic Flight & Holiday Booking";
-$pageDescription = "Explore and book flights, hotels, and holiday destinations around the world with Fond Travels.";
+$pageTitle = "Fares Junction - Dynamic Flight & Holiday Booking";
+$pageDescription = "Explore and book flights, hotels, and holiday destinations around the world with Fares Junction.";
 $extraCSS = ['css/hero.css', 'css/features.css', 'css/vacations.css', 'css/destinations.css', 'css/deals.css', 'css/testimonials.css', 'css/blogs.css'];
 ob_start();
 ?>
@@ -379,7 +379,7 @@ ob_start();
           <div class="container">
             <div class="features-container-card">
               <div class="features-header">
-                <h2 class="features-title">Reasons to book with <span>Fond Travels</span></h2>
+                <h2 class="features-title">Reasons to book with <span>Fares Junction</span></h2>
               </div>
               <div class="features-grid">
                 <!-- Card 1: Call Us 24 x 7 -->
@@ -737,7 +737,7 @@ ob_start();
                     <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   </div>
                   <h4 class="review-title">"Best flight deal I could find anywhere!"</h4>
-                  <p class="review-body">I needed last-minute flights to London and Fond Travels got me an unbeatable price within hours. Their agent was patient and professional throughout the whole process. Highly recommend!</p>
+                  <p class="review-body">I needed last-minute flights to London and Fares Junction got me an unbeatable price within hours. Their agent was patient and professional throughout the whole process. Highly recommend!</p>
                   <div class="reviewer-meta">
                     <div class="reviewer-avatar" style="background: linear-gradient(135deg, #ff7b25, #e56513);">MJ</div>
                     <div>
@@ -783,7 +783,7 @@ ob_start();
                     <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   </div>
                   <h4 class="review-title">"24/7 support actually works!"</h4>
-                  <p class="review-body">My flight got cancelled and the support team at Fond Travels immediately re-booked me on another flight with no extra charge. I couldn't believe how quickly they resolved it.</p>
+                  <p class="review-body">My flight got cancelled and the support team at Fares Junction immediately re-booked me on another flight with no extra charge. I couldn't believe how quickly they resolved it.</p>
                   <div class="reviewer-meta">
                     <div class="reviewer-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">DK</div>
                     <div>

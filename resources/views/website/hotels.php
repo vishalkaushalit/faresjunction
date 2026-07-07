@@ -1,8 +1,8 @@
 <?php
 require resource_path('views/layouts/includes/packages-data.php');
 
-$pageTitle = "Book Hotels & Accommodations Worldwide | Fond Travels";
-$pageDescription = "Compare hotel prices and find cheap room stays at popular global tourist destinations with Fond Travels.";
+$pageTitle = "Book Hotels & Accommodations Worldwide | Fares Junction";
+$pageDescription = "Compare hotel prices and find cheap room stays at popular global tourist destinations with Fares Junction.";
 $extraCSS = ['css/vacations.css', 'css/flights.css', 'css/hotels.css'];
 ob_start();
 ?>
@@ -97,10 +97,10 @@ ob_start();
           </div>
         </section>
 
-        <!-- USP Sections: Why Choose Fond Travels -->
+        <!-- USP Sections: Why Choose Fares Junction -->
         <section class="hotel-usp-section">
           <div class="container">
-            <h2 class="section-title text-center">Why Choose Fond Travels for <strong>Best Hotel Deals</strong></h2>
+            <h2 class="section-title text-center">Why Choose Fares Junction for <strong>Best Hotel Deals</strong></h2>
             <div class="hotel-usp-grid">
               
               <div class="hotel-usp-item">
@@ -343,7 +343,7 @@ ob_start();
                 <!-- Q1 -->
                 <div class="faq-item active">
                   <div class="faq-header active">
-                    <span class="faq-title-text">How do I get the lowest hotel rates with Fond Travels?</span>
+                    <span class="faq-title-text">How do I get the lowest hotel rates with Fares Junction?</span>
                     <svg class="faq-toggle-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                   </div>
                   <div class="faq-body" style="display: block;">

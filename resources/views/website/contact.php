@@ -1,5 +1,5 @@
 <?php
-$pageTitle = "Contact Our Customer Service Team Available 24/7 | Fond Travels";
+$pageTitle = "Contact Our Customer Service Team Available 24/7 | Fares Junction";
 $pageDescription = "Contact our customer service team. Our representatives are available 24/7 365 days to assist you with flight changes and cancellations.";
 $extraCSS = ['css/flights.css', 'css/contact.css'];
 ob_start();
@@ -92,7 +92,7 @@ ob_start();
                     </div>
                     <div class="channel-details">
                       <h3>Email Support</h3>
-                      <a href="mailto:support@fondtravels.com">support@fondtravels.com</a>
+                      <a href="mailto:support@faresjunction.com">support@faresjunction.com</a>
                       <p>Response within 2-4 business hours.</p>
                     </div>
                   </div>

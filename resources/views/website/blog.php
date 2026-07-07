@@ -15,7 +15,7 @@ foreach (($databasePosts ?? collect()) as $databasePost) {
         'tag' => $databasePost->category?->name ?? ($tagItems[0]['name'] ?? 'Travel'),
         'image' => $databasePost->featured_image ? asset('storage/' . $databasePost->featured_image) : asset('dashboardAssets/img/news-1.jpg'),
         'imageAlt' => $databasePost->featured_image_alt ?: $databasePost->title,
-        'author' => $databasePost->author?->name ?? 'Fond Travels',
+        'author' => $databasePost->author?->name ?? 'Fares Junction',
         'date' => optional($databasePost->published_at ?? $databasePost->created_at)->format('F j, Y'),
         'readTime' => ceil(str_word_count(strip_tags($databasePost->content)) / 200) . ' min read',
         'excerpt' => $databasePost->excerpt ?: str($databasePost->content)->stripTags()->limit(160)->toString(),
@@ -39,7 +39,7 @@ if ($selectedTag) {
     $selectedTagLabel ??= \Illuminate\Support\Str::headline(str_replace('-', ' ', $selectedTag));
 }
 
-$pageTitle = "Travel Blog, Guides & Flight Hacks | Fond Travels";
+$pageTitle = "Travel Blog, Guides & Flight Hacks | Fares Junction";
 $pageDescription = "Unlock travel hacks, airline policies, baggage fees, and insider destination guides with our comprehensive travel blog.";
 $extraCSS = ['css/vacations.css', 'css/flights.css', 'css/blogs.css', 'css/blogs-page.css', 'css/testimonials.css'];
 ob_start();
@@ -295,7 +295,7 @@ ob_start();
                     <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   </div>
                   <h4 class="review-title">"Best flight deal I could find anywhere!"</h4>
-                  <p class="review-body">I needed last-minute flights to London and Fond Travels got me an unbeatable price within hours. Their agent was patient and professional throughout the whole process. Highly recommend!</p>
+                  <p class="review-body">I needed last-minute flights to London and Fares Junction got me an unbeatable price within hours. Their agent was patient and professional throughout the whole process. Highly recommend!</p>
                   <div class="reviewer-meta">
                     <div class="reviewer-avatar" style="background: linear-gradient(135deg, #ff7b25, #e56513);">MJ</div>
                     <div>
@@ -341,7 +341,7 @@ ob_start();
                     <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   </div>
                   <h4 class="review-title">"24/7 support actually works!"</h4>
-                  <p class="review-body">My flight got cancelled and the support team at Fond Travels immediately re-booked me on another flight with no extra charge. I couldn't believe how quickly they resolved it.</p>
+                  <p class="review-body">My flight got cancelled and the support team at Fares Junction immediately re-booked me on another flight with no extra charge. I couldn't believe how quickly they resolved it.</p>
                   <div class="reviewer-meta">
                     <div class="reviewer-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">DK</div>
                     <div>

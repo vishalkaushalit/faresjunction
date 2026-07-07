@@ -1,6 +1,6 @@
 <?php
-$pageTitle = "Cheap Car Rentals & Rental Car Deals | Fond Travels";
-$pageDescription = "Find cheap car rentals and special deals on rental cars with Fond Travels. Compare rates and save on your vehicle booking.";
+$pageTitle = "Cheap Car Rentals & Rental Car Deals | Fares Junction";
+$pageDescription = "Find cheap car rentals and special deals on rental cars with Fares Junction. Compare rates and save on your vehicle booking.";
 $extraCSS = ['css/flights.css', 'css/cars.css'];
 ob_start();
 ?>
@@ -101,7 +101,7 @@ ob_start();
           <div class="container">
             <div class="section-header text-center">
               <span class="section-eyebrow">Affordable Wheels</span>
-              <h2 class="section-title">Car Rental Deals Found on <strong>Fond Travels</strong></h2>
+              <h2 class="section-title">Car Rental Deals Found on <strong>Fares Junction</strong></h2>
               <p class="section-subtitle">Rent a top-tier vehicle at premium rates in major U.S. travel destinations.</p>
             </div>
 

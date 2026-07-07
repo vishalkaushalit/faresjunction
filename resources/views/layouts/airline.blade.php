@@ -23,7 +23,7 @@
 
         $seoMeta = $seoMeta ?? ($seoKey ? \App\Models\SeoMetaTag::findActive($seoType, $seoKey) : null);
         $globalScripts = \App\Models\GlobalScript::findCurrent();
-        $metaTitle = $seoMeta?->meta_title ?: ($pageTitle ?? 'Fond Travels Clone');
+        $metaTitle = $seoMeta?->meta_title ?: ($pageTitle ?? 'Fares Junction');
         $metaDescription = $seoMeta?->meta_description ?: ($pageDescription ?? 'Explore and book flights, hotels, and holiday destinations around the world.');
         $metaKeywords = $seoMeta?->meta_keywords;
         $canonicalUrl = $seoMeta?->canonical_url ?: url()->current();
@@ -136,8 +136,8 @@
             <div class="navbar">
                 <div class="container navbar-container">
                     <!-- Brand Logo -->
-                    <a href="{{ url('/') }}" class="logo" aria-label="Fond Travels Home">
-                        <span class="logo-bold">Fond</span><span class="logo-light">Travels</span>
+                    <a href="{{ url('/') }}" class="logo" aria-label="Fares Junction Home">
+                        <span class="logo-bold">Fares</span><span class="logo-light">Junction</span>
                         <svg class="logo-plane" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                             <path
                                 d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L14 19v-5.5l7 2.5z" />
@@ -172,7 +172,7 @@
 
                     <!-- Right Action Area -->
                     <div class="nav-actions">
-                        <a href="tel:+13238006001" class="btn btn-call" aria-label="Call Fond Travels">
+                        <a href="tel:+13238006001" class="btn btn-call" aria-label="Call Fares Junction">
                             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
                                 <path
                                     d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z" />
@@ -192,8 +192,8 @@
             <!-- Mobile Drawer Menu -->
             <div class="mobile-drawer" id="mobile-nav" aria-hidden="true">
                 <div class="drawer-header">
-                    <a href="{{ url('/') }}" class="logo" aria-label="Fond Travels Home">
-                        <span class="logo-bold">Fond</span><span class="logo-light">Travels</span>
+                    <a href="{{ url('/') }}" class="logo" aria-label="Fares Junction Home">
+                        <span class="logo-bold">Fares</span><span class="logo-light">Junction</span>
                     </a>
                     <button class="drawer-close" aria-label="Close Navigation Menu">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
@@ -335,8 +335,8 @@
                             </div>
                             <div>
                                 <span class="footer-contact-label">Email Support</span>
-                                <a href="mailto:support@fondtravels.com"
-                                    class="footer-contact-value">support@fondtravels.com</a>
+                                <a href="mailto:support@faresjunction.com"
+                                    class="footer-contact-value">support@faresjunction.com</a>
                             </div>
                         </div>
                         <div class="footer-contact-item">
@@ -359,7 +359,7 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="footer-bottom-row">
-                        <p class="footer-copyright">&copy; 2026 <strong>Fond Travels</strong>. All rights reserved.</p>
+                        <p class="footer-copyright">&copy; 2026 <strong>Fares Junction</strong>. All rights reserved.</p>
                         <!-- Payment Icons -->
                         <div class="payment-icons" aria-label="Accepted payment methods">
                             <div class="payment-icon"><span>VISA</span></div>

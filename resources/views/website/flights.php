@@ -1,7 +1,7 @@
 <?php
 require resource_path('views/layouts/includes/packages-data.php');
 
-$pageTitle = "Book Cheap Flight Tickets & Last Minute Travel Deals | Fond Travels";
+$pageTitle = "Book Cheap Flight Tickets & Last Minute Travel Deals | Fares Junction";
 $pageDescription = "Compare airfares on major airlines. Book cheap flights, round-trip ticket deals, and get up to 40% off by calling our 24/7 travel experts.";
 $extraCSS = ['css/vacations.css', 'css/testimonials.css', 'css/flights.css'];
 ob_start();
@@ -115,7 +115,7 @@ ob_start();
                 <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
               <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--primary-color); margin-bottom: 0.5rem;">Flight Inquiry Submitted!</h2>
-              <p style="color: var(--gray-600); line-height: 1.6; font-size: 1.05rem;">Thank you for choosing <strong>Fond Travels</strong>. Our flight ticketing team is searching the best fares for <span id="success-flight-route" style="color: var(--secondary-color); font-weight: 700;">your trip</span>. We will call you shortly on your phone/email to finalize the quote.</p>
+              <p style="color: var(--gray-600); line-height: 1.6; font-size: 1.05rem;">Thank you for choosing <strong>Fares Junction</strong>. Our flight ticketing team is searching the best fares for <span id="success-flight-route" style="color: var(--secondary-color); font-weight: 700;">your trip</span>. We will call you shortly on your phone/email to finalize the quote.</p>
             </div>
 
           </div>
@@ -380,7 +380,7 @@ ob_start();
                     <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   </div>
                   <h4 class="review-title">"Best flight deal I could find anywhere!"</h4>
-                  <p class="review-body">I needed last-minute flights to London and Fond Travels got me an unbeatable price within hours. Their agent was patient and professional throughout the whole process. Highly recommend!</p>
+                  <p class="review-body">I needed last-minute flights to London and Fares Junction got me an unbeatable price within hours. Their agent was patient and professional throughout the whole process. Highly recommend!</p>
                   <div class="reviewer-meta">
                     <div class="reviewer-avatar" style="background: linear-gradient(135deg, #ff7b25, #e56513);">MJ</div>
                     <div>
@@ -426,7 +426,7 @@ ob_start();
                     <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   </div>
                   <h4 class="review-title">"24/7 support actually works!"</h4>
-                  <p class="review-body">My flight got cancelled and the support team at Fond Travels immediately re-booked me on another flight with no extra charge. I couldn't believe how quickly they resolved it.</p>
+                  <p class="review-body">My flight got cancelled and the support team at Fares Junction immediately re-booked me on another flight with no extra charge. I couldn't believe how quickly they resolved it.</p>
                   <div class="reviewer-meta">
                     <div class="reviewer-avatar" style="background: linear-gradient(135deg, #10b981, #059669);">DK</div>
                     <div>
@@ -473,7 +473,7 @@ ob_start();
               <!-- Q1 -->
               <div class="faq-item active">
                 <div class="faq-header active">
-                  <span class="faq-title-text">How do I find the cheapest flight tickets on Fond Travels?</span>
+                  <span class="faq-title-text">How do I find the cheapest flight tickets on Fares Junction?</span>
                   <svg class="faq-toggle-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <div class="faq-body" style="display: block;">

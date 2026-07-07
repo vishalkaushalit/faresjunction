@@ -9,7 +9,7 @@ if (!isset($packagesData[$packageKey])) {
 
 $pkg = $packagesData[$packageKey];
 
-$pageTitle = $pkg['title'] . " | Fond Travels Packages";
+$pageTitle = $pkg['title'] . " | Fares Junction Packages";
 $pageDescription = $pkg['overview'];
 $extraCSS = ['css/package-details.css', 'css/vacations.css'];
 
@@ -55,7 +55,7 @@ ob_start();
                   <span class="package-hero-price-label">Price starts from</span>
                   <span class="package-hero-price-val" id="hero-price"><?php echo htmlspecialchars($pkg['price']); ?> <span>Per Person</span></span>
                 </div>
-                <a href="tel:+13238006001" class="btn btn-call" aria-label="Call Fond Travels">
+                <a href="tel:+13238006001" class="btn btn-call" aria-label="Call Fares Junction">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-2.2 2.2a15.045 15.045 0 01-6.59-6.59l2.2-2.21a.96.96 0 00.25-1A11.36 11.36 0 018.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
                   <span>Call Now</span>
                 </a>

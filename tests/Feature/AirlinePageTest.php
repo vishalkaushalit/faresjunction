@@ -34,12 +34,12 @@ class AirlinePageTest extends TestCase
             ->post(route('airline-pages.store'), [
                 'name' => 'Test Airways',
                 'code' => 'TA',
-                'intro' => 'Compare Test Airways flights with Fond Travels.',
+                'intro' => 'Compare Test Airways flights with Fares Junction.',
                 'routes_text' => "New York (JFK) to Miami (MIA)\nChicago (ORD) to Dallas (DFW)",
                 'faqs' => [
                     [
                         'question' => 'How do I book Test Airways?',
-                        'answer' => 'Call Fond Travels to book Test Airways.',
+                        'answer' => 'Call Fares Junction to book Test Airways.',
                     ],
                     [
                         'question' => '',
@@ -75,7 +75,7 @@ class AirlinePageTest extends TestCase
         $this->assertSame([
             [
                 'question' => 'How do I book Test Airways?',
-                'answer' => 'Call Fond Travels to book Test Airways.',
+                'answer' => 'Call Fares Junction to book Test Airways.',
             ],
         ], $airlinePage->faqs);
         $this->assertSame('Test Airways overview content.', $airlinePage->sections['overview']['body']);
@@ -87,7 +87,7 @@ class AirlinePageTest extends TestCase
             'name' => 'Test Airways',
             'slug' => 'test-airways',
             'code' => 'TA',
-            'intro' => 'Compare Test Airways flights with Fond Travels.',
+            'intro' => 'Compare Test Airways flights with Fares Junction.',
             'routes' => ['New York (JFK) to Miami (MIA)'],
             'faqs' => [
                 [
@@ -122,7 +122,7 @@ class AirlinePageTest extends TestCase
             'name' => 'Test Airways',
             'slug' => 'test-airways',
             'code' => 'TA',
-            'intro' => 'Compare Test Airways flights with Fond Travels.',
+            'intro' => 'Compare Test Airways flights with Fares Junction.',
             'sections' => [
                 'overview' => [
                     'title' => 'Overview',
@@ -147,7 +147,7 @@ class AirlinePageTest extends TestCase
             'name' => 'Test Airways',
             'slug' => 'test-airways',
             'code' => 'TA',
-            'intro' => 'Compare Test Airways flights with Fond Travels.',
+            'intro' => 'Compare Test Airways flights with Fares Junction.',
             'routes' => ['New York (JFK) to Miami (MIA)'],
             'sections' => [
                 'overview' => [
@@ -182,7 +182,7 @@ class AirlinePageTest extends TestCase
             'name' => 'Footer Airways',
             'slug' => 'footer-airways',
             'code' => 'FA',
-            'intro' => 'Compare Footer Airways flights with Fond Travels.',
+            'intro' => 'Compare Footer Airways flights with Fares Junction.',
             'sections' => [
                 'overview' => [
                     'title' => 'Overview',

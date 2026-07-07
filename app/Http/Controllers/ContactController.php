@@ -56,17 +56,17 @@ class ContactController extends Controller
                 "<strong>Phone:</strong> {$safePhone}<br>" .
                 "<strong>Subject:</strong> {$safeSubject}<br>" .
                 "<strong>Message:</strong><br>{$safeMessage}<br><br>" .
-                "Regards,<br>Fond Travels"
+                "Regards,<br>Fares Junction"
             );
         });
 
         Mail::send([], [], function ($message) use ($validated, $safeName) {
             $message->to($validated['contact_email'], $validated['contact_name'])
-                ->subject('We received your Fond Travels inquiry')
+                ->subject('We received your Fares Junction inquiry')
                 ->html(
                     "Hello {$safeName},<br><br>" .
-                    "Thank you for contacting Fond Travels. Our reservation desk has received your details and will reach out within 2 business days.<br><br>" .
-                    "Regards,<br>Fond Travels"
+                    "Thank you for contacting Fares Junction. Our reservation desk has received your details and will reach out within 2 business days.<br><br>" .
+                    "Regards,<br>Fares Junction"
                 );
         });
 
@@ -119,17 +119,17 @@ class ContactController extends Controller
                 "Hello Admin,<br><br>" .
                 "A new newsletter subscription has been submitted.<br><br>" .
                 "<strong>Email:</strong> {$safeEmail}<br><br>" .
-                "Regards,<br>Fond Travels"
+                "Regards,<br>Fares Junction"
             );
         });
 
         Mail::send([], [], function ($message) use ($validated, $safeEmail) {
             $message->to($validated['email'])
-                ->subject('You are subscribed to Fond Travels')
+                ->subject('You are subscribed to Fares Junction')
                 ->html(
                     "Hello,<br><br>" .
-                    "Thank you for subscribing to Fond Travels. We will send exclusive flight deals, travel guides, and tips to {$safeEmail}.<br><br>" .
-                    "Regards,<br>Fond Travels"
+                    "Thank you for subscribing to Fares Junction. We will send exclusive flight deals, travel guides, and tips to {$safeEmail}.<br><br>" .
+                    "Regards,<br>Fares Junction"
                 );
         });
 

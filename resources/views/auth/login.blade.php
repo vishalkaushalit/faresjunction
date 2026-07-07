@@ -1,7 +1,7 @@
 <x-guest-layout>
     <?php
-    $pageTitle = 'Fond Travels - Login';
-    $pageDescription = 'Explore and book flights, hotels, and holiday destinations around the world with Fond Travels.';
+    $pageTitle = 'Fares Junction - Login';
+    $pageDescription = 'Explore and book flights, hotels, and holiday destinations around the world with Fares Junction.';
     ?>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />

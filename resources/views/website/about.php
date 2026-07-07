@@ -1,6 +1,6 @@
 <?php
-$pageTitle = "About Fond Travels - Who We Are, How We Work, & Our Mission";
-$pageDescription = "Get to know about Fond Travels insights that explain Who we are, How we work, and what is our mission.";
+$pageTitle = "About Fares Junction - Who We Are, How We Work, & Our Mission";
+$pageDescription = "Get to know about Fares Junction insights that explain Who we are, How we work, and what is our mission.";
 $extraCSS = ['css/about.css'];
 ob_start();
 ?>
@@ -10,7 +10,7 @@ ob_start();
           <div class="container">
             <div class="about-hero-content">
               <h1>About Us</h1>
-              <p class="about-hero-subtitle">Think Travel deals, think us. Save on Flights, Hotels, and Vacations with Fond Travels.</p>
+              <p class="about-hero-subtitle">Think Travel deals, think us. Save on Flights, Hotels, and Vacations with Fares Junction.</p>
             </div>
           </div>
         </section>
@@ -23,14 +23,14 @@ ob_start();
               <div class="about-story-text">
                 <span class="section-eyebrow">Who We Are</span>
                 <h2 class="section-title">Book Cheap Airline Tickets and Vacation Packages</h2>
-                <p>Fond Travels is your cheap flights finder and travel solution provider! Founded in 2017, we have carved a niche in the travel industry over the past years and emerged as a favorite for millions of travelers looking for the best travel deals with superb savings.</p>
+                <p>Fares Junction is your cheap flights finder and travel solution provider! Founded in 2017, we have carved a niche in the travel industry over the past years and emerged as a favorite for millions of travelers looking for the best travel deals with superb savings.</p>
                 <p>Our wide range of travel products and services, such as airline tickets, hotel reservations, vacation packages, and other travel-related needs, have inspired thousands of clients to book their travel deals under one roof. With cutting-edge technology, a repository of airlines, customized travel packages, and multiple bookings, we bring the ease of convenient booking from the comfort of your home without hassle, with great affordability matching your budget.</p>
                 <p>With a robust team of highly-skilled travel experts and decades of experience in the travel industry, we enhance the magic of travel and adventure by helping you to explore the unexplored with cheap airline tickets.</p>
                 <p>If you are planning your next trip, look no further. We've got cheap flight deals to whisk you off to your dream destination. So whether you wish to explore Dubai, discover the black beach of Iceland, go safari in Kenya, or celebrate an occasion in any part of the world, we've got you covered with the widest range of award-winning airlines - international and domestic, from the United States.</p>
               </div>
 
               <div class="about-story-image">
-                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&auto=format&fit=crop" alt="Fond Travels Team Travel Planning" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&auto=format&fit=crop" alt="Fares Junction Team Travel Planning" loading="lazy">
               </div>
 
             </div>

@@ -1,7 +1,7 @@
 <x-guest-layout>
     <?php
-    $pageTitle = 'Fond Travels - Verify Email';
-    $pageDescription = 'Verify your email address to finish setting up your Fond Travels account.';
+    $pageTitle = 'Fares Junction - Verify Email';
+    $pageDescription = 'Verify your email address to finish setting up your Fares Junction account.';
     ?>
 
     <section class="login_sec section_padding">

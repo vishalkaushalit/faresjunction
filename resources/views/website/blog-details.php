@@ -8,7 +8,7 @@ if (!empty($databasePost)) {
         'title' => $databasePost->title,
         'excerpt' => $databasePost->excerpt ?: str($databasePost->content)->stripTags()->limit(160)->toString(),
         'tag' => $databasePost->category?->name ?? 'Travel',
-        'author' => $databasePost->author?->name ?? 'Fond Travels',
+        'author' => $databasePost->author?->name ?? 'Fares Junction',
         'date' => optional($databasePost->published_at ?? $databasePost->created_at)->format('F j, Y'),
         'readTime' => ceil(str_word_count(strip_tags($databasePost->content)) / 200) . ' min read',
         'image' => $databasePost->featured_image ? asset('storage/' . $databasePost->featured_image) : asset('dashboardAssets/img/news-1.jpg'),

@@ -4,7 +4,7 @@ $airlines = ($databaseAirlinePages ?? collect())
         $airlinePage->slug => [
             'name' => $airlinePage->name,
             'code' => $airlinePage->code ?: 'N/A',
-            'intro' => $airlinePage->intro ?: "Compare {$airlinePage->name} flights and get help from Fond Travels.",
+            'intro' => $airlinePage->intro ?: "Compare {$airlinePage->name} flights and get help from Fares Junction.",
             'routes' => $airlinePage->routes ?? [],
             'faqs' => $airlinePage->faqs ?? [],
             'sections' => $airlinePage->mergedSections(),
@@ -17,8 +17,8 @@ $airlines = ($databaseAirlinePages ?? collect())
 $allSidebarPages = $sectionLabels ?? [];
 
 if (empty($airlines)) {
-    $pageTitle = 'Airline Pages | Fond Travels';
-    $pageDescription = 'Explore airline travel guides from Fond Travels.';
+    $pageTitle = 'Airline Pages | Fares Junction';
+    $pageDescription = 'Explore airline travel guides from Fares Junction.';
     $extraCSS = ['css/hero.css', 'css/airline.css'];
     $extraJS = ['js/search.js'];
     ob_start();
@@ -59,8 +59,8 @@ $pageKey = request('section', 'overview');
 $pageKey = array_key_exists($pageKey, $sidebarPages) ? $pageKey : array_key_first($sidebarPages);
 $activePageTitle = $pageKey ? $sidebarPages[$pageKey] : null;
 
-$pageTitle = $airline['meta_title'] ?: "{$airline['name']} Flights & Travel Guide | Fond Travels";
-$pageDescription = $airline['meta_description'] ?: "{$airline['intro']} Get 24/7 assistance from Fond Travels.";
+$pageTitle = $airline['meta_title'] ?: "{$airline['name']} Flights & Travel Guide | Fares Junction";
+$pageDescription = $airline['meta_description'] ?: "{$airline['intro']} Get 24/7 assistance from Fares Junction.";
 $extraCSS = ['css/hero.css', 'css/airline.css'];
 $extraJS = ['js/search.js'];
 ob_start();
