@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\AirlinePageController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\BlogTagController;
@@ -19,6 +20,7 @@ Route::controller(WebsiteController::class)->group(function () {
     Route::get('/packages', 'packages')->name('website.packages');
     Route::get('/package-details', 'packageDetails')->name('website.package-details');
     Route::get('/airlines', 'airline')->name('website.airline');
+    Route::get('/airlines/{airline}', 'airline')->name('website.airline.slug');
     Route::get('/about', 'about')->name('website.about');
     Route::get('/blog', 'blog')->name('website.blog');
     Route::get('/blog/{slug}', 'blogDetails')->name('website.blog-details');
@@ -86,6 +88,7 @@ Route::middleware('auth')->group(function () {
         Route::put('global-scripts', [GlobalScriptController::class, 'update'])->name('global-scripts.update');
 
         Route::resource('blog-categories', BlogCategoryController::class)->except(['show']);
+        Route::resource('airline-pages', AirlinePageController::class)->except(['show']);
     });
 });
 

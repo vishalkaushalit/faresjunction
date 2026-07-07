@@ -1,188 +1,66 @@
 <?php
-$airlines = [
-    'american-airlines' => [
-        'name' => 'American Airlines',
-        'code' => 'AA',
-        'intro' => 'Book cheap American Airlines flights, compare popular routes, and get help with booking, check-in, baggage, cancellations, and travel extras.',
-        'routes' => [
-            'Detroit (DTW) to Orlando (MCO)',
-            'Chicago (ORD) to Fort Lauderdale (FLL)',
-            'Houston (IAH) to Las Vegas (LAS)',
-            'Newark (EWR) to Fort Lauderdale (FLL)',
-            'Dallas (DFW) to Las Vegas (LAS)',
-            'New York City to Fort Lauderdale',
-            'Detroit (DTW) to Las Vegas (LAS)',
-            'Baltimore/Washington DC to Fort Lauderdale',
+$airlines = ($databaseAirlinePages ?? collect())
+    ->mapWithKeys(fn ($airlinePage) => [
+        $airlinePage->slug => [
+            'name' => $airlinePage->name,
+            'code' => $airlinePage->code ?: 'N/A',
+            'intro' => $airlinePage->intro ?: "Compare {$airlinePage->name} flights and get help from Fond Travels.",
+            'routes' => $airlinePage->routes ?? [],
+            'faqs' => $airlinePage->faqs ?? [],
+            'sections' => $airlinePage->mergedSections(),
+            'meta_title' => $airlinePage->meta_title,
+            'meta_description' => $airlinePage->meta_description,
         ],
-    ],
-    'delta-air-lines' => [
-        'name' => 'Delta Air Lines',
-        'code' => 'DL',
-        'intro' => 'Find Delta Air Lines flight deals, plan domestic or international travel, and review the essentials before you fly.',
-        'routes' => [
-            'Atlanta (ATL) to New York (JFK)',
-            'Los Angeles (LAX) to Seattle (SEA)',
-            'Detroit (DTW) to Las Vegas (LAS)',
-            'Minneapolis (MSP) to Orlando (MCO)',
-            'Boston (BOS) to Miami (MIA)',
-            'Salt Lake City (SLC) to Denver (DEN)',
-            'New York (LGA) to Chicago (ORD)',
-            'Atlanta (ATL) to Fort Lauderdale (FLL)',
-        ],
-    ],
-    'united-airlines' => [
-        'name' => 'United Airlines',
-        'code' => 'UA',
-        'intro' => 'Compare United Airlines flight options and use this guide for booking, seat, baggage, and travel policy support.',
-        'routes' => [
-            'Chicago (ORD) to Denver (DEN)',
-            'Newark (EWR) to Los Angeles (LAX)',
-            'Houston (IAH) to Cancun (CUN)',
-            'San Francisco (SFO) to Honolulu (HNL)',
-            'Washington DC (IAD) to London (LHR)',
-            'Denver (DEN) to Phoenix (PHX)',
-            'Newark (EWR) to Orlando (MCO)',
-            'Chicago (ORD) to Fort Lauderdale (FLL)',
-        ],
-    ],
-    'british-airways' => [
-        'name' => 'British Airways',
-        'code' => 'BA',
-        'intro' => 'Compare British Airways flights, review long-haul travel options, and get support with booking, baggage, seats, and schedule changes.',
-        'routes' => [
-            'New York (JFK) to London (LHR)',
-            'Los Angeles (LAX) to London (LHR)',
-            'Chicago (ORD) to London (LHR)',
-            'Boston (BOS) to London (LHR)',
-            'Miami (MIA) to London (LHR)',
-            'San Francisco (SFO) to London (LHR)',
-            'London (LHR) to Paris (CDG)',
-            'London (LHR) to Rome (FCO)',
-        ],
-    ],
-    'lufthansa' => [
-        'name' => 'Lufthansa',
-        'code' => 'LH',
-        'intro' => 'Find Lufthansa flight options for Europe and beyond, with booking help for seats, baggage, connections, and travel policies.',
-        'routes' => [
-            'New York (JFK) to Frankfurt (FRA)',
-            'Chicago (ORD) to Munich (MUC)',
-            'Los Angeles (LAX) to Frankfurt (FRA)',
-            'Boston (BOS) to Munich (MUC)',
-            'Miami (MIA) to Frankfurt (FRA)',
-            'San Francisco (SFO) to Munich (MUC)',
-            'Frankfurt (FRA) to Berlin (BER)',
-            'Munich (MUC) to Rome (FCO)',
-        ],
-    ],
-    'emirates-airlines' => [
-        'name' => 'Emirates Airlines',
-        'code' => 'EK',
-        'intro' => 'Explore Emirates Airlines flights, cabin options, baggage support, and international route planning with Fond Travels.',
-        'routes' => [
-            'New York (JFK) to Dubai (DXB)',
-            'Los Angeles (LAX) to Dubai (DXB)',
-            'Chicago (ORD) to Dubai (DXB)',
-            'Houston (IAH) to Dubai (DXB)',
-            'San Francisco (SFO) to Dubai (DXB)',
-            'Boston (BOS) to Dubai (DXB)',
-            'Dubai (DXB) to Mumbai (BOM)',
-            'Dubai (DXB) to London (LHR)',
-        ],
-    ],
-];
+    ])
+    ->all();
 
-$sidebarPages = [
-    'overview' => 'Overview',
-    'book-manage' => 'Book & Manage',
-    'classes-seat' => 'Classes & Seat Selection',
-    'checkin-onboard' => 'Check-in & Onboard',
-    'baggage' => 'Baggage',
-    'unaccompanied' => 'Unaccompanied Minor & Infant',
-    'cancellation' => 'Cancellation & Refund',
-    'flight-change' => 'Flight Name & Date Change',
-    'pet-travel' => 'Pet Travel',
-    'loyalty' => 'Loyalty Programs',
-    'insurance' => 'Travel Insurance',
-    'deals' => 'Flight Deals',
-    'destinations' => 'Destinations',
-    'cruises' => 'Cruises',
-    'vacations' => 'Vacations',
-];
+$allSidebarPages = $sectionLabels ?? [];
 
-$airlineKey = request('airline', 'american-airlines');
-$airline = $airlines[$airlineKey] ?? $airlines['american-airlines'];
-$airlineKey = array_key_exists($airlineKey, $airlines) ? $airlineKey : 'american-airlines';
+if (empty($airlines)) {
+    $pageTitle = 'Airline Pages | Fond Travels';
+    $pageDescription = 'Explore airline travel guides from Fond Travels.';
+    $extraCSS = ['css/hero.css', 'css/airline.css'];
+    $extraJS = ['js/search.js'];
+    ob_start();
+    ?>
+    <section class="airline-content-section">
+        <div class="container">
+            <article class="airline-content-card">
+                <h1 class="section-title">No airline pages available</h1>
+                <p>Active airline pages added in the admin panel will appear here.</p>
+            </article>
+        </div>
+    </section>
+    <?php
+    $slot = new \Illuminate\Support\HtmlString(ob_get_clean());
 
+    echo view('layouts.airline', compact('slot', 'pageTitle', 'pageDescription', 'extraCSS', 'extraJS'))->render();
+    return;
+}
+
+$defaultAirlineKey = array_key_exists('american-airlines', $airlines) ? 'american-airlines' : array_key_first($airlines);
+$airlineKey = $requestedAirlineKey ?: request('airline', $defaultAirlineKey);
+$airlineKey = array_key_exists($airlineKey, $airlines) ? $airlineKey : $defaultAirlineKey;
+$airline = $airlines[$airlineKey];
+
+$contentMap = collect($allSidebarPages)
+    ->filter(fn (string $label, string $key): bool => filled($airline['sections'][$key]['body'] ?? null))
+    ->mapWithKeys(fn (string $label, string $key): array => [
+        $key => [
+            'title' => $airline['sections'][$key]['title'] ?: $label,
+            'body' => $airline['sections'][$key]['body'],
+        ],
+    ])
+    ->all();
+$sidebarPages = collect($contentMap)
+    ->mapWithKeys(fn (array $section, string $key): array => [$key => $section['title']])
+    ->all();
 $pageKey = request('section', 'overview');
-$pageKey = array_key_exists($pageKey, $sidebarPages) ? $pageKey : 'overview';
-$activePageTitle = $sidebarPages[$pageKey];
+$pageKey = array_key_exists($pageKey, $sidebarPages) ? $pageKey : array_key_first($sidebarPages);
+$activePageTitle = $pageKey ? $sidebarPages[$pageKey] : null;
 
-$contentMap = [
-    'overview' => [
-        'title' => 'Overview',
-        'body' => "{$airline['name']} is a major airline serving domestic and international routes. Use this page to compare flight options, review common travel policies, and connect with Fond Travels for booking support.",
-    ],
-    'book-manage' => [
-        'title' => 'Book & Manage',
-        'body' => "Fond Travels can help you book {$airline['name']} flights, review fare choices, add travelers, and understand booking updates before your trip.",
-    ],
-    'classes-seat' => [
-        'title' => 'Classes & Seat Selection',
-        'body' => "Review available cabin choices, seat selection options, and upgrade possibilities for {$airline['name']} before confirming your itinerary.",
-    ],
-    'checkin-onboard' => [
-        'title' => 'Check-in & Onboard',
-        'body' => "Check-in windows, boarding groups, and onboard services can vary by route and fare. Keep your confirmation details ready when checking in for {$airline['name']} flights.",
-    ],
-    'baggage' => [
-        'title' => 'Baggage',
-        'body' => "Baggage rules depend on your fare, destination, and loyalty status. Confirm carry-on, personal item, and checked bag allowances before traveling with {$airline['name']}.",
-    ],
-    'unaccompanied' => [
-        'title' => 'Unaccompanied Minor & Infant',
-        'body' => "{$airline['name']} may require special documentation, fees, and service steps for infants or unaccompanied minors. Verify requirements before booking.",
-    ],
-    'cancellation' => [
-        'title' => 'Cancellation & Refund',
-        'body' => "Cancellation eligibility, travel credits, and refund timelines depend on fare rules. Fond Travels can help you review your {$airline['name']} ticket conditions.",
-    ],
-    'flight-change' => [
-        'title' => 'Flight Name & Date Change',
-        'body' => "Name corrections and date changes follow airline fare rules and availability. Check change fees and fare differences before updating a {$airline['name']} reservation.",
-    ],
-    'pet-travel' => [
-        'title' => 'Pet Travel',
-        'body' => "Pet travel rules can include carrier size, route restrictions, and advance approval. Review {$airline['name']} pet travel requirements before departure.",
-    ],
-    'loyalty' => [
-        'title' => 'Loyalty Programs',
-        'body' => "Add your frequent flyer number when booking {$airline['name']} flights so eligible trips can earn miles or loyalty credit.",
-    ],
-    'insurance' => [
-        'title' => 'Travel Insurance',
-        'body' => "Travel insurance may help protect eligible trip costs for delays, cancellations, medical needs, and other covered disruptions.",
-    ],
-    'deals' => [
-        'title' => 'Flight Deals',
-        'body' => "Call Fond Travels to compare published and available {$airline['name']} fares for your dates, route, and cabin preference.",
-    ],
-    'destinations' => [
-        'title' => 'Destinations',
-        'body' => "{$airline['name']} serves popular business and leisure destinations. Use the route list below as a starting point for trip planning.",
-    ],
-    'cruises' => [
-        'title' => 'Cruises',
-        'body' => "Coordinate flights with cruise departures and arrivals so your {$airline['name']} itinerary leaves enough connection time around port schedules.",
-    ],
-    'vacations' => [
-        'title' => 'Vacations',
-        'body' => "Bundle flights, hotels, cars, or activities with Fond Travels for a smoother vacation plan around your {$airline['name']} flights.",
-    ],
-];
-
-$pageTitle = "{$airline['name']} Flights & Travel Guide | Fond Travels";
-$pageDescription = "{$airline['intro']} Get 24/7 assistance from Fond Travels.";
+$pageTitle = $airline['meta_title'] ?: "{$airline['name']} Flights & Travel Guide | Fond Travels";
+$pageDescription = $airline['meta_description'] ?: "{$airline['intro']} Get 24/7 assistance from Fond Travels.";
 $extraCSS = ['css/hero.css', 'css/airline.css'];
 $extraJS = ['js/search.js'];
 ob_start();
@@ -530,8 +408,13 @@ ob_start();
             <main class="airline-main-content">
                 <article class="airline-content-card">
                     <p class="airline-code">Airline Code: {{ $airline['code'] }}</p>
-                    <h2 class="section-title">{{ $contentMap[$pageKey]['title'] }}</h2>
-                    <p>{{ $contentMap[$pageKey]['body'] }}</p>
+                    @if ($pageKey)
+                        <h2 class="section-title">{{ $contentMap[$pageKey]['title'] }}</h2>
+                        <p>{{ $contentMap[$pageKey]['body'] }}</p>
+                    @else
+                        <h2 class="section-title">No section content available</h2>
+                        <p>Section content added in the admin panel will appear here.</p>
+                    @endif
                 </article>
 
                 <hr class="airline-content-divider">
@@ -547,49 +430,36 @@ ob_start();
                     </div>
                 </section>
 
-                <section class="airline-faq-section">
-                    <h3 class="airline-section-title">Frequently Asked Questions</h3>
-                    <div class="accordion faq-accordion" id="airlineFaqAccordion">
-                        <div class="accordion-item faq-item">
-                            <h4 class="accordion-header" id="airlineFaqHeadingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#airlineFaqOne" aria-expanded="false" aria-controls="airlineFaqOne">
-                                    How can I check-in for my {{ $airline['name'] }} flight?
-                                </button>
-                            </h4>
-                            <div id="airlineFaqOne" class="accordion-collapse collapse" aria-labelledby="airlineFaqHeadingOne" data-bs-parent="#airlineFaqAccordion">
-                                <div class="accordion-body faq-content">
-                                    <p>You can check in online through the airline website, mobile app, or at the airport using self-service kiosks and check-in counters.</p>
+                @if (! empty($airline['faqs']))
+                    <section class="airline-faq-section">
+                        <h3 class="airline-section-title">Frequently Asked Questions</h3>
+                        <div class="accordion faq-accordion" id="airlineFaqAccordion">
+                            @foreach ($airline['faqs'] as $index => $faq)
+                                @php
+                                    $headingId = 'airlineFaqHeading' . $index;
+                                    $collapseId = 'airlineFaq' . $index;
+                                    $isOpen = $loop->first;
+                                @endphp
+                                <div class="accordion-item faq-item">
+                                    <h4 class="accordion-header" id="{{ $headingId }}">
+                                        <button class="accordion-button {{ $isOpen ? '' : 'collapsed' }}" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#{{ $collapseId }}"
+                                            aria-expanded="{{ $isOpen ? 'true' : 'false' }}"
+                                            aria-controls="{{ $collapseId }}">
+                                            {{ $faq['question'] }}
+                                        </button>
+                                    </h4>
+                                    <div id="{{ $collapseId }}" class="accordion-collapse collapse {{ $isOpen ? 'show' : '' }}"
+                                        aria-labelledby="{{ $headingId }}" data-bs-parent="#airlineFaqAccordion">
+                                        <div class="accordion-body faq-content">
+                                            <p>{{ $faq['answer'] }}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-
-                        <div class="accordion-item faq-item">
-                            <h4 class="accordion-header" id="airlineFaqHeadingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#airlineFaqTwo" aria-expanded="false" aria-controls="airlineFaqTwo">
-                                    What is the baggage allowance for {{ $airline['name'] }}?
-                                </button>
-                            </h4>
-                            <div id="airlineFaqTwo" class="accordion-collapse collapse" aria-labelledby="airlineFaqHeadingTwo" data-bs-parent="#airlineFaqAccordion">
-                                <div class="accordion-body faq-content">
-                                    <p>Baggage allowance varies by ticket class, route, and fare rules. Most passengers can bring one carry-on bag and one personal item.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accordion-item faq-item">
-                            <h4 class="accordion-header" id="airlineFaqHeadingThree">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#airlineFaqThree" aria-expanded="true" aria-controls="airlineFaqThree">
-                                    Can I cancel or change my {{ $airline['name'] }} booking?
-                                </button>
-                            </h4>
-                            <div id="airlineFaqThree" class="accordion-collapse collapse show" aria-labelledby="airlineFaqHeadingThree" data-bs-parent="#airlineFaqAccordion">
-                                <div class="accordion-body faq-content">
-                                    <p>Yes, you can modify or cancel your booking through the Manage Booking section. Fees and policies depend on your fare type and how far in advance you make the change.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                @endif
             </main>
         </div>
     </div>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AirlinePage;
 use App\Models\BlogPost;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -38,9 +40,23 @@ class WebsiteController extends Controller
         return view('website.package-details');
     }
 
-    public function airline(): View
+    public function airline(Request $request, ?string $airline = null): View
     {
-        return view('website.airlines.airline');
+        try {
+            $databaseAirlinePages = AirlinePage::query()
+                ->where('status', true)
+                ->orderBy('sort_order')
+                ->orderBy('name')
+                ->get();
+        } catch (QueryException) {
+            $databaseAirlinePages = collect();
+        }
+
+        return view('website.airlines.airline', [
+            'databaseAirlinePages' => $databaseAirlinePages,
+            'requestedAirlineKey' => $airline ?: $request->query('airline'),
+            'sectionLabels' => AirlinePage::SECTION_LABELS,
+        ]);
     }
 
     public function about(): View

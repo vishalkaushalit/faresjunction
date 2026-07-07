@@ -266,17 +266,13 @@
                         <div class="footer-col">
                             <h4 class="footer-col-title">Airlines</h4>
                             <ul class="footer-links">
-                                <li><a href="{{ route('website.airline', ['airline' => 'american-airlines']) }}" class="footer-link">American
-                                        Airlines</a></li>
-                                <li><a href="{{ route('website.airline', ['airline' => 'delta-air-lines']) }}" class="footer-link">Delta Air Lines</a>
-                                </li>
-                                <li><a href="{{ route('website.airline', ['airline' => 'united-airlines']) }}" class="footer-link">United Airlines</a>
-                                </li>
-                                <li><a href="{{ route('website.airline', ['airline' => 'british-airways']) }}" class="footer-link">British Airways</a>
-                                </li>
-                                <li><a href="{{ route('website.airline', ['airline' => 'lufthansa']) }}" class="footer-link">Lufthansa</a></li>
-                                <li><a href="{{ route('website.airline', ['airline' => 'emirates-airlines']) }}" class="footer-link">Emirates
-                                        Airlines</a></li>
+                                @foreach ($footerAirlinePages ?? [] as $footerAirlinePage)
+                                    <li>
+                                        <a href="{{ route('website.airline.slug', $footerAirlinePage->slug) }}" class="footer-link">
+                                            {{ $footerAirlinePage->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <!-- Col 3: Company -->

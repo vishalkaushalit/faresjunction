@@ -47,6 +47,14 @@
 
         @if (Auth::user()->isAdmin())
             <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('airline-pages.*') ? '' : 'collapsed' }}" href="{{ route('airline-pages.index') }}">
+                    <i class="bi bi-airplane"></i>
+                    <span>Airline Pages</span>
+                </a>
+            </li>
+            <!-- End Airline Pages Nav -->
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('users.index') }}">
                     <i class="bi bi-people"></i>
                     <span>Users</span>
