@@ -19,7 +19,7 @@
             <form method="POST" action="{{ route('airline-pages.store') }}">
                 @csrf
 
-                @include('airline-pages.partials.form', [
+                @include('airlines.partials.form', [
                     'airlinePage' => null,
                     'sectionLabels' => $sectionLabels,
                 ])

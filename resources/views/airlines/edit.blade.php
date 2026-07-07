@@ -20,7 +20,7 @@
                 @csrf
                 @method('PUT')
 
-                @include('airline-pages.partials.form', [
+                @include('airlines.partials.form', [
                     'airlinePage' => $airlinePage,
                     'sectionLabels' => $sectionLabels,
                 ])

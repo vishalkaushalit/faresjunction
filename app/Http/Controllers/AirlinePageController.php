@@ -18,12 +18,12 @@ class AirlinePageController extends Controller
             ->orderBy('name')
             ->paginate(10);
 
-        return view('airline-pages.index', compact('airlinePages'));
+        return view('airlines.index', compact('airlinePages'));
     }
 
     public function create(): View
     {
-        return view('airline-pages.create', [
+        return view('airlines.create', [
             'airlinePage' => null,
             'sectionLabels' => AirlinePage::SECTION_LABELS,
         ]);
@@ -40,7 +40,7 @@ class AirlinePageController extends Controller
 
     public function edit(AirlinePage $airlinePage): View
     {
-        return view('airline-pages.edit', [
+        return view('airlines.edit', [
             'airlinePage' => $airlinePage,
             'sectionLabels' => AirlinePage::SECTION_LABELS,
         ]);
