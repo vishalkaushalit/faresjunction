@@ -232,7 +232,7 @@
 
 .btn-call {
   background-color: var(--secondary-color, #ff7b25);
-  color: #11264b;
+  color: #fff;
 }
 
 .btn-call:hover,
