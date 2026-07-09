@@ -51,8 +51,13 @@
         <label for="featured_image" class="form-label">Featured Image</label>
         <input type="file" id="featured_image" name="featured_image" class="form-control" accept="image/*">
         @if ($post?->featured_image)
+            @php
+                $featuredImageSrc = \Illuminate\Support\Str::startsWith($post->featured_image, ['http://', 'https://', '/'])
+                    ? $post->featured_image
+                    : asset('storage/' . $post->featured_image);
+            @endphp
             <div class="mt-2">
-                <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" width="120"
+                <img src="{{ $featuredImageSrc }}" alt="{{ $post->title }}" width="120"
                     class="rounded border">
             </div>
         @endif

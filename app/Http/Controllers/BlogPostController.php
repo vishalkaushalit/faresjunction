@@ -11,10 +11,14 @@ use DOMElement;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
+use RuntimeException;
 
 class BlogPostController extends Controller
 {
@@ -146,6 +150,31 @@ class BlogPostController extends Controller
             ->with('success', 'Blog post duplicated successfully. Review and publish it when ready.');
     }
 
+    public function import(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'csv_file' => ['required', 'file', 'mimes:csv,txt', 'max:5120'],
+        ]);
+
+        $handle = fopen($request->file('csv_file')->getRealPath(), 'r');
+
+        if ($handle === false) {
+            return back()->with('error', 'Unable to read the uploaded CSV file.');
+        }
+
+        try {
+            $imported = DB::transaction(fn (): int => $this->importCsvPosts($request, $handle));
+        } catch (RuntimeException $exception) {
+            return back()->with('error', $exception->getMessage());
+        } finally {
+            fclose($handle);
+        }
+
+        return redirect()
+            ->route('blog-posts.index')
+            ->with('success', $imported . ' blog ' . Str::plural('post', $imported) . ' imported successfully.');
+    }
+
     public function uploadContentImage(Request $request): JsonResponse
     {
         $request->validate([
@@ -217,6 +246,295 @@ class BlogPostController extends Controller
         ]) + [
             'status' => $request->boolean('status'),
         ];
+    }
+
+    private function importCsvPosts(Request $request, mixed $handle): int
+    {
+        $headerRow = fgetcsv($handle);
+
+        if ($headerRow === false) {
+            throw new RuntimeException('The uploaded CSV file is empty.');
+        }
+
+        $headers = $this->normalizeCsvHeaders($headerRow);
+        $created = 0;
+        $rowNumber = 1;
+
+        while (($row = fgetcsv($handle)) !== false) {
+            $rowNumber++;
+
+            if ($this->isEmptyCsvRow($row)) {
+                continue;
+            }
+
+            $csvRow = $this->combineCsvRow($headers, $row);
+            $data = $this->csvPostData($request, $csvRow, $rowNumber);
+            $tags = $this->normalizeTags($this->csvValue($csvRow, 'tags', ''));
+
+            $post = BlogPost::create($data);
+            $this->syncTags($post, $tags);
+            $created++;
+        }
+
+        if ($created === 0) {
+            throw new RuntimeException('No blog posts found in the CSV file.');
+        }
+
+        return $created;
+    }
+
+    private function csvPostData(Request $request, array $row, int $rowNumber): array
+    {
+        $title = $this->csvValue($row, 'title', '');
+        $content = $this->csvValue($row, ['content', 'body'], '');
+        $slug = $this->csvValue($row, 'slug') ?: Str::slug($title);
+        $status = $this->parseCsvBoolean($this->csvValue($row, ['status', 'published']), false, $rowNumber, 'status');
+        $contentImageAlts = $this->parseCsvPipeList($this->csvValue($row, ['content_image_alts', 'image_alts']));
+
+        $data = [
+            'author_id' => $this->resolveCsvAuthorId($request, $row, $rowNumber),
+            'blog_category_id' => $this->resolveCsvCategoryId($row, $rowNumber),
+            'title' => $title,
+            'slug' => $slug,
+            'featured_image' => $this->csvValue($row, 'featured_image'),
+            'featured_image_alt' => $this->csvValue($row, 'featured_image_alt'),
+            'excerpt' => $this->csvValue($row, 'excerpt'),
+            'table_of_contents' => $this->parseCsvTableOfContents($this->csvValue($row, ['table_of_contents', 'toc']), $rowNumber),
+            'content' => $this->prepareContentImages($content, $contentImageAlts),
+            'status' => $status,
+            'published_at' => $this->csvPublishedAt($row, $status, $rowNumber),
+        ];
+
+        $validator = Validator::make($data, [
+            'author_id' => [
+                'required',
+                'integer',
+                Rule::exists('users', 'id')->whereIn('role', [User::ROLE_ADMIN, User::ROLE_AUTHOR]),
+            ],
+            'blog_category_id' => ['nullable', 'integer', Rule::exists('blog_categories', 'id')],
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+                Rule::unique('blog_posts', 'slug'),
+            ],
+            'featured_image' => ['nullable', 'string', 'max:255'],
+            'featured_image_alt' => ['nullable', 'string', 'max:255'],
+            'excerpt' => ['nullable', 'string', 'max:1000'],
+            'table_of_contents' => ['nullable', 'array'],
+            'content' => ['required', 'string'],
+            'status' => ['boolean'],
+            'published_at' => ['nullable', 'date'],
+        ]);
+
+        if ($validator->fails()) {
+            throw new RuntimeException('Row ' . $rowNumber . ': ' . $validator->errors()->first());
+        }
+
+        return $data;
+    }
+
+    private function normalizeCsvHeaders(array $headerRow): array
+    {
+        return collect($headerRow)
+            ->map(function (?string $header, int $index): string {
+                $header = preg_replace('/^\xEF\xBB\xBF/', '', (string) $header);
+                $header = Str::lower(trim($header));
+                $header = preg_replace('/[^a-z0-9]+/', '_', $header) ?: '';
+                $header = trim($header, '_');
+
+                return $header !== '' ? $header : 'column_' . ($index + 1);
+            })
+            ->all();
+    }
+
+    private function combineCsvRow(array $headers, array $row): array
+    {
+        $row = array_slice(array_pad($row, count($headers), ''), 0, count($headers));
+
+        return array_combine($headers, $row) ?: [];
+    }
+
+    private function isEmptyCsvRow(array $row): bool
+    {
+        return collect($row)->every(fn (mixed $value): bool => trim((string) $value) === '');
+    }
+
+    private function csvValue(array $row, string|array $keys, ?string $default = null): ?string
+    {
+        foreach ((array) $keys as $key) {
+            if (array_key_exists($key, $row) && trim((string) $row[$key]) !== '') {
+                return trim((string) $row[$key]);
+            }
+        }
+
+        return $default;
+    }
+
+    private function resolveCsvAuthorId(Request $request, array $row, int $rowNumber): int|string|null
+    {
+        if (! $request->user()->isAdmin()) {
+            return $request->user()->id;
+        }
+
+        $authorId = $this->csvValue($row, 'author_id');
+
+        if ($authorId !== null) {
+            return $authorId;
+        }
+
+        $authorEmail = $this->csvValue($row, 'author_email');
+
+        if ($authorEmail === null) {
+            return $request->user()->id;
+        }
+
+        $author = User::query()
+            ->where('email', $authorEmail)
+            ->whereIn('role', [User::ROLE_ADMIN, User::ROLE_AUTHOR])
+            ->first();
+
+        if (! $author) {
+            throw new RuntimeException('Row ' . $rowNumber . ': Author "' . $authorEmail . '" was not found.');
+        }
+
+        return $author->id;
+    }
+
+    private function resolveCsvCategoryId(array $row, int $rowNumber): int|string|null
+    {
+        $categoryId = $this->csvValue($row, ['blog_category_id', 'category_id']);
+
+        if ($categoryId !== null) {
+            return $categoryId;
+        }
+
+        $categorySlug = $this->csvValue($row, ['blog_category_slug', 'category_slug']);
+        $categoryName = $this->csvValue($row, ['blog_category', 'category', 'category_name']);
+
+        if ($categorySlug === null && $categoryName === null) {
+            return null;
+        }
+
+        $categorySlug = $categorySlug ? Str::slug($categorySlug) : null;
+        $categoryName = $categoryName ?: Str::headline(str_replace('-', ' ', (string) $categorySlug));
+
+        $category = BlogCategory::query()
+            ->where('status', true)
+            ->when($categorySlug, fn ($query) => $query->where('slug', $categorySlug))
+            ->when(! $categorySlug && $categoryName, fn ($query) => $query->where('name', $categoryName))
+            ->first();
+
+        return ($category ?? BlogCategory::create([
+            'name' => $categoryName,
+            'slug' => $this->uniqueCategorySlug($categorySlug ?: Str::slug($categoryName)),
+            'status' => true,
+        ]))->id;
+    }
+
+    private function uniqueCategorySlug(string $slug): string
+    {
+        $base = Str::limit($slug ?: 'blog-category', 240, '');
+        $candidate = $base;
+        $counter = 2;
+
+        while (BlogCategory::query()->where('slug', $candidate)->exists()) {
+            $suffix = '-' . $counter;
+            $candidate = Str::limit($base, 255 - strlen($suffix), '') . $suffix;
+            $counter++;
+        }
+
+        return $candidate;
+    }
+
+    private function parseCsvBoolean(?string $value, bool $default, int $rowNumber, string $field): bool
+    {
+        if ($value === null || $value === '') {
+            return $default;
+        }
+
+        $normalized = Str::lower($value);
+
+        if (in_array($normalized, ['1', 'true', 'yes', 'y', 'published', 'publish', 'active'], true)) {
+            return true;
+        }
+
+        if (in_array($normalized, ['0', 'false', 'no', 'n', 'draft', 'unpublished', 'inactive'], true)) {
+            return false;
+        }
+
+        throw new RuntimeException('Row ' . $rowNumber . ': ' . $field . ' must be true/false, yes/no, published, or draft.');
+    }
+
+    private function csvPublishedAt(array $row, bool $status, int $rowNumber): ?Carbon
+    {
+        if (! $status) {
+            return null;
+        }
+
+        $publishedAt = $this->csvValue($row, 'published_at');
+
+        if ($publishedAt === null) {
+            return now();
+        }
+
+        try {
+            return Carbon::parse($publishedAt);
+        } catch (\Throwable) {
+            throw new RuntimeException('Row ' . $rowNumber . ': published_at must be a valid date.');
+        }
+    }
+
+    private function parseCsvTableOfContents(?string $value, int $rowNumber): array
+    {
+        if ($value === null || $value === '') {
+            return [];
+        }
+
+        if (str_starts_with($value, '[') || str_starts_with($value, '{')) {
+            $decoded = json_decode($value, true);
+
+            if (! is_array($decoded)) {
+                throw new RuntimeException('Row ' . $rowNumber . ': table_of_contents must be valid JSON or title|link pairs.');
+            }
+
+            $items = collect($decoded)
+                ->map(fn (mixed $item): array => is_array($item)
+                    ? [
+                        'title' => $item['title'] ?? '',
+                        'link' => $item['link'] ?? '',
+                    ]
+                    : ['title' => (string) $item, 'link' => ''])
+                ->all();
+
+            return $this->normalizeTableOfContents($items);
+        }
+
+        $items = collect(explode(';', $value))
+            ->map(function (string $item): array {
+                [$title, $link] = array_pad(explode('|', $item, 2), 2, '');
+
+                return [
+                    'title' => trim($title),
+                    'link' => trim($link),
+                ];
+            })
+            ->all();
+
+        return $this->normalizeTableOfContents($items);
+    }
+
+    private function parseCsvPipeList(?string $value): array
+    {
+        if ($value === null || $value === '') {
+            return [];
+        }
+
+        return collect(explode('|', $value))
+            ->map(fn (string $item): string => trim($item))
+            ->all();
     }
 
     private function authorizePostAccess(Request $request, BlogPost $blogPost): void

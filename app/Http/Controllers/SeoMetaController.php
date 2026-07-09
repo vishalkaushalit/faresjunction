@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogPost;
 use App\Models\SeoMetaTag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -175,15 +176,9 @@ class SeoMetaController extends Controller
 
     private function blogOptions(): array
     {
-        $blogsData = [];
-        $blogsPath = resource_path('views/layouts/includes/blogs-data.php');
-
-        if (file_exists($blogsPath)) {
-            require $blogsPath;
-        }
-
-        return collect($blogsData)
-            ->mapWithKeys(fn (array $blog, string $key) => [$key => $blog['title'] ?? $key])
+        return BlogPost::query()
+            ->orderBy('title')
+            ->pluck('title', 'slug')
             ->all();
     }
 

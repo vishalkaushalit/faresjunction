@@ -1,36 +1,10 @@
 <?php
-require resource_path('views/layouts/includes/blogs-data.php');
 require resource_path('views/layouts/includes/packages-data.php');
 
-if (!empty($databasePost)) {
-    $postKey = $databasePost->slug;
-    $blog = [
-        'title' => $databasePost->title,
-        'excerpt' => $databasePost->excerpt ?: str($databasePost->content)->stripTags()->limit(160)->toString(),
-        'tag' => $databasePost->category?->name ?? 'Travel',
-        'author' => $databasePost->author?->name ?? 'Fares Junction',
-        'date' => optional($databasePost->published_at ?? $databasePost->created_at)->format('F j, Y'),
-        'readTime' => ceil(str_word_count(strip_tags($databasePost->content)) / 200) . ' min read',
-        'image' => $databasePost->featured_image ? asset('storage/' . $databasePost->featured_image) : asset('dashboardAssets/img/news-1.jpg'),
-        'imageAlt' => $databasePost->featured_image_alt ?: $databasePost->title,
-        'content' => $databasePost->content,
-        'tags' => $databasePost->tags
-            ->map(fn ($tag) => ['name' => $tag->name, 'slug' => $tag->slug])
-            ->all(),
-        'tableOfContents' => $databasePost->table_of_contents ?? [],
-    ];
-} else {
-    // Resolve post from route slug or legacy query parameter, fallback to default
-    $postKey = $postKey ?? ($_GET['post'] ?? 'best-time-to-visit-europe');
-    if (!isset($blogsData[$postKey])) {
-        $postKey = 'best-time-to-visit-europe';
-    }
-
-    $blog = $blogsData[$postKey];
-    $blog['imageAlt'] = $blog['imageAlt'] ?? $blog['title'];
-    $blog['tags'] = $blog['tags'] ?? [];
-    $blog['tableOfContents'] = $blog['tableOfContents'] ?? [];
-}
+$blog['imageAlt'] = $blog['imageAlt'] ?? $blog['title'];
+$blog['tags'] = $blog['tags'] ?? [];
+$blog['tableOfContents'] = $blog['tableOfContents'] ?? [];
+$recentPosts = $recentPosts ?? [];
 
 $pageTitle = $blog['title'] . " | Travel Blog & Insights";
 $pageDescription = $blog['excerpt'];
@@ -97,29 +71,6 @@ ob_start();
                 </div>
                 <?php } ?>
 
-                <?php if (!empty($blog['tableOfContents'])) { ?>
-                <nav class="blog-table-of-contents" aria-label="Table of Contents">
-                  <div class="toc-heading">
-                    <span class="toc-heading-icon">&#9776;</span>
-                    <h2>Table of Contents</h2>
-                  </div>
-                  <ul>
-                    <?php foreach ($blog['tableOfContents'] as $tocItem) {
-                        $tocTitle = $tocItem['title'] ?? '';
-                        $tocLink = $tocItem['link'] ?? '#';
-
-                        if ($tocTitle === '') {
-                            continue;
-                        }
-                        ?>
-                        <li>
-                          <a href="<?php echo htmlspecialchars($tocLink); ?>"><?php echo htmlspecialchars($tocTitle); ?></a>
-                        </li>
-                    <?php } ?>
-                  </ul>
-                </nav>
-                <?php } ?>
-
                 <div class="blog-post-body">
                   <?php echo $blog['content']; ?>
                 </div>
@@ -143,7 +94,7 @@ ob_start();
                   <h3 class="widget-title">Recent Articles</h3>
                   <div class="widget-posts-list">
                     <?php 
-                    foreach ($blogsData as $key => $recentPost) {
+                    foreach ($recentPosts as $key => $recentPost) {
                         if ($key === $postKey) continue; // Skip current post
                         ?>
                         <a href="<?php echo route('website.blog-details', ['slug' => $key], false); ?>" class="widget-post-item">

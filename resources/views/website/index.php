@@ -1,10 +1,10 @@
 <?php
 require resource_path('views/layouts/includes/packages-data.php');
-require resource_path('views/layouts/includes/blogs-data.php');
 
 $pageTitle = "Fares Junction - Dynamic Flight & Holiday Booking";
 $pageDescription = "Explore and book flights, hotels, and holiday destinations around the world with Fares Junction.";
 $extraCSS = ['css/hero.css', 'css/features.css', 'css/vacations.css', 'css/destinations.css', 'css/deals.css', 'css/testimonials.css', 'css/blogs.css'];
+$blogCardsData = $blogCardsData ?? [];
 ob_start();
 ?>
 
@@ -680,10 +680,10 @@ ob_start();
               <p class="section-subtitle">Tips, guides and inspiring stories from around the globe.</p>
             </div>
             <div class="blogs-grid">
-              <?php foreach ($blogsData as $bKey => $blog): ?>
+              <?php foreach ($blogCardsData as $bKey => $blog): ?>
                 <a href="<?php echo route('website.blog-details', ['slug' => $bKey], false); ?>" class="blog-card">
                   <div class="blog-thumb">
-                    <img src="<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['title']); ?>" class="blog-img" loading="lazy">
+                    <img src="<?php echo htmlspecialchars($blog['image']); ?>" alt="<?php echo htmlspecialchars($blog['imageAlt'] ?? $blog['title']); ?>" class="blog-img" loading="lazy">
                     <span class="blog-tag"><?php echo htmlspecialchars($blog['tag']); ?></span>
                   </div>
                   <div class="blog-content">

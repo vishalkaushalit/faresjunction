@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use App\Models\Tag;
 use App\Models\User;
@@ -168,6 +169,101 @@ class BlogPostTest extends TestCase
         Storage::disk('public')->assertExists($path);
     }
 
+    public function test_admin_can_import_blog_posts_from_csv(): void
+    {
+        $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
+        $author = User::factory()->create(['role' => User::ROLE_AUTHOR]);
+        $category = BlogCategory::create([
+            'name' => 'Travel Guides',
+            'slug' => 'travel-guides',
+            'status' => true,
+        ]);
+
+        $csv = implode("\n", [
+            'title,slug,content,author_email,category_slug,tags,status,table_of_contents,featured_image_alt,excerpt,published_at',
+            '"CSV Travel Post",csv-travel-post,"<p>Imported CSV content.</p><img src=""/images/csv.jpg"">",' . $author->email . ',travel-guides,"CSV, Travel",published,"Planning|#planning;Booking|","Travel desk","Imported excerpt","2026-07-01 10:30:00"',
+        ]);
+
+        $response = $this
+            ->actingAs($admin)
+            ->post(route('blog-posts.import'), [
+                'csv_file' => UploadedFile::fake()->createWithContent('posts.csv', $csv),
+            ]);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect(route('blog-posts.index'));
+
+        $post = BlogPost::where('slug', 'csv-travel-post')->firstOrFail();
+        $post->load('tags');
+
+        $this->assertSame($author->id, $post->author_id);
+        $this->assertSame($category->id, $post->blog_category_id);
+        $this->assertTrue($post->status);
+        $this->assertSame('Travel desk', $post->featured_image_alt);
+        $this->assertSame('Imported excerpt', $post->excerpt);
+        $this->assertSame([
+            ['title' => 'Planning', 'link' => '#planning'],
+            ['title' => 'Booking', 'link' => '#booking'],
+        ], $post->table_of_contents);
+        $this->assertStringContainsString('<p>Imported CSV content.</p>', $post->content);
+        $this->assertSame(['CSV', 'Travel'], $post->tags->pluck('name')->all());
+    }
+
+    public function test_csv_import_creates_missing_blog_category(): void
+    {
+        $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
+
+        $csv = implode("\n", [
+            'title,content,category,status',
+            '"New Category Import","<p>Imported with a new category.</p>","Hidden Beaches",draft',
+        ]);
+
+        $response = $this
+            ->actingAs($admin)
+            ->post(route('blog-posts.import'), [
+                'csv_file' => UploadedFile::fake()->createWithContent('posts.csv', $csv),
+            ]);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect(route('blog-posts.index'));
+
+        $category = BlogCategory::where('slug', 'hidden-beaches')->firstOrFail();
+        $post = BlogPost::where('slug', 'new-category-import')->firstOrFail();
+
+        $this->assertSame('Hidden Beaches', $category->name);
+        $this->assertTrue($category->status);
+        $this->assertSame($category->id, $post->blog_category_id);
+    }
+
+    public function test_csv_import_rolls_back_when_a_row_is_invalid(): void
+    {
+        $admin = User::factory()->create(['role' => User::ROLE_ADMIN]);
+        $postCount = BlogPost::count();
+
+        $csv = implode("\n", [
+            'title,content,status',
+            '"Valid Import","<p>This should roll back.</p>",draft',
+            '"Broken Import","",draft',
+        ]);
+
+        $response = $this
+            ->actingAs($admin)
+            ->post(route('blog-posts.import'), [
+                'csv_file' => UploadedFile::fake()->createWithContent('posts.csv', $csv),
+            ]);
+
+        $response
+            ->assertSessionHas('error')
+            ->assertRedirect();
+
+        $this->assertDatabaseMissing('blog_posts', [
+            'title' => 'Valid Import',
+        ]);
+        $this->assertDatabaseCount('blog_posts', $postCount);
+    }
+
     public function test_author_cannot_edit_another_authors_post(): void
     {
         $author = User::factory()->create(['role' => User::ROLE_AUTHOR]);
@@ -222,7 +318,7 @@ class BlogPostTest extends TestCase
         Storage::fake('public');
 
         $author = User::factory()->create(['role' => User::ROLE_AUTHOR]);
-        $tag = Tag::create(['name' => 'Europe', 'slug' => 'europe']);
+        $tag = Tag::firstOrCreate(['slug' => 'europe'], ['name' => 'Europe']);
         Storage::disk('public')->put('blog-posts/original.jpg', 'image-content');
 
         $post = BlogPost::create([
@@ -274,6 +370,7 @@ class BlogPostTest extends TestCase
     {
         $author = User::factory()->create(['role' => User::ROLE_AUTHOR]);
         $otherAuthor = User::factory()->create(['role' => User::ROLE_AUTHOR]);
+        $postCount = BlogPost::count();
         $post = BlogPost::create([
             'author_id' => $otherAuthor->id,
             'title' => 'Other Post',
@@ -286,7 +383,7 @@ class BlogPostTest extends TestCase
             ->post(route('blog-posts.duplicate', $post))
             ->assertForbidden();
 
-        $this->assertDatabaseCount('blog_posts', 1);
+        $this->assertDatabaseCount('blog_posts', $postCount + 1);
     }
 
     public function test_published_database_post_displays_table_of_contents(): void
@@ -307,8 +404,8 @@ class BlogPostTest extends TestCase
             'published_at' => now(),
         ]);
         $post->tags()->attach([
-            Tag::create(['name' => 'Europe', 'slug' => 'europe'])->id,
-            Tag::create(['name' => 'Seasonal Travel', 'slug' => 'seasonal-travel'])->id,
+            Tag::firstOrCreate(['slug' => 'europe'], ['name' => 'Europe'])->id,
+            Tag::firstOrCreate(['slug' => 'seasonal-travel'], ['name' => 'Seasonal Travel'])->id,
         ]);
 
         $this
@@ -326,8 +423,8 @@ class BlogPostTest extends TestCase
     public function test_blog_index_can_be_filtered_by_clicked_tag(): void
     {
         $author = User::factory()->create(['role' => User::ROLE_AUTHOR]);
-        $europe = Tag::create(['name' => 'Europe', 'slug' => 'europe']);
-        $flights = Tag::create(['name' => 'Flights', 'slug' => 'flights']);
+        $europe = Tag::firstOrCreate(['slug' => 'europe'], ['name' => 'Europe']);
+        $flights = Tag::firstOrCreate(['slug' => 'flights'], ['name' => 'Flights']);
 
         $europePost = BlogPost::create([
             'author_id' => $author->id,
@@ -362,8 +459,8 @@ class BlogPostTest extends TestCase
     {
         $author = User::factory()->create(['role' => User::ROLE_AUTHOR]);
         $otherAuthor = User::factory()->create(['role' => User::ROLE_AUTHOR]);
-        $europe = Tag::create(['name' => 'Europe', 'slug' => 'europe']);
-        $flights = Tag::create(['name' => 'Flights', 'slug' => 'flights']);
+        $europe = Tag::firstOrCreate(['slug' => 'europe'], ['name' => 'Europe']);
+        $flights = Tag::firstOrCreate(['slug' => 'flights'], ['name' => 'Flights']);
 
         $authorPost = BlogPost::create([
             'author_id' => $author->id,

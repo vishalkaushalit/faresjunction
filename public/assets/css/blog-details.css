@@ -7,6 +7,12 @@
   background-color: var(--gray-100);
 }
 
+.blog-post-body h1,
+.blog-post-body h2,
+.blog-post-body h3 {
+  scroll-margin-top: 100px;
+}
+
 .blog-details-grid {
   display: grid;
   grid-template-columns: 7fr 3fr;
@@ -161,7 +167,7 @@
 }
 
 .blog-table-of-contents li::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0.72em;
   left: -1.35rem;
@@ -303,7 +309,11 @@
 
 /* CTA Promo Box Widget */
 .sidebar-cta-widget {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--primary-dark) 100%
+  );
   color: var(--white);
   text-align: center;
   padding: 2rem 1.75rem;
@@ -315,7 +325,7 @@
 }
 
 .sidebar-cta-widget::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50px;
   right: -50px;
@@ -490,9 +500,9 @@
   font-size: 0.95rem;
   font-weight: 500;
   transition: var(--transition-fast);
+
 }
 
 .toc-link:hover {
   color: var(--secondary-color);
-  text-decoration: underline;
 }

@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
         ->name('blog-posts.content-image-upload');
     Route::post('/blog-posts/content-file-upload', [BlogPostController::class, 'uploadContentFile'])
         ->name('blog-posts.content-file-upload');
+    Route::post('/blog-posts/import', [BlogPostController::class, 'import'])
+        ->name('blog-posts.import');
     Route::post('/blog-posts/{blogPost}/duplicate', [BlogPostController::class, 'duplicate'])
         ->name('blog-posts.duplicate');
     Route::resource('blog-posts', BlogPostController::class)->except(['show']);

@@ -6,9 +6,53 @@
         </div>
     @endif
 
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session('error') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="d-flex justify-content-end mb-3">
         <a href="{{ route('blog-posts.create') }}" class="btn btn-primary">Add Blog Post</a>
     </div>
+
+    <section class="card mb-3">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Import Blog Posts</h5>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ route('blog-posts.import') }}" enctype="multipart/form-data"
+                class="row g-3 align-items-end">
+                @csrf
+                <div class="col-md-8">
+                    <label for="csv_file" class="form-label">CSV File</label>
+                    <input type="file" id="csv_file" name="csv_file" class="form-control" accept=".csv,text/csv"
+                        required>
+                    <small class="text-muted">
+                        Required columns: title, content. Optional columns: slug, author_email, category_slug,
+                        category, excerpt, tags, status, featured_image_alt, table_of_contents. Missing categories
+                        are created automatically.
+                    </small>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-upload"></i> Upload CSV
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
 
     <section class="card">
         <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">

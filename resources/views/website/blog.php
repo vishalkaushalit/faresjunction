@@ -1,41 +1,16 @@
 <?php
-require resource_path('views/layouts/includes/blogs-data.php');
 require resource_path('views/layouts/includes/packages-data.php');
 
 $selectedTag = $selectedTag ?? null;
-$databaseBlogsData = [];
-
-foreach (($databasePosts ?? collect()) as $databasePost) {
-    $tagItems = $databasePost->tags
-        ->map(fn ($tag) => ['name' => $tag->name, 'slug' => $tag->slug])
-        ->all();
-
-    $databaseBlogsData[$databasePost->slug] = [
-        'title' => $databasePost->title,
-        'tag' => $databasePost->category?->name ?? ($tagItems[0]['name'] ?? 'Travel'),
-        'image' => $databasePost->featured_image ? asset('storage/' . $databasePost->featured_image) : asset('dashboardAssets/img/news-1.jpg'),
-        'imageAlt' => $databasePost->featured_image_alt ?: $databasePost->title,
-        'author' => $databasePost->author?->name ?? 'Fares Junction',
-        'date' => optional($databasePost->published_at ?? $databasePost->created_at)->format('F j, Y'),
-        'readTime' => ceil(str_word_count(strip_tags($databasePost->content)) / 200) . ' min read',
-        'excerpt' => $databasePost->excerpt ?: str($databasePost->content)->stripTags()->limit(160)->toString(),
-        'tags' => $tagItems,
-    ];
-}
-
-$blogCardsData = $selectedTag ? $databaseBlogsData : $databaseBlogsData + $blogsData;
-$selectedTagLabel = null;
+$blogCardsData = $blogCardsData ?? [];
+$blogCategoryTabs = collect($blogCardsData)
+    ->pluck('tag')
+    ->filter()
+    ->unique()
+    ->values()
+    ->all();
 
 if ($selectedTag) {
-    foreach ($databaseBlogsData as $blog) {
-        foreach ($blog['tags'] ?? [] as $tag) {
-            if (($tag['slug'] ?? '') === $selectedTag) {
-                $selectedTagLabel = $tag['name'];
-                break 2;
-            }
-        }
-    }
-
     $selectedTagLabel ??= \Illuminate\Support\Str::headline(str_replace('-', ' ', $selectedTag));
 }
 
@@ -157,9 +132,9 @@ ob_start();
             <!-- Category Tabs Left -->
             <div class="filter-tabs" id="blogFilterTabs">
               <button class="filter-tab-btn active" data-category="all">All Blogs</button>
-              <button class="filter-tab-btn" data-category="Travel Tips">Travel Tips</button>
-              <button class="filter-tab-btn" data-category="Flight Hacks">Flight Hacks</button>
-              <button class="filter-tab-btn" data-category="Destination Guide">Destination Guides</button>
+              <?php foreach ($blogCategoryTabs as $category): ?>
+                <button class="filter-tab-btn" data-category="<?php echo htmlspecialchars($category); ?>"><?php echo htmlspecialchars($category); ?></button>
+              <?php endforeach; ?>
             </div>
 
             <!-- Search Input Right -->
