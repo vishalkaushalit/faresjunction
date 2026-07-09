@@ -139,7 +139,7 @@
   align-items: center;
   gap: 0.3rem;
   font-size: 1.6rem;
-  font-family: var(--font-primary, 'Outfit', sans-serif);
+  font-family: var(--font-primary, "Outfit", sans-serif);
   font-weight: 800;
   color: var(--primary-color, #0f294d);
   transition: var(--transition-fast, all 0.2s ease-in-out);
@@ -174,7 +174,7 @@
 }
 
 .nav-link {
-  font-family: var(--font-primary, 'Outfit', sans-serif);
+  font-family: var(--font-primary, "Outfit", sans-serif);
   font-weight: 500;
   font-size: 1.05rem;
   color: var(--gray-800, #343a40);
@@ -190,7 +190,7 @@
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -240,6 +240,7 @@
   background-color: #e56513;
   transform: translateY(-1px);
   outline: none;
+  color: #fff;
 }
 
 .mobile-toggle {
@@ -313,7 +314,7 @@
 }
 
 .drawer-link {
-  font-family: var(--font-primary, 'Outfit', sans-serif);
+  font-family: var(--font-primary, "Outfit", sans-serif);
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--gray-800, #343a40);
