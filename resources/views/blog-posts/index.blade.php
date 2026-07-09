@@ -138,7 +138,7 @@
 
         @if ($posts->hasPages())
             <div class="d-flex justify-content-end m-2">
-                {!! $posts->links() !!}
+                {!! $posts->links('pagination::simple-tailwind') !!}
             </div>
         @endif
     </section>

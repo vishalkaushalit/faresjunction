@@ -51,7 +51,7 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-end m-2">
-                {!! $contactdata->links() !!}
+                {!! $contactdata->links('pagination::simple-tailwind') !!}
             </div>
         </div>
     </section>

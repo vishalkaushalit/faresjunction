@@ -54,6 +54,7 @@
                         <th>Name</th>
                         <th>Slug</th>
                         <th>Posts</th>
+                        <th>Created Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -64,6 +65,7 @@
                             <td>{{ $tag->name }}</td>
                             <td>{{ $tag->slug }}</td>
                             <td>{{ $tag->posts_count }}</td>
+                            <td>{{ $tag->created_at?->format('d M Y') ?? 'Not set' }}</td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
                                     <a href="{{ route('website.blog', ['tag' => $tag->slug]) }}"
@@ -85,7 +87,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5">No blog tags available.</td>
+                            <td colspan="6">No blog tags available.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -94,7 +96,7 @@
 
         @if ($tags->hasPages())
             <div class="d-flex justify-content-end m-2">
-                {!! $tags->links() !!}
+                {!! $tags->links('pagination::simple-tailwind') !!}
             </div>
         @endif
     </section>

@@ -24,6 +24,7 @@
                         <th>Slug</th>
                         <th>Description</th>
                         <th>Status</th>
+                        <th>Created Date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -41,6 +42,7 @@
                                     <span class="badge bg-secondary">Inactive</span>
                                 @endif
                             </td>
+                            <td>{{ $category->created_at?->format('d M Y') ?? 'Not set' }}</td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
                                     <a href="{{ route('blog-categories.edit', $category) }}"
@@ -61,7 +63,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6">No blog categories available.</td>
+                            <td colspan="7">No blog categories available.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -70,7 +72,7 @@
 
         @if ($categories->hasPages())
             <div class="d-flex justify-content-end m-2">
-                {!! $categories->links() !!}
+                {!! $categories->links('pagination::simple-tailwind') !!}
             </div>
         @endif
     </section>

@@ -77,7 +77,7 @@
 
         @if ($airlinePages->hasPages())
             <div class="d-flex justify-content-end m-2">
-                {!! $airlinePages->links() !!}
+                {!! $airlinePages->links('pagination::simple-tailwind') !!}
             </div>
         @endif
     </section>
