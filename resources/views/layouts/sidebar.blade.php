@@ -2,6 +2,7 @@
 <aside id="sidebar" class="sidebar">
     @php
         $blogMenuOpen = request()->routeIs('blog-posts.*', 'blog-categories.*', 'blog-tags.*');
+        $flightMenuOpen = request()->routeIs('flight-categories.*', 'flight-routes.*', 'flight-destinations.*');
         $leadMenuOpen = request()->routeIs('contact.*', 'subscribe.*');
     @endphp
 
@@ -46,6 +47,32 @@
         <!-- End Blogs Nav -->
 
         @if (Auth::user()->isAdmin())
+            <li class="nav-item">
+                <a class="nav-link {{ $flightMenuOpen ? '' : 'collapsed' }}" data-bs-target="#flight-nav" data-bs-toggle="collapse" href="#" aria-expanded="{{ $flightMenuOpen ? 'true' : 'false' }}">
+                    <i class="bi bi-airplane-engines"></i>
+                    <span>Flights</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="flight-nav" class="nav-content collapse {{ $flightMenuOpen ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ route('flight-categories.index') }}" class="{{ request()->routeIs('flight-categories.*') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('flight-routes.index') }}" class="{{ request()->routeIs('flight-routes.*') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Routes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('flight-destinations.index') }}" class="{{ request()->routeIs('flight-destinations.*') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Destinations</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- End Flights Nav -->
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('airline-pages.*') ? '' : 'collapsed' }}" href="{{ route('airline-pages.index') }}">
                     <i class="bi bi-airplane"></i>

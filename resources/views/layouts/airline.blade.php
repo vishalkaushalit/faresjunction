@@ -6,12 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.svg') }}">
+
     @php
         $seoType = 'page';
         $seoKey = null;
         $routeName = request()->route()?->getName();
 
-        if (request()->routeIs('website.blog-details') || request()->is('blog/*') || request()->is('blog-details') || request()->is('blog-details.php')) {
+        if (
+            request()->routeIs('website.blog-details') ||
+            request()->is('blog/*') ||
+            request()->is('blog-details') ||
+            request()->is('blog-details.php')
+        ) {
             $seoType = 'blog';
             $seoKey = request()->route('slug') ?: request('post');
         } elseif ($routeName && str_starts_with($routeName, 'website.')) {
@@ -23,8 +31,10 @@
 
         $seoMeta = $seoMeta ?? ($seoKey ? \App\Models\SeoMetaTag::findActive($seoType, $seoKey) : null);
         $globalScripts = \App\Models\GlobalScript::findCurrent();
-        $metaTitle = $seoMeta?->meta_title ?: ($pageTitle ?? 'Fares Junction');
-        $metaDescription = $seoMeta?->meta_description ?: ($pageDescription ?? 'Explore and book flights, hotels, and holiday destinations around the world.');
+        $metaTitle = $seoMeta?->meta_title ?: $pageTitle ?? 'Fares Junction';
+        $metaDescription =
+            $seoMeta?->meta_description ?:
+            $pageDescription ?? 'Explore and book flights, hotels, and holiday destinations around the world.';
         $metaKeywords = $seoMeta?->meta_keywords;
         $canonicalUrl = $seoMeta?->canonical_url ?: url()->current();
         $ogTitle = $seoMeta?->og_title ?: $metaTitle;
@@ -236,7 +246,7 @@
             <div class="drawer-overlay"></div>
         </header>
 
-        
+
         {{ $slot }}
 
         <!-- Footer Section -->
@@ -269,7 +279,8 @@
                             <ul class="footer-links">
                                 @foreach ($footerAirlinePages ?? [] as $footerAirlinePage)
                                     <li>
-                                        <a href="{{ route('website.airline.slug', $footerAirlinePage->slug) }}" class="footer-link">
+                                        <a href="{{ route('website.airline.slug', $footerAirlinePage->slug) }}"
+                                            class="footer-link">
                                             {{ $footerAirlinePage->name }}
                                         </a>
                                     </li>
@@ -296,11 +307,12 @@
                             <h4 class="footer-col-title">Newsletter</h4>
                             <p class="newsletter-desc">Subscribe and get exclusive flight deals, travel guides, and
                                 tips delivered to your inbox.</p>
-                            <form class="newsletter-form footer-subscribe-form" method="POST" action="{{ route('subscribe.create') }}">
+                            <form class="newsletter-form footer-subscribe-form" method="POST"
+                                action="{{ route('subscribe.create') }}">
                                 @csrf
                                 <div class="newsletter-input-group">
-                                    <input type="email" name="email" class="newsletter-input" placeholder="Your email address"
-                                        aria-label="Email for newsletter" required>
+                                    <input type="email" name="email" class="newsletter-input"
+                                        placeholder="Your email address" aria-label="Email for newsletter" required>
                                     <button class="newsletter-btn" type="submit">Subscribe</button>
                                 </div>
                                 <p class="newsletter-status" aria-live="polite" style="display: none;"></p>
@@ -359,7 +371,8 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="footer-bottom-row">
-                        <p class="footer-copyright">&copy; 2026 <strong>Fares Junction</strong>. All rights reserved.</p>
+                        <p class="footer-copyright">&copy; 2026 <strong>Fares Junction</strong>. All rights reserved.
+                        </p>
                         <!-- Payment Icons -->
                         <div class="payment-icons" aria-label="Accepted payment methods">
                             <div class="payment-icon"><span>VISA</span></div>

@@ -8,6 +8,8 @@ use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\BlogTagController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FlightCategoryController;
+use App\Http\Controllers\FlightRouteDestinationController;
 use App\Http\Controllers\GlobalScriptController;
 use App\Http\Controllers\SeoMetaController;
 use App\Http\Controllers\UserController;
@@ -90,6 +92,11 @@ Route::middleware('auth')->group(function () {
         Route::put('global-scripts', [GlobalScriptController::class, 'update'])->name('global-scripts.update');
 
         Route::resource('blog-categories', BlogCategoryController::class)->except(['show']);
+        Route::resource('flight-categories', FlightCategoryController::class);
+        Route::resource('flight-routes', FlightRouteDestinationController::class)
+            ->parameters(['flight-routes' => 'flightRouteDestination']);
+        Route::resource('flight-destinations', FlightRouteDestinationController::class)
+            ->parameters(['flight-destinations' => 'flightRouteDestination']);
         Route::resource('airline-pages', AirlinePageController::class)->except(['show']);
     });
 });
