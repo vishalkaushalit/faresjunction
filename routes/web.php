@@ -21,9 +21,8 @@ Route::controller(WebsiteController::class)->group(function () {
     Route::get('/cars', 'cars')->name('website.cars');
     Route::get('/packages', 'packages')->name('website.packages');
     Route::get('/package-details', 'packageDetails')->name('website.package-details');
-    Route::get('/airlines', 'airline')->name('website.airline');
-    Route::get('/airlines/{airline}/{section}', 'airline')->name('website.airline.section');
     Route::get('/airlines/{airline}', 'airline')->name('website.airline.slug');
+    Route::get('/airlines/{airline}/{section}', 'airline')->name('website.airline.section');
     Route::get('/about', 'about')->name('website.about');
     Route::get('/blog', 'blog')->name('website.blog');
     Route::get('/blog/{slug}', 'blogDetails')->name('website.blog-details');
@@ -31,20 +30,6 @@ Route::controller(WebsiteController::class)->group(function () {
     Route::get('/contact', 'contact')->name('website.contact');
     Route::get('/privacy-policy', 'privacyPolicy')->name('website.privacy-policy');
     Route::get('/terms', 'terms')->name('website.terms');
-
-    Route::get('/index.php', 'index');
-    Route::get('/flights.php', 'flights');
-    Route::get('/hotels.php', 'hotels');
-    Route::get('/cars.php', 'cars');
-    Route::get('/packages.php', 'packages');
-    Route::get('/package-details.php', 'packageDetails');
-    Route::get('/airlines.php', 'airline');
-    Route::get('/about.php', 'about');
-    Route::get('/blog.php', 'blog');
-    Route::get('/blog-details.php', 'blogDetails');
-    Route::get('/contact.php', 'contact');
-    Route::get('/privacy-policy.php', 'privacyPolicy');
-    Route::get('/terms.php', 'terms');
 });
 
 Route::post('contact/create', [ContactController::class, 'create'])->name('contact.create');
