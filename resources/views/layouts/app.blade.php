@@ -8,17 +8,13 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet">
-
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.svg') }}">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Vendor CSS Files -->
@@ -37,12 +33,13 @@
     <meta name="google-site-verification" content="moulPyqrWIh1sdiu7yjx0Gn9MtbOU1lXOQBstoj2FEM">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/js/app.js')
 
     <style>
         .bg-danger {
             background: #000 !important;
         }
+
     </style>
 </head>
 

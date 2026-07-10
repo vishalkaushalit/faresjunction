@@ -45,7 +45,7 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-end m-2">
-                {!! $subscribedata->links('pagination::simple-tailwind') !!}
+                {!! $subscribedata->links('pagination::simple-bootstrap-5') !!}
             </div>
         </div>
     </section>

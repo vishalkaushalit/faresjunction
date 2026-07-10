@@ -96,7 +96,7 @@
 
         @if ($tags->hasPages())
             <div class="d-flex justify-content-end m-2">
-                {!! $tags->links('pagination::simple-tailwind') !!}
+                {!! $tags->links('pagination::simple-bootstrap-5') !!}
             </div>
         @endif
     </section>

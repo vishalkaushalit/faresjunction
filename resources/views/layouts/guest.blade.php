@@ -83,8 +83,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
     @if (filled($globalScripts?->header_scripts))
         {!! $globalScripts->header_scripts !!}
     @endif

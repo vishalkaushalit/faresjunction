@@ -12,16 +12,17 @@
 :root {
     scroll-behavior: smooth;
     --red: #e91e25;
+    --font-primary: "Outfit", sans-serif;
 }
 
 body {
-    font-family: "Open Sans", sans-serif;
+    font-family: var(--font-primary);
     background: #f6f9ff;
     color: #444444;
 }
 
 a {
-    color: #4154f1;
+    color: #ff7b25;
     text-decoration: none;
 }
 .bg_red {
@@ -29,7 +30,7 @@ a {
     color: #fff;
 }
 a:hover {
-    color: #717ff5;
+    color: #e56513;
     text-decoration: none;
 }
 
@@ -39,7 +40,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "Nunito", sans-serif;
+    font-family: var(--font-primary);
 }
 
 /*--------------------------------------------------------------
@@ -81,7 +82,7 @@ h6 {
     right: 15px;
     bottom: 15px;
     z-index: 99999;
-    background: #4154f1;
+    background: #ff7b25;
     width: 40px;
     height: 40px;
     border: 0;
@@ -101,7 +102,7 @@ h6 {
 }
 
 .back-to-top:hover {
-    background: #6776f4;
+    background: #e56513;
     color: #fff;
 }
 
@@ -252,13 +253,72 @@ h6 {
     font-size: 18px;
     font-weight: 500;
     color: #012970;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-primary);
 }
 
 .card-title span {
     color: #899bbd;
     font-size: 14px;
     font-weight: 400;
+}
+
+/* Dashboard previous/next pagination */
+.dashboard-pagination .pagination {
+    display: flex;
+    gap: 12px;
+}
+
+.dashboard-pagination .page-item {
+    flex: 0 0 auto;
+}
+
+.dashboard-pagination .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 128px;
+    min-height: 48px;
+    padding: 10px 24px;
+    border: 1px solid #dce1e8;
+    border-radius: 8px !important;
+    background: #fff;
+    color: #111;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-align: center;
+    box-shadow: none;
+}
+
+.dashboard-pagination .page-link:hover,
+.dashboard-pagination .page-link:focus {
+    border-color: #ff7b25;
+    background: #f6f9ff;
+    color: #ff7b25;
+}
+
+.dashboard-pagination .page-item.disabled .page-link {
+    border-color: #dce1e8;
+    background: #fff;
+    color: #9aa3b2;
+    opacity: 1;
+}
+
+@media (max-width: 575px) {
+    .dashboard-pagination,
+    .dashboard-pagination .pagination {
+        width: 100%;
+    }
+
+    .dashboard-pagination .page-item {
+        min-width: 0;
+    }
+
+    .dashboard-pagination .page-link {
+        min-width: 0;
+        min-height: 44px;
+        padding: 9px 14px;
+        font-size: 0.95rem;
+    }
 }
 
 .card-body {
@@ -272,7 +332,7 @@ h6 {
 /* Alerts */
 .alert-heading {
     font-weight: 500;
-    font-family: "Poppins", sans-serif;
+    font-family: var(--font-primary);
     font-size: 20px;
 }
 
@@ -309,7 +369,7 @@ h6 {
 
 .accordion-flush .accordion-button:not(.collapsed) {
     box-shadow: none;
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .accordion-flush .accordion-body {
@@ -321,7 +381,7 @@ h6 {
 /* Breadcrumbs */
 .breadcrumb {
     font-size: 14px;
-    font-family: "Nunito", sans-serif;
+    font-family: var(--font-primary);
     color: #899bbd;
     font-weight: 600;
 }
@@ -357,13 +417,13 @@ h6 {
 
 .nav-tabs-bordered .nav-link:hover,
 .nav-tabs-bordered .nav-link:focus {
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .nav-tabs-bordered .nav-link.active {
     background-color: #fff;
-    color: #4154f1;
-    border-bottom: 2px solid #4154f1;
+    color: #ff7b25;
+    border-bottom: 2px solid #ff7b25;
 }
 
 /*--------------------------------------------------------------
@@ -720,7 +780,7 @@ h2.heading {
     align-items: center;
     font-size: 15px;
     font-weight: 600;
-    color: #4154f1;
+    color: #ff7b25;
     transition: 0.3;
     background: #f6f9ff;
     padding: 10px 15px;
@@ -730,7 +790,7 @@ h2.heading {
 .sidebar-nav .nav-link i {
     font-size: 16px;
     margin-right: 10px;
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .sidebar-nav .nav-link.collapsed {
@@ -743,12 +803,12 @@ h2.heading {
 }
 
 .sidebar-nav .nav-link:hover {
-    color: #4154f1;
+    color: #ff7b25;
     background: #f6f9ff;
 }
 
 .sidebar-nav .nav-link:hover i {
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .sidebar-nav .nav-link .bi-chevron-down {
@@ -786,11 +846,11 @@ h2.heading {
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .sidebar-nav .nav-content a.active i {
-    background-color: #4154f1;
+    background-color: #ff7b25;
 }
 
 /*--------------------------------------------------------------
@@ -813,7 +873,7 @@ h2.heading {
 
 .dashboard .filter .icon:hover,
 .dashboard .filter .icon:focus {
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .dashboard .filter .dropdown-header {
@@ -857,7 +917,7 @@ h2.heading {
 }
 
 .dashboard .sales-card .card-icon {
-    color: #4154f1;
+    color: #ff7b25;
     background: #f6f6fe;
 }
 
@@ -942,7 +1002,7 @@ h2.heading {
 }
 
 .dashboard .news h4 a:hover {
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .dashboard .news p {
@@ -1090,7 +1150,7 @@ h2.heading {
 .faq .basic h6 {
     font-size: 18px;
     font-weight: 600;
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .faq .basic p {
@@ -1107,7 +1167,7 @@ h2.heading {
 .contact .info-box i {
     font-size: 38px;
     line-height: 0;
-    color: #4154f1;
+    color: #ff7b25;
 }
 
 .contact .info-box h3 {
@@ -1174,7 +1234,7 @@ h2.heading {
 
 .contact .php-email-form input:focus,
 .contact .php-email-form textarea:focus {
-    border-color: #4154f1;
+    border-color: #ff7b25;
 }
 
 .contact .php-email-form input {
@@ -1186,7 +1246,7 @@ h2.heading {
 }
 
 .contact .php-email-form button[type="submit"] {
-    background: #4154f1;
+    background: #ff7b25;
     border: 0;
     padding: 10px 30px;
     color: #fff;
@@ -1195,7 +1255,7 @@ h2.heading {
 }
 
 .contact .php-email-form button[type="submit"]:hover {
-    background: #5969f3;
+    background: #e56513;
 }
 
 @keyframes animate-loading {
@@ -1218,7 +1278,7 @@ h2.heading {
 .error-404 h1 {
     font-size: 180px;
     font-weight: 700;
-    color: #4154f1;
+    color: #ff7b25;
     margin-bottom: 0;
     line-height: 150px;
 }
@@ -1298,13 +1358,13 @@ nav[role="navigation"] span {
 
 /* Active / highlighted button */
 nav[role="navigation"] a {
-    background-color: #2563eb; /* Blue */
-    border-color: #2563eb;
+    background-color: #ff7b25;
+    border-color: #ff7b25;
     color: #000;
 }
 nav[role="navigation"] a:hover {
-    background-color: #1e4ed8;
-    border-color: #1e4ed8;
+    background-color: #e56513;
+    border-color: #e56513;
 }
 
 /* Disabled button */

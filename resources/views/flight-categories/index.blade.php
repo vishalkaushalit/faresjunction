@@ -81,7 +81,7 @@
 
         @if ($flightCategories->hasPages())
             <div class="d-flex justify-content-end m-2">
-                {!! $flightCategories->links('pagination::simple-tailwind') !!}
+                {!! $flightCategories->links('pagination::simple-bootstrap-5') !!}
             </div>
         @endif
     </section>
