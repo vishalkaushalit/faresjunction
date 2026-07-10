@@ -178,7 +178,7 @@ class FlightRouteDestinationController extends Controller
             ? 'flight-destinations'
             : 'flight-routes';
 
-        return $file->storeAs($directory, $file->getClientOriginalName(), 'public');
+        return $this->storeWithUniqueName($file, $directory);
     }
 
     private function deleteFile(?string $path): void

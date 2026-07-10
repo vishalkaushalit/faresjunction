@@ -14,10 +14,10 @@ The sidebar is link-based navigation, not tab navigation.
 Each sidebar item loads the same airline page with query parameters:
 
 ```text
-/airlines?airline=american-airlines&section=baggage
+/airlines/american-airlines/baggage
 ```
 
-The `airline` value selects the airline data. The `section` value selects the active sidebar page content.
+The first path value selects the airline data. The second path value selects the active sidebar page content.
 
 ## Adding Another Airline
 
@@ -46,7 +46,7 @@ Example:
 Then open it with:
 
 ```text
-/airlines?airline=new-airline
+/airlines/new-airline
 ```
 
 ## Adding Sidebar Pages

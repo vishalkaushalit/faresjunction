@@ -49,7 +49,7 @@ class WebsiteController extends Controller
         return view('website.package-details');
     }
 
-    public function airline(Request $request, ?string $airline = null): View
+    public function airline(Request $request, ?string $airline = null, ?string $section = null): View
     {
         try {
             $databaseAirlinePages = AirlinePage::query()
@@ -64,6 +64,7 @@ class WebsiteController extends Controller
         return view('website.airlines.airline', [
             'databaseAirlinePages' => $databaseAirlinePages,
             'requestedAirlineKey' => $airline ?: $request->query('airline'),
+            'requestedSectionKey' => $section ?: $request->query('section'),
             'sectionLabels' => AirlinePage::SECTION_LABELS,
         ]);
     }

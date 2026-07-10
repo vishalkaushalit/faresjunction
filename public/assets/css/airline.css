@@ -12,11 +12,10 @@
 .airline-banner-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 20px;
 }
 
 .airline-hero-copy {
-  max-width: 760px;
   color: var(--white);
 }
 
@@ -33,10 +32,10 @@
 
 .airline-hero-copy h1 {
   color: var(--white);
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 0.8rem;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .airline-hero-copy p {
@@ -74,6 +73,63 @@
 .airline-content-section {
   background-color: #f5f5f5;
   padding: 4rem 0;
+}
+
+.airline-breadcrumb {
+  margin-bottom: 10px;
+}
+
+.airline-breadcrumb ol {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.airline-breadcrumb li {
+  align-items: center;
+  color: #202027;
+  display: flex;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.airline-breadcrumb li:not(:last-child)::after {
+  border-right: 2px solid #20272d;
+  border-top: 2px solid #20272d;
+  content: "";
+  display: block;
+  height: 12px;
+  margin-left: 10px;
+  transform: rotate(45deg);
+  width: 12px;
+}
+
+.airline-breadcrumb a {
+  color: #211d3c;
+  text-decoration: none;
+}
+
+.airline-breadcrumb a:hover {
+  color: var(--secondary-color);
+}
+
+.airline-page-heading {
+  margin-bottom: 20px;
+}
+
+.airline-page-heading h2 {
+  color: var(--primary-color);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.airline-page-heading h2 span {
+  color: var(--secondary-color);
 }
 
 .airline-layout {
@@ -144,7 +200,14 @@
   padding: 0;
 }
 
-.airline-content-card p.airline-code {
+.airline-content-card p {
+  color: var(--primary-color);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+p.airline-code {
   background: var(--secondary-color);
   display: inline-flex;
   max-width: 100%;
@@ -152,13 +215,7 @@
   color: #fff;
   border-radius: 5px;
   overflow-wrap: anywhere;
-}
-
-.airline-content-card p {
-  color: var(--primary-color);
-  font-size: 1rem;
-  line-height: 1.8;
-  margin-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .airline-content-divider {
@@ -304,6 +361,10 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .airline-hero-copy h1 {
+    font-size: 30px;
+  }
 }
 
 @media (max-width: 1199.98px) {
@@ -328,8 +389,14 @@
     padding: 3rem 0;
   }
 
-  .airline-hero-copy h1 {
-    font-size: 2.2rem;
+  .airline-breadcrumb li {
+    font-size: 1rem;
+  }
+
+  .airline-breadcrumb li:not(:last-child)::after {
+    height: 9px;
+    margin-left: 0.55rem;
+    width: 9px;
   }
 
   .airline-search-widget .form-grid,
@@ -352,5 +419,19 @@
 
   .popular-flights-list {
     column-count: 1;
+  }
+
+  .airline-page-heading h2 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 575px) {
+  .airline-page-heading h2 {
+    font-size: 26px;
+  }
+
+  .airline-breadcrumb li {
+    font-size: 14px;
   }
 }

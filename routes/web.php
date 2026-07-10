@@ -22,6 +22,7 @@ Route::controller(WebsiteController::class)->group(function () {
     Route::get('/packages', 'packages')->name('website.packages');
     Route::get('/package-details', 'packageDetails')->name('website.package-details');
     Route::get('/airlines', 'airline')->name('website.airline');
+    Route::get('/airlines/{airline}/{section}', 'airline')->name('website.airline.section');
     Route::get('/airlines/{airline}', 'airline')->name('website.airline.slug');
     Route::get('/about', 'about')->name('website.about');
     Route::get('/blog', 'blog')->name('website.blog');

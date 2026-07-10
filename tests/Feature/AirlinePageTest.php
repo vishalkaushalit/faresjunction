@@ -141,6 +141,36 @@ class AirlinePageTest extends TestCase
             ->assertDontSee('How can I check-in for my Test Airways flight?');
     }
 
+    public function test_public_airline_section_uses_clean_path_url(): void
+    {
+        AirlinePage::create([
+            'name' => 'American Airlines',
+            'slug' => 'american-airlines',
+            'sections' => [
+                'overview' => [
+                    'title' => 'Overview',
+                    'body' => 'American Airlines overview.',
+                ],
+                'book-manage' => [
+                    'title' => 'Book & Manage',
+                    'body' => 'Manage your American Airlines booking.',
+                ],
+            ],
+            'status' => true,
+        ]);
+
+        $url = route('website.airline.section', [
+            'airline' => 'american-airlines',
+            'section' => 'book-manage',
+        ]);
+
+        $this->assertStringEndsWith('/airlines/american-airlines/book-manage', $url);
+
+        $this->get($url)
+            ->assertOk()
+            ->assertSee('Manage your American Airlines booking.');
+    }
+
     public function test_public_airline_sidebar_hides_sections_without_body_content(): void
     {
         AirlinePage::create([
@@ -166,14 +196,17 @@ class AirlinePageTest extends TestCase
             'status' => true,
         ]);
 
-        $response = $this->get(route('website.airline.slug', 'test-airways') . '?section=baggage');
+        $response = $this->get(route('website.airline.section', [
+            'airline' => 'test-airways',
+            'section' => 'baggage',
+        ]));
 
         $response
             ->assertOk()
             ->assertSee('Visible overview content.')
-            ->assertSee('section=overview', false)
-            ->assertSee('section=cancellation', false)
-            ->assertDontSee('section=baggage', false);
+            ->assertSee('/airlines/test-airways/overview', false)
+            ->assertSee('/airlines/test-airways/cancellation', false)
+            ->assertDontSee('/airlines/test-airways/baggage', false);
     }
 
     public function test_new_active_airline_appears_in_public_footer(): void

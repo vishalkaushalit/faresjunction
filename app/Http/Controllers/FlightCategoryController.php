@@ -162,7 +162,7 @@ class FlightCategoryController extends Controller
     {
         $file = $request->file('category_image');
 
-        return $file->storeAs('flight-categories', $file->getClientOriginalName(), 'public');
+        return $this->storeWithUniqueName($file, 'flight-categories');
     }
 
     private function deleteFile(?string $path): void

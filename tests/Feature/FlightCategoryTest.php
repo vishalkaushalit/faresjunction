@@ -59,6 +59,29 @@ class FlightCategoryTest extends TestCase
         Storage::disk('public')->assertExists($category->image_path);
     }
 
+    public function test_duplicate_image_names_receive_incrementing_suffixes(): void
+    {
+        Storage::fake('public');
+
+        $user = User::factory()->create(['role' => User::ROLE_ADMIN]);
+
+        foreach (['First', 'Second', 'Third'] as $name) {
+            $this->actingAs($user)->post(route('flight-categories.store'), [
+                'name' => $name,
+                'category_image' => UploadedFile::fake()->image('shared.jpg'),
+            ])->assertSessionHasNoErrors();
+        }
+
+        $this->assertSame(
+            [
+                'flight-categories/shared.jpg',
+                'flight-categories/shared-1.jpg',
+                'flight-categories/shared-2.jpg',
+            ],
+            FlightCategory::query()->orderBy('id')->pluck('image_path')->all()
+        );
+    }
+
     public function test_flight_category_can_be_updated(): void
     {
         Storage::fake('public');
