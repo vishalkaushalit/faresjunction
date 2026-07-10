@@ -200,22 +200,22 @@
   padding: 0;
 }
 
-.airline-content-card p {
-  color: var(--primary-color);
-  font-size: 1rem;
-  line-height: 1.8;
-  margin-bottom: 0;
-}
-
 p.airline-code {
   background: var(--secondary-color);
   display: inline-flex;
   max-width: 100%;
   padding: 2px 10px;
-  color: #fff;
+  color: #fff !important;
   border-radius: 5px;
   overflow-wrap: anywhere;
   margin-bottom: 10px;
+}
+
+.airline-content-card p {
+  color: var(--primary-color);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 0;
 }
 
 .airline-content-divider {
@@ -344,8 +344,15 @@ p.airline-code {
   padding: 1rem 1.25rem 1.25rem;
 }
 
+.airline-faq-section .accordion-collapse.show .faq-content {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
 .airline-faq-section .faq-content p {
   margin: 0;
+  color: var(--primary-color);
 }
 
 @media (max-width: 992px) {

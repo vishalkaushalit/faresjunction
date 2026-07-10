@@ -586,13 +586,14 @@ ob_start();
                             @foreach ($airline['faqs'] as $index => $faq)
                                 @php
                                     $headingId = 'airlineFaqHeading' . $index;
-                                    $collapseId = 'airlineFaq' . $index;
+                                    $collapseId = 'airlineFaqCollapse' . $index;
                                     $isOpen = $loop->first;
                                 @endphp
                                 <div class="accordion-item faq-item">
                                     <h4 class="accordion-header" id="{{ $headingId }}">
                                         <button class="accordion-button {{ $isOpen ? '' : 'collapsed' }}"
-                                            type="button" data-bs-toggle="collapse"
+                                            type="button"
+                                            data-bs-toggle="collapse"
                                             data-bs-target="#{{ $collapseId }}"
                                             aria-expanded="{{ $isOpen ? 'true' : 'false' }}"
                                             aria-controls="{{ $collapseId }}">
@@ -601,7 +602,8 @@ ob_start();
                                     </h4>
                                     <div id="{{ $collapseId }}"
                                         class="accordion-collapse collapse {{ $isOpen ? 'show' : '' }}"
-                                        aria-labelledby="{{ $headingId }}" data-bs-parent="#airlineFaqAccordion">
+                                        aria-labelledby="{{ $headingId }}"
+                                        data-bs-parent="#airlineFaqAccordion">
                                         <div class="accordion-body faq-content">
                                             <p>{{ $faq['answer'] }}</p>
                                         </div>
