@@ -69,6 +69,7 @@
     <link href="{{ asset('dashboardAssets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/variables.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/global.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/ui-components.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
     @foreach ($extraCSS ?? [] as $cssFile)
         @php
@@ -256,18 +257,14 @@
                         <div class="footer-col">
                             <h4 class="footer-col-title">Popular Routes</h4>
                             <ul class="footer-links">
-                                <li><a href="{{ route('website.flights') }}" class="footer-link">Flights from New
-                                        York</a></li>
-                                <li><a href="{{ route('website.flights') }}" class="footer-link">Flights from Los
-                                        Angeles</a></li>
-                                <li><a href="{{ route('website.flights') }}" class="footer-link">Flights from
-                                        Chicago</a></li>
-                                <li><a href="{{ route('website.flights') }}" class="footer-link">Flights from
-                                        Miami</a></li>
-                                <li><a href="{{ route('website.flights') }}" class="footer-link">Flights from
-                                        Houston</a></li>
-                                <li><a href="{{ route('website.flights') }}" class="footer-link">Flights from
-                                        Dallas</a></li>
+                                @foreach ($footerRouteCategories ?? [] as $footerRouteCategory)
+                                    <li>
+                                        <a href="{{ route('website.routes.category', ['category' => $footerRouteCategory->slug]) }}"
+                                            class="footer-link">
+                                            {{ $footerRouteCategory->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <!-- Col 2: Airlines -->

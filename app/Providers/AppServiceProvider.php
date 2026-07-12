@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 use App\Models\AirlinePage;
+use App\Models\FlightCategory;
 use App\Models\User;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Database\QueryException;
@@ -47,11 +48,21 @@ class AppServiceProvider extends ServiceProvider
                     ->orderBy('sort_order')
                     ->orderBy('name')
                     ->get(['name', 'slug']);
+
+                $footerRouteCategories = FlightCategory::query()
+                    ->whereDoesntHave('children')
+                    ->orderByDesc('created_at')
+                    ->limit(6)
+                    ->get(['name', 'slug']);
             } catch (QueryException) {
                 $footerAirlinePages = collect();
+                $footerRouteCategories = collect();
             }
 
-            $view->with('footerAirlinePages', $footerAirlinePages);
+            $view->with([
+                'footerAirlinePages' => $footerAirlinePages,
+                'footerRouteCategories' => $footerRouteCategories,
+            ]);
         });
     }
 }

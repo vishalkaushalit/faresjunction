@@ -28,6 +28,7 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('dashboardAssets/css/style.css') }}?123" rel="stylesheet">
+    <link href="{{ asset('assets/css/ui-components.css') }}" rel="stylesheet">
 
     <!-- Google Search Console -->
     <meta name="google-site-verification" content="moulPyqrWIh1sdiu7yjx0Gn9MtbOU1lXOQBstoj2FEM">
@@ -40,10 +41,11 @@
             background: #000 !important;
         }
 
+
     </style>
 </head>
 
-<body class="font-sans antialiased">
+<body>
     @php
         $authenticatedUser = Auth::user();
     @endphp

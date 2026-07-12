@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AirlinePage;
 use App\Models\BlogPost;
+use App\Models\FlightCategory;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -27,6 +28,22 @@ class WebsiteController extends Controller
     public function flights(): View
     {
         return view('website.flights');
+    }
+
+    public function routes(?FlightCategory $category = null): View
+    {
+        $breadcrumbs = collect();
+        $ancestor = $category;
+
+        while ($ancestor) {
+            $breadcrumbs->prepend($ancestor);
+            $ancestor = $ancestor->parent;
+        }
+
+        return view('website.flight-routes', [
+            'routeCategory' => $category,
+            'routeBreadcrumbs' => $breadcrumbs,
+        ]);
     }
 
     public function hotels(): View
