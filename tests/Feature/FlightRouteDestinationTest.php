@@ -25,7 +25,40 @@ class FlightRouteDestinationTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('Flight Routes')
-            ->assertSee('Add Route');
+            ->assertSee('Add Route')
+            ->assertSee('Type');
+    }
+
+    public function test_public_flight_destination_category_page_can_be_rendered(): void
+    {
+        $parent = FlightCategory::create([
+            'name' => 'Europe',
+            'slug' => 'europe',
+        ]);
+        $destination = FlightCategory::create([
+            'parent_id' => $parent->id,
+            'name' => 'Amsterdam',
+            'slug' => 'amsterdam',
+            'image_path' => 'flight-categories/amsterdam.jpg',
+        ]);
+
+        $page = FlightRouteDestination::create([
+            'type' => FlightRouteDestination::TYPE_DESTINATION,
+            'flight_category_id' => $destination->id,
+            'route_text' => 'Flights to Amsterdam',
+            'slug' => 'flights-to-amsterdam',
+            'trip_type' => 'round_trip',
+            'cabin_class' => 'Economy',
+            'is_published' => true,
+        ]);
+
+        $response = $this->get(route('website.destinations.show', $page));
+
+        $response
+            ->assertOk()
+            ->assertSee('Flights to Amsterdam Flights &amp; Destinations', false)
+            ->assertSee(route('website.routes.category', $parent))
+            ->assertSee('Find Flights to Flights to Amsterdam');
     }
 
     public function test_flight_destination_can_be_created(): void
@@ -45,6 +78,7 @@ class FlightRouteDestinationTest extends TestCase
                 'flight_category_id' => $category->id,
                 'image' => UploadedFile::fake()->image('dubai.jpg'),
                 'route_text' => 'Dubai',
+                'slug' => 'Dubai Flights',
                 'trip_type' => 'round_trip',
                 'cabin_class' => 'Businesss',
                 'pricing' => '$899',
@@ -60,6 +94,7 @@ class FlightRouteDestinationTest extends TestCase
         $destination = FlightRouteDestination::where('route_text', 'Dubai')->firstOrFail();
 
         $this->assertSame(FlightRouteDestination::TYPE_DESTINATION, $destination->type);
+        $this->assertSame('dubai-flights', $destination->slug);
         $this->assertSame($category->id, $destination->flight_category_id);
         $this->assertSame('flight-destinations/dubai.jpg', $destination->image_path);
         $this->assertSame('dubai.jpg', $destination->image_original_name);
@@ -83,6 +118,7 @@ class FlightRouteDestinationTest extends TestCase
             'image_path' => UploadedFile::fake()->image('old-route.jpg')->storeAs('flight-routes', 'old-route.jpg', 'public'),
             'image_original_name' => 'old-route.jpg',
             'route_text' => 'New York to London',
+            'slug' => 'new-york-to-london',
             'trip_type' => 'one_way',
             'cabin_class' => 'Economy',
             'pricing' => '$399',
@@ -97,6 +133,7 @@ class FlightRouteDestinationTest extends TestCase
                 'image' => UploadedFile::fake()->image('new-route.jpg'),
                 'flight_category_id' => $category->id,
                 'route_text' => 'New York to London via Boston',
+                'slug' => 'New York London via Boston',
                 'trip_type' => 'multi_city',
                 'cabin_class' => 'Premium Economy',
                 'pricing' => '$599',
@@ -112,6 +149,7 @@ class FlightRouteDestinationTest extends TestCase
         $route->refresh();
 
         $this->assertSame('New York to London via Boston', $route->route_text);
+        $this->assertSame('new-york-london-via-boston', $route->slug);
         $this->assertSame($category->id, $route->flight_category_id);
         $this->assertSame('multi_city', $route->trip_type);
         $this->assertSame('Premium Economy', $route->cabin_class);

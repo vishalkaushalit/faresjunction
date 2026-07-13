@@ -22,6 +22,20 @@
                             <td>{{ $item->route_text }}</td>
                         </tr>
                         <tr>
+                            <th>Type</th>
+                            <td>
+                                @if ($item->type === \App\Models\FlightRouteDestination::TYPE_DESTINATION)
+                                    <span class="badge bg-info text-dark">Destination</span>
+                                @else
+                                    <span class="badge bg-primary">Route</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Slug</th>
+                            <td><code>{{ $item->slug ?: 'Not set' }}</code></td>
+                        </tr>
+                        <tr>
                             <th>Category Name</th>
                             <td>{{ $item->category?->name ?? 'Not set' }}</td>
                         </tr>

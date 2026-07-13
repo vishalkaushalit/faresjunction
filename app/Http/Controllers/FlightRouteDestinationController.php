@@ -116,9 +116,19 @@ class FlightRouteDestinationController extends Controller
 
     private function validatedData(Request $request, string $type): array
     {
+        $request->merge([
+            'slug' => Str::slug((string) $request->input('slug')),
+        ]);
+
         return $request->validate([
             'flight_category_id' => ['nullable', 'integer', Rule::exists('flight_categories', 'id')],
             'route_text' => ['required', 'string', 'max:255'],
+            'slug' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('flight_route_destinations', 'slug')->ignore($request->route('flightRouteDestination')),
+            ],
             'trip_type' => ['required', Rule::in(array_keys(FlightRouteDestination::TRIP_TYPES))],
             'cabin_class' => ['required', Rule::in(array_keys(FlightRouteDestination::CABIN_CLASSES))],
             'pricing' => ['nullable', 'string', 'max:255'],

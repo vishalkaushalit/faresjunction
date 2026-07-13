@@ -35,6 +35,13 @@
     </div>
 
     <div class="col-md-6 mb-3">
+        <label for="slug" class="form-label">Slug</label>
+        <input type="text" id="slug" name="slug" class="form-control"
+            value="{{ old('slug', $item?->slug) }}" placeholder="new-york-to-london" required>
+        <div class="form-text">Used as the unique, URL-friendly page identifier.</div>
+    </div>
+
+    <div class="col-md-6 mb-3">
         <label for="trip_type" class="form-label">Trip Type</label>
         <select id="trip_type" name="trip_type" class="form-select" required>
             <option value="">Select Trip Type</option>

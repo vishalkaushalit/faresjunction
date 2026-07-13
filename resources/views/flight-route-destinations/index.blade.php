@@ -22,6 +22,8 @@
                         <th>Sr. No.</th>
                         <th>{{ $imageLabel }}</th>
                         <th>{{ $itemLabel }}</th>
+                        <th>Slug</th>
+                        <th>Type</th>
                         <th>Category Name</th>
                         <th>Trip Type</th>
                         <th>Cabin Class</th>
@@ -45,6 +47,14 @@
                                 @endif
                             </td>
                             <td>{{ $item->route_text }}</td>
+                            <td><code>{{ $item->slug ?: 'Not set' }}</code></td>
+                            <td>
+                                @if ($item->type === \App\Models\FlightRouteDestination::TYPE_DESTINATION)
+                                    <span class="badge bg-info text-dark">Destination</span>
+                                @else
+                                    <span class="badge bg-primary">Route</span>
+                                @endif
+                            </td>
                             <td>{{ $item->category?->name ?? 'Not set' }}</td>
                             <td>{{ $item->trip_type_label }}</td>
                             <td>{{ $item->cabin_class }}</td>
@@ -82,7 +92,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="11">No {{ strtolower($pluralTitle) }} available.</td>
+                            <td colspan="13">No {{ strtolower($pluralTitle) }} available.</td>
                         </tr>
                     @endforelse
                 </tbody>

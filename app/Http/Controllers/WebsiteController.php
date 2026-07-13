@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AirlinePage;
 use App\Models\BlogPost;
 use App\Models\FlightCategory;
+use App\Models\FlightRouteDestination;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -32,6 +33,21 @@ class WebsiteController extends Controller
 
     public function routes(?FlightCategory $category = null): View
     {
+        return $this->flightCategoryPage($category, 'route');
+    }
+
+    public function routePage(FlightRouteDestination $flightRouteDestination): View
+    {
+        return $this->flightItemPage($flightRouteDestination, FlightRouteDestination::TYPE_ROUTE);
+    }
+
+    public function destinationPage(FlightRouteDestination $flightRouteDestination): View
+    {
+        return $this->flightItemPage($flightRouteDestination, FlightRouteDestination::TYPE_DESTINATION);
+    }
+
+    private function flightCategoryPage(?FlightCategory $category, string $pageType): View
+    {
         $breadcrumbs = collect();
         $ancestor = $category;
 
@@ -43,6 +59,29 @@ class WebsiteController extends Controller
         return view('website.flight-routes', [
             'routeCategory' => $category,
             'routeBreadcrumbs' => $breadcrumbs,
+            'flightPageType' => $pageType,
+            'flightPageItem' => null,
+        ]);
+    }
+
+    private function flightItemPage(FlightRouteDestination $item, string $type): View
+    {
+        abort_unless($item->type === $type && $item->is_published, 404);
+
+        $category = $item->category;
+        $breadcrumbs = collect();
+        $ancestor = $category;
+
+        while ($ancestor) {
+            $breadcrumbs->prepend($ancestor);
+            $ancestor = $ancestor->parent;
+        }
+
+        return view('website.flight-routes', [
+            'routeCategory' => $category,
+            'routeBreadcrumbs' => $breadcrumbs,
+            'flightPageType' => $type,
+            'flightPageItem' => $item,
         ]);
     }
 

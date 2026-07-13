@@ -1,8 +1,16 @@
 <?php
-$routePageName = $routeCategory?->name ?? 'Amsterdam';
-$routeHeroImage = $routeCategory?->image_url ?? asset('assets/images/amsterdam_banner_bg.png');
-$pageTitle = "{$routePageName} Flights & Routes | Fares Junction";
-$pageDescription = "Compare flights and explore travel routes for {$routePageName} with Fares Junction.";
+$flightPageItem = $flightPageItem ?? null;
+$routePageName = $flightPageItem?->route_text ?? $routeCategory?->name ?? 'Amsterdam';
+$routeHeroImage = $flightPageItem?->image_url ?? $routeCategory?->image_url ?? asset('assets/images/amsterdam_banner_bg.png');
+$isDestinationPage = ($flightPageType ?? 'route') === 'destination';
+$pageSectionName = $isDestinationPage ? 'Destinations' : 'Routes';
+$categoryRouteName = 'website.routes.category';
+$pageTitle = "{$routePageName} Flights & {$pageSectionName} | Fares Junction";
+$pageDescription = $flightPageItem?->description
+    ? strip_tags($flightPageItem->description)
+    : ($isDestinationPage
+    ? "Compare flights and explore {$routePageName} as a travel destination with Fares Junction."
+    : "Compare flights and explore travel routes for {$routePageName} with Fares Junction.");
 $extraCSS = ['css/hero.css', 'css/routes.css'];
 $extraJS = ['js/search.js'];
 ob_start();
@@ -15,17 +23,22 @@ ob_start();
             <li><a href="{{ route('website.index') }}">Home</a> <span class="divider">/</span></li>
             <li><a href="{{ route('website.flights') }}">Flights</a> <span class="divider">/</span></li>
             @forelse ($routeBreadcrumbs as $breadcrumb)
-                @if ($loop->last)
+                @if ($loop->last && ! $flightPageItem)
                     <li class="active" aria-current="page">{{ $breadcrumb->name }}</li>
                 @else
                     <li>
-                        <a href="{{ route('website.routes.category', ['category' => $breadcrumb->slug]) }}">{{ $breadcrumb->name }}</a>
+                        <a href="{{ route($categoryRouteName, ['category' => $breadcrumb->slug]) }}">{{ $breadcrumb->name }}</a>
                         <span class="divider">/</span>
                     </li>
                 @endif
             @empty
-                <li class="active" aria-current="page">Routes</li>
+                @unless ($flightPageItem)
+                    <li class="active" aria-current="page">{{ $pageSectionName }}</li>
+                @endunless
             @endforelse
+            @if ($flightPageItem)
+                <li class="active" aria-current="page">{{ $flightPageItem->route_text }}</li>
+            @endif
         </ul>
     </div>
 </div>

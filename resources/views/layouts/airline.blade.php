@@ -258,17 +258,31 @@
                         <div class="footer-col">
                             <h4 class="footer-col-title">Popular Routes</h4>
                             <ul class="footer-links">
-                                @foreach ($footerRouteCategories ?? [] as $footerRouteCategory)
+                                @foreach ($footerRoutes ?? [] as $footerRoute)
                                     <li>
-                                        <a href="{{ route('website.routes.category', ['category' => $footerRouteCategory->slug]) }}"
+                                        <a href="{{ route('website.routes.show', $footerRoute) }}"
                                             class="footer-link">
-                                            {{ $footerRouteCategory->name }}
+                                            {{ $footerRoute->route_text }}
                                         </a>
                                     </li>
                                 @endforeach
                             </ul>
                         </div>
-                        <!-- Col 2: Airlines -->
+                        <!-- Col 2: Popular Destinations -->
+                        <div class="footer-col">
+                            <h4 class="footer-col-title">Destinations</h4>
+                            <ul class="footer-links">
+                                @foreach ($footerDestinations ?? [] as $footerDestination)
+                                    <li>
+                                        <a href="{{ route('website.destinations.show', $footerDestination) }}"
+                                            class="footer-link">
+                                            {{ $footerDestination->route_text }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <!-- Col 3: Airlines -->
                         <div class="footer-col">
                             <h4 class="footer-col-title">Airlines</h4>
                             <ul class="footer-links">
@@ -282,7 +296,7 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <!-- Col 3: Company -->
+                        <!-- Col 4: Company -->
                         <div class="footer-col">
                             <h4 class="footer-col-title">Company</h4>
                             <ul class="footer-links">
@@ -297,7 +311,7 @@
                                 <li><a href="{{ asset('sitemap.xml') }}" class="footer-link">Sitemap</a></li>
                             </ul>
                         </div>
-                        <!-- Col 4: Newsletter -->
+                        <!-- Col 5: Newsletter -->
                         <div class="footer-col">
                             <h4 class="footer-col-title">Newsletter</h4>
                             <p class="newsletter-desc">Subscribe and get exclusive flight deals, travel guides, and

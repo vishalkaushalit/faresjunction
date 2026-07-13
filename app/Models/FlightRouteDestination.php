@@ -34,6 +34,7 @@ class FlightRouteDestination extends Model
         'image_path',
         'image_original_name',
         'route_text',
+        'slug',
         'trip_type',
         'cabin_class',
         'pricing',
