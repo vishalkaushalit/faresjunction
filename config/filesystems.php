@@ -40,7 +40,10 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            // Allow shared hosts without symlink support to write directly to
+            // public/storage. Existing Laravel installations can keep the
+            // conventional storage/app/public location via the environment.
+            'root' => env('PUBLIC_FILESYSTEM_ROOT', public_path('storage')),
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,
