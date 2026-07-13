@@ -17,6 +17,7 @@ use App\Http\Controllers\UserController;
 Route::controller(WebsiteController::class)->group(function () {
     Route::get('/', 'index')->name('website.index');
     Route::get('/flights', 'flights')->name('website.flights');
+    Route::get('/airlines', 'airlines')->name('website.airlines');
     Route::get('/flights/{category:slug}', 'routes')->name('website.routes.category');
     Route::get('/routes/{flightRouteDestination:slug}', 'routePage')->name('website.routes.show');
     Route::get('/destinations/{flightRouteDestination:slug}', 'destinationPage')->name('website.destinations.show');

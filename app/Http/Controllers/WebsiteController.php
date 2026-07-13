@@ -90,6 +90,11 @@ class WebsiteController extends Controller
         return view('website.hotels');
     }
 
+    public function airlines(): View
+    {
+        return view('website.airlines.index');
+    }
+
     public function cars(): View
     {
         return view('website.cars');
