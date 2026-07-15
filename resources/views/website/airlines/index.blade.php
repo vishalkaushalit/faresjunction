@@ -174,7 +174,19 @@ ob_start();
                     </div>
                     <div class="category-body">
 
-                        <div class="airline-item">
+                        <a class="airline-item" href="{{ route('website.airline.slug', 'delta-airlines') }}">
+                            <h3 class="airline-name">Delta Air Lines (DL)</h3>
+                            <ul class="airline-features">
+                                <li>Premium services in <strong>business class, first class</strong>, and
+                                    <strong>premium economy</strong>.</li>
+                            </ul>
+                            <p class="airline-info-line"><strong>Hub:</strong> Atlanta (ATL), Detroit (DTW), 
+                                Minneapolis/St. Paul (MSP)</p>
+                            <p class="airline-info-line"><strong>Popular Route:</strong> Atlanta (ATL) - Orlando
+                                (MCO)</p>
+                        </a>
+                        
+                        <a class="airline-item" href="{{ route('website.airline.slug', 'american-airlines') }}">
                             <h3 class="airline-name">American Airlines (AA)</h3>
                             <ul class="airline-features">
                                 <li>Premium services in <strong>business class, first class</strong>, and
@@ -184,9 +196,21 @@ ob_start();
                                 Charlotte (CLT)</p>
                             <p class="airline-info-line"><strong>Popular Route:</strong> New York (JFK) - Los Angeles
                                 (LAX)</p>
-                        </div>
-
-                        <div class="airline-item">
+                        </a>
+                        
+                        <a class="airline-item" href="{{ route('website.airline.slug', 'southwest-airlines') }}">
+                            <h3 class="airline-name">Southwest Airlines (WN)</h3>
+                            <ul class="airline-features">
+                                <li>Premium services in <strong>business class, first class</strong>, and
+                                    <strong>premium economy</strong>.</li>
+                            </ul>
+                            <p class="airline-info-line"><strong>Hub:</strong> Dallas/Fort Worth (DFW), Miami (MIA),
+                                Charlotte (CLT)</p>
+                            <p class="airline-info-line"><strong>Popular Route:</strong> New York (JFK) - Los Angeles
+                                (LAX)</p>
+                        </a>
+                        
+                        <a class="airline-item" href="{{ route('website.airline.slug', 'united-airlines') }}">
                             <h3 class="airline-name">United Airlines (UA)</h3>
                             <ul class="airline-features">
                                 <li>Extensive flight network covering <strong>domestic and international
@@ -200,7 +224,31 @@ ob_start();
                                 Francisco (SFO)</p>
                             <p class="airline-info-line"><strong>Popular Route:</strong> Chicago (ORD) - Denver (DEN)
                             </p>
-                        </div>
+                        </a>
+                        
+                        <a class="airline-item" href="{{ route('website.airline.slug', 'alaska-airlines') }}">
+                            <h3 class="airline-name">Alaska Airlines (AS)</h3>
+                            <ul class="airline-features">
+                                <li>Premium services in <strong>business class, first class</strong>, and
+                                    <strong>premium economy</strong>.</li>
+                            </ul>
+                            <p class="airline-info-line"><strong>Hub:</strong> Dallas/Fort Worth (DFW), Miami (MIA),
+                                Charlotte (CLT)</p>
+                            <p class="airline-info-line"><strong>Popular Route:</strong> New York (JFK) - Los Angeles
+                                (LAX)</p>
+                        </a>
+                        
+                         <a class="airline-item" href="{{ route('website.airline.slug', 'jetblue-airways') }}">
+                            <h3 class="airline-name">JetBlue Airways (B6)</h3>
+                            <ul class="airline-features">
+                                <li>Premium services in <strong>business class, first class</strong>, and
+                                    <strong>premium economy</strong>.</li>
+                            </ul>
+                            <p class="airline-info-line"><strong>Hub:</strong> Dallas/Fort Worth (DFW), Miami (MIA),
+                                Charlotte (CLT)</p>
+                            <p class="airline-info-line"><strong>Popular Route:</strong> New York (JFK) - Los Angeles
+                                (LAX)</p>
+                        </a>
                     </div>
                 </div>
 
