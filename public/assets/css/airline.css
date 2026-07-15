@@ -35,7 +35,6 @@
   font-size: 40px;
   font-weight: 600;
   line-height: 1.2;
-  text-align: center;
 }
 
 .airline-hero-copy p {
@@ -385,8 +384,8 @@ p.airline-code {
     gap: 0.75rem;
   }
 
-  .airline-search-widget .form-grid-5 > *:first-child,
-  .airline-search-widget .form-grid-5 > .btn-search {
+  .airline-search-widget .form-grid-5>*:first-child,
+  .airline-search-widget .form-grid-5>.btn-search {
     grid-column: span 2;
   }
 }
@@ -411,8 +410,8 @@ p.airline-code {
     grid-template-columns: 1fr;
   }
 
-  .airline-search-widget .form-grid-5 > *:first-child,
-  .airline-search-widget .form-grid-5 > .btn-search {
+  .airline-search-widget .form-grid-5>*:first-child,
+  .airline-search-widget .form-grid-5>.btn-search {
     grid-column: span 1;
   }
 

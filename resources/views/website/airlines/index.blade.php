@@ -21,6 +21,14 @@ ob_start();
         }
     }
 
+    .airline-sidebar {
+        position: sticky;
+        top: 100px;
+        align-self: start;
+        z-index: 10;
+        transition: all 0.3s ease-in-out;
+    }
+
     .category-section {
         margin-bottom: 2.5rem;
         background: #fff;

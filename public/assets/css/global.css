@@ -12,7 +12,7 @@ body {
 }
 
 div#app {
-  overflow: hidden;
+  overflow: clip;
 }
 
 h2,
