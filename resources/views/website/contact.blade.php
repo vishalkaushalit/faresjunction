@@ -1,7 +1,7 @@
 <?php
 $pageTitle = "Contact Our Customer Service Team Available 24/7 | Fares Junction";
 $pageDescription = "Contact our customer service team. Our representatives are available 24/7 365 days to assist you with flight changes and cancellations.";
-$extraCSS = ['css/flights.css', 'css/contact.css'];
+$extraCSS = ['css/contact.css'];
 ob_start();
 ?>
 

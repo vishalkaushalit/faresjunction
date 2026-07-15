@@ -6,7 +6,7 @@ $recentPosts = $recentPosts ?? [];
 
 $pageTitle = $blog['title'] . ' | Travel Blog & Insights';
 $pageDescription = $blog['excerpt'];
-$extraCSS = ['css/blog-details.css', 'css/flights.css', 'css/contact.css'];
+$extraCSS = ['css/blog-details.css', 'css/contact.css'];
 $extraJS = ['js/blog-details.js', 'js/contact.js'];
 
 ob_start();

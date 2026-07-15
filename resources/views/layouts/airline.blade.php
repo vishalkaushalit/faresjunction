@@ -71,7 +71,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/ui-components.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
-    @foreach ($extraCSS ?? [] as $cssFile)
+    @php
+        $cssFiles = collect($extraCSS ?? [])
+            ->filter(fn($cssFile) => filled($cssFile))
+            ->unique()
+            ->values();
+    @endphp
+    @foreach ($cssFiles as $cssFile)
         @php
             $cssFile = ltrim($cssFile, '/');
             $cssHref = preg_match('#^(https?:)?//#', $cssFile)

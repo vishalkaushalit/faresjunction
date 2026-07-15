@@ -74,6 +74,41 @@
   gap: 1.25rem;
 }
 
+.contact-form .input-field-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.contact-form .input-field-wrapper input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.62rem 2.35rem 0.62rem 0.85rem;
+  font-size: 0.92rem;
+  color: var(--primary-color);
+  background: var(--white);
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+}
+
+.contact-form .input-field-wrapper input:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(229, 101, 19, 0.1);
+}
+
+.contact-form .input-field-wrapper svg.field-icon {
+  position: absolute;
+  top: 50%;
+  right: 0.85rem;
+  width: 18px;
+  height: 18px;
+  color: var(--gray-500);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
 .contact-form .text-area-wrapper {
   align-items: flex-start;
 }

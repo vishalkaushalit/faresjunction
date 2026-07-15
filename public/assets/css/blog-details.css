@@ -451,23 +451,50 @@
   background-color: var(--gray-100);
   border: 1px solid var(--gray-200);
   border-radius: var(--card-radius);
-  padding: 1.5rem;
+  padding: 15px;
   margin-bottom: 2rem;
   max-width: 480px;
 }
 
 .toc-title {
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
   font-size: 1.1rem;
+  font-family: inherit;
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.toc-title-label {
+  display: inline-flex;
+  align-items: center;
   gap: 0.5rem;
 }
 
-.toc-title svg {
+.toc-title-label svg {
   color: var(--secondary-color);
+}
+
+.toc-toggle-icon {
+  flex: 0 0 auto;
+  transition: transform 0.2s ease;
+}
+
+.toc-box.is-collapsed .toc-toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.toc-box.is-collapsed .toc-title {
+  margin-bottom: 0;
 }
 
 .toc-list {
@@ -477,6 +504,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  max-height: 1000px;
+  overflow: hidden;
+  opacity: 1;
+  transition: max-height 0.25s ease, opacity 0.2s ease;
+}
+
+.toc-box.is-collapsed .toc-list {
+  max-height: 0;
+  opacity: 0;
 }
 
 .toc-list li {

@@ -120,9 +120,7 @@ ob_start();
         margin-top: 3rem;
     }
 
-    html {
-        scroll-behavior: smooth;
-    }
+    .airline-main-content 
 </style>
 
 <section class="airline-banner">
