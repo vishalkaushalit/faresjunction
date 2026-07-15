@@ -3,7 +3,7 @@
     @php
         $blogMenuOpen = request()->routeIs('blog-posts.*', 'blog-categories.*', 'blog-tags.*');
         $flightMenuOpen = request()->routeIs('flight-categories.*', 'flight-routes.*', 'flight-destinations.*');
-        $leadMenuOpen = request()->routeIs('contact.*', 'subscribe.*');
+        $leadMenuOpen = request()->routeIs('contact.*', 'subscribe.*', 'package-inquiries.*');
     @endphp
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -82,6 +82,13 @@
             <!-- End Airline Pages Nav -->
 
             <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin-packages.*') ? '' : 'collapsed' }}" href="{{ route('admin-packages.index') }}">
+                    <i class="bi bi-suitcase2"></i>
+                    <span>Packages</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('users.index') }}">
                     <i class="bi bi-people"></i>
                     <span>Users</span>
@@ -120,6 +127,11 @@
                     <li>
                         <a href="{{ route('subscribe.index') }}" class="{{ request()->routeIs('subscribe.index') ? 'active' : '' }}">
                             <i class="bi bi-circle"></i><span>Subscribe Form</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('package-inquiries.index') }}" class="{{ request()->routeIs('package-inquiries.*') ? 'active' : '' }}">
+                            <i class="bi bi-circle"></i><span>Package Enquiries</span>
                         </a>
                     </li>
                 </ul>

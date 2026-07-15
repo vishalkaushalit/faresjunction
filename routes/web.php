@@ -13,6 +13,8 @@ use App\Http\Controllers\FlightRouteDestinationController;
 use App\Http\Controllers\GlobalScriptController;
 use App\Http\Controllers\SeoMetaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PackageInquiryController;
 
 Route::controller(WebsiteController::class)->group(function () {
     Route::get('/', 'index')->name('website.index');
@@ -24,7 +26,7 @@ Route::controller(WebsiteController::class)->group(function () {
     Route::get('/hotels', 'hotels')->name('website.hotels');
     Route::get('/cars', 'cars')->name('website.cars');
     Route::get('/packages', 'packages')->name('website.packages');
-    Route::get('/package-details', 'packageDetails')->name('website.package-details');
+    Route::get('/package-details/{package?}', 'packageDetails')->name('website.package-details');
     Route::get('/airlines/{airline}', 'airline')->name('website.airline.slug');
     Route::get('/airlines/{airline}/{section}', 'airline')->name('website.airline.section');
     Route::get('/about', 'about')->name('website.about');
@@ -38,6 +40,7 @@ Route::controller(WebsiteController::class)->group(function () {
 
 Route::post('contact/create', [ContactController::class, 'create'])->name('contact.create');
 Route::post('subscribe/create', [ContactController::class, 'subscribeCreate'])->name('subscribe.create');
+Route::post('package-inquiries', [PackageInquiryController::class, 'store'])->name('package-inquiries.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -70,6 +73,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('subscribe/index', [ContactController::class, 'subscribeIndex'])->name('subscribe.index');
         Route::delete('/subscribe/delete/{id}', [ContactController::class, 'subscribeDelete'])->name('subscribe.delete');
+        Route::get('package-inquiries', [PackageInquiryController::class, 'index'])->name('package-inquiries.index');
+        Route::delete('package-inquiries/{packageInquiry}', [PackageInquiryController::class, 'destroy'])->name('package-inquiries.destroy');
 
         Route::get('seo-meta', [SeoMetaController::class, 'index'])->name('seo-meta.index');
         Route::get('seo-meta/create', [SeoMetaController::class, 'create'])->name('seo-meta.create');
@@ -88,6 +93,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('flight-destinations', FlightRouteDestinationController::class)
             ->parameters(['flight-destinations' => 'flightRouteDestination']);
         Route::resource('airline-pages', AirlinePageController::class)->except(['show']);
+        Route::delete('admin-packages/{adminPackage}/gallery-image', [PackageController::class, 'deleteGalleryImage'])
+            ->name('admin-packages.gallery-image.destroy');
+        Route::resource('admin-packages', PackageController::class)
+            ->parameters(['admin-packages' => 'adminPackage'])->except(['show']);
     });
 });
 

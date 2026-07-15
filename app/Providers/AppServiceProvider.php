@@ -4,6 +4,7 @@ namespace App\Providers;
 use App\Models\AirlinePage;
 use App\Models\FlightRouteDestination;
 use App\Models\User;
+use App\Models\Package;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\ServiceProvider;
@@ -39,6 +40,24 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                 'contactCount' => $contactCount,
             ]);
+        });
+
+        View::composer('website.*', function ($view) {
+            if (array_key_exists('packagesData', $view->getData())) {
+                return;
+            }
+
+            try {
+                $packagesData = Package::query()->where('status', true)
+                    ->orderBy('sort_order')->orderBy('title')->get()
+                    ->mapWithKeys(fn (Package $package) => [
+                        $package->slug => $package->websiteData(),
+                    ])->all();
+            } catch (QueryException) {
+                $packagesData = [];
+            }
+
+            $view->with('packagesData', $packagesData);
         });
 
         View::composer(['layouts.guest', 'layouts.airline'], function ($view) {

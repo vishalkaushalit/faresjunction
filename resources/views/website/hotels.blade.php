@@ -1,6 +1,4 @@
 <?php
-require resource_path('views/layouts/includes/packages-data.php');
-
 $pageTitle = "Book Hotels & Accommodations Worldwide | Fares Junction";
 $pageDescription = "Compare hotel prices and find cheap room stays at popular global tourist destinations with Fares Junction.";
 $extraCSS = ['css/vacations.css', 'css/flights.css', 'css/hotels.css'];

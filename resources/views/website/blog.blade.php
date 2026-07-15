@@ -1,6 +1,4 @@
 <?php
-require resource_path('views/layouts/includes/packages-data.php');
-
 $selectedTag = $selectedTag ?? null;
 $blogCardsData = $blogCardsData ?? [];
 $blogCategoryTabs = collect($blogCardsData)

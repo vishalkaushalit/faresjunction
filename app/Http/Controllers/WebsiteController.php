@@ -6,6 +6,7 @@ use App\Models\AirlinePage;
 use App\Models\BlogPost;
 use App\Models\FlightCategory;
 use App\Models\FlightRouteDestination;
+use App\Models\Package;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -102,12 +103,29 @@ class WebsiteController extends Controller
 
     public function packages(): View
     {
-        return view('website.packages');
+        return view('website.packages', [
+            'packagesData' => Package::query()->where('status', true)
+                ->orderBy('sort_order')->orderBy('title')->get()
+                ->mapWithKeys(fn (Package $package) => [$package->slug => $package->websiteData()])->all(),
+        ]);
     }
 
-    public function packageDetails(): View
+    public function packageDetails(Request $request, ?Package $package = null): View
     {
-        return view('website.package-details');
+        $package ??= Package::query()->where('slug', $request->query('package'))->first();
+        abort_unless($package && $package->status, 404);
+
+        $allPackages = Package::query()->where('status', true)
+            ->orderBy('sort_order')->orderBy('title')->get();
+
+        return view('website.package-details', [
+            'packageKey' => $package->slug,
+            'pkg' => $package->websiteData(),
+            'packagesData' => $allPackages->mapWithKeys(
+                fn (Package $item) => [$item->slug => $item->websiteData()]
+            )->all(),
+            'packageModel' => $package,
+        ]);
     }
 
     public function airline(Request $request, ?string $airline = null, ?string $section = null): View
