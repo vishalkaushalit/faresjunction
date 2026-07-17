@@ -328,7 +328,13 @@
                                 <div class="newsletter-input-group">
                                     <input type="email" name="email" class="newsletter-input"
                                         placeholder="Your email address" aria-label="Email for newsletter" required>
-                                    <button class="newsletter-btn" type="submit">Subscribe</button>
+                                    <button class="newsletter-btn" type="submit" aria-label="Subscribe to newsletter"
+                                        title="Subscribe">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M2.1 10.8 21.8 1.5 7.7 14.6 2.2 12.2a.75.75 0 0 1-.1-1.4Z" />
+                                            <path d="m9.3 15.4 12.5-13.9-4.1 20.2a.75.75 0 0 1-1.2.45l-4.1-3.2-2.05 2.55a.75.75 0 0 1-1.33-.47l.28-5.63Z" />
+                                        </svg>
+                                    </button>
                                 </div>
                                 <p class="newsletter-status" aria-live="polite" style="display: none;"></p>
                             </form>

@@ -16,12 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (status) {
         status.style.display = 'none';
         status.textContent = '';
+        status.classList.remove('is-success', 'is-error');
       }
 
       if (button) {
         button.disabled = true;
-        button.dataset.originalText = button.textContent;
-        button.textContent = 'Subscribing...';
+        button.setAttribute('aria-label', 'Subscribing');
       }
 
       try {
@@ -47,20 +47,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (status) {
           status.textContent = data.message || 'Thank you for subscribing!';
           status.style.display = 'block';
-          status.style.color = '#ffffff';
+          status.classList.add('is-success');
         }
       } catch (error) {
         if (status) {
           status.textContent = error.message;
           status.style.display = 'block';
-          status.style.color = '#ffcccc';
+          status.classList.add('is-error');
         } else {
           alert(error.message);
         }
       } finally {
         if (button) {
           button.disabled = false;
-          button.textContent = button.dataset.originalText || 'Subscribe';
+          button.setAttribute('aria-label', 'Subscribe to newsletter');
         }
       }
     });

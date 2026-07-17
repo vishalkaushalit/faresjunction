@@ -78,7 +78,8 @@
 }
 
 .newsletter-input-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
   gap: 0;
   width: 100%;
   min-width: 0;
@@ -88,7 +89,6 @@
 }
 
 .newsletter-input {
-  flex: 1 1 auto;
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
@@ -110,11 +110,14 @@
 }
 
 .newsletter-btn {
-  flex: 0 0 auto;
+  width: 48px;
+  min-width: 48px;
+  padding: 0.65rem;
+  display: grid;
+  place-items: center;
   background-color: var(--secondary-color);
   color: var(--white);
   border: none;
-  padding: 0.65rem 1.1rem;
   font-family: var(--font-primary);
   font-size: 0.85rem;
   font-weight: 700;
@@ -122,8 +125,48 @@
   transition: background-color 0.2s ease;
 }
 
+.newsletter-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffffff;
+}
+
+.newsletter-btn:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.newsletter-btn:disabled svg {
+  display: none;
+}
+
+.newsletter-btn:disabled::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  box-sizing: border-box;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: newsletter-spinner 0.7s linear infinite;
+}
+
+@keyframes newsletter-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .newsletter-btn:hover {
   background-color: var(--secondary-dark);
+}
+
+.newsletter-status.is-success {
+  color: #4ade80 !important;
+}
+
+.newsletter-status.is-error {
+  color: #ffcccc !important;
 }
 
 /* Footer Middle: Contact Info */
@@ -250,6 +293,12 @@ a.footer-contact-value:hover {
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+  .footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 992px) {
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -259,11 +308,6 @@ a.footer-contact-value:hover {
 @media (max-width: 576px) {
   .footer-top {
     padding: 2.5rem 0 2rem;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
   }
 
   .footer-contact-row {
@@ -276,6 +320,12 @@ a.footer-contact-value:hover {
     flex-direction: column;
     text-align: center;
     align-items: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
   }
 }
 
